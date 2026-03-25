@@ -1,3 +1,70 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Project'
+baseURL = "https://pipery.dev"
+languageCode = "en-us"
+title = "Pipery — Production-grade CI/CD pipelines"
+theme = "hugo-brewm"
+
+[params]
+  description = "Verified, reusable, and observable CI/CD pipelines for modern DevOps teams."
+  keywords = ["CI/CD", "DevOps", "pipelines", "GitHub Actions", "GitLab CI", "CircleCI", "continuous integration", "continuous delivery"]
+  extMeta = true
+  DisableFootBar = false
+
+  primaryColor = "#6366F1"
+  secondaryColor = "#7C3AED"
+  accentColor = "#06B6D4"
+  backgroundColor = "#0F172A"
+  textColor = "#E5E7EB"
+
+  twitter = "https://twitter.com/pipery"
+  github = "https://github.com/pipery"
+
+  googleAnalytics = ""
+  customCSS = ["css/custom.css"]
+
+[params.author]
+  name = "Pipery"
+  email = "hello@pipery.dev"
+
+[params.logo]
+  logoMark = "/images/pipery.png"
+  logoMarkDark = "/images/pipery-color.png"
+  logoType = true
+
+[params.home]
+  disableSlide = true
+  disableListing = true
+
+[params.posts]
+  share = false
+  related = false
+  noIndent = false
+  justifying = false
+
+[params.search]
+  enable = false
+
+[params.typeface]
+  webSafe = false
+  localHost = true
+  serif = "Cormorant"
+  sans = "Montserrat"
+
+[[menu.main]]
+  name = "Pipelines"
+  url = "#pipelines"
+  weight = 1
+
+[[menu.main]]
+  name = "Features"
+  url = "#features"
+  weight = 2
+
+[[menu.main]]
+  name = "Get Started"
+  url = "#cta"
+  weight = 3
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

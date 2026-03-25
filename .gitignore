@@ -1,12 +1,15 @@
 # Hugo
 public/
-resources/
-
-# Node (if any)
-node_modules/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
 
 # Logs
 *.log
+
+# Build artifacts
+dist/
+build/
 
 # OS
 .DS_Store
@@ -14,13 +17,3 @@ node_modules/
 # Editor
 .vscode/
 .idea/
-
-# Build artifacts
-dist/
-build/
-
-# Mac
-.DS_Store
-
-# Vscode
-.vscode/

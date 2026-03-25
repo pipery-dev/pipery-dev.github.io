@@ -1,0 +1,8 @@
+{{- $language := .Get "language" | default "text" -}}
+{{- $title := .Get "title" -}}
+<section class="code-block">
+  {{- with $title }}
+  <h3>{{ . }}</h3>
+  {{- end }}
+  {{ highlight (.Inner | strings.TrimSpace) $language "" }}
+</section>

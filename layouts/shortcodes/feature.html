@@ -1,0 +1,7 @@
+{{- $title := .Get "title" -}}
+<article class="feature-card">
+  {{- with $title }}
+  <h3>{{ . }}</h3>
+  {{- end }}
+  {{ .Inner | markdownify }}
+</article>

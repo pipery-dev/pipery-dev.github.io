@@ -1,0 +1,5 @@
+{{- $href := .Get "href" | default "#" -}}
+{{- $isPrimary := eq (.Get "primary") "true" -}}
+<a class="btn {{ if $isPrimary }}btn-primary{{ else }}btn-secondary{{ end }}" href="{{ $href }}">
+  {{ .Inner | markdownify | plainify }}
+</a>

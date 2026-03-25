@@ -1,0 +1,5 @@
+<section class="cta-section"{{ with .Get "id" }} id="{{ . }}"{{ end }}>
+  <div class="landing-shell">
+    {{ .Inner | markdownify }}
+  </div>
+</section>
