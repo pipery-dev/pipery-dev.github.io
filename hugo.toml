@@ -28,7 +28,7 @@ theme = "hugo-brewm"
 [params.logo]
   logoMark = "/images/pipery-logo-dark.png"
   logoMarkDark = "/images/pipery-logo-light.png"
-  logoType = false
+  logoType = true
 
 [params.home]
   disableSlide = true
