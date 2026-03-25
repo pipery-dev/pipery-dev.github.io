@@ -24,6 +24,7 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
+          submodules: recursive
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
