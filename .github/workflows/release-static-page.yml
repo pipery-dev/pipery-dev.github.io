@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
   pages: write
 
@@ -15,6 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
       - name: Check out repository
         uses: actions/checkout@v4
         with:
@@ -34,7 +38,10 @@ jobs:
           extended: true
 
       - name: Build static site
-        run: hugo --minify
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Publish static files by uploading artifact
         uses: actions/upload-pages-artifact@v3
