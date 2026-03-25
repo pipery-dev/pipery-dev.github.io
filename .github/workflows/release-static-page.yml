@@ -10,12 +10,8 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
-    env:
-      BRANCH_NAME: release/${{ github.sha }}
-      RELEASE_VERSION: ${{ github.sha }}
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -33,7 +29,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
+          cache: npm
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Automatically inject basePath in your Next.js configuration file and disable
+          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          #
+          # You may remove this line if you want to manage the configuration yourself.
+          static_site_generator: next
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
@@ -53,21 +67,18 @@ jobs:
         run: |
           touch out/.nojekyll
 
-      - name: Publish versioned static files to release branch
-        run: |
-          set -eu
-          echo "Publishing release ${RELEASE_VERSION} to branch ${BRANCH_NAME}…"
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          echo "Creating orphan branch ${BRANCH_NAME}…"
-          git checkout -b "$BRANCH_NAME"
-
-          echo "Copying built artifacts to branch root…"
-          mv out release
-
-          echo "Committing and pushing release to branch ${BRANCH_NAME}…"
-          git add --all
-          git commit -m "Release static site ${RELEASE_VERSION}"
-          git push origin "HEAD:${BRANCH_NAME}"
+      - name: Publish static files by uploading artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+# Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
