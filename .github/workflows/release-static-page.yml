@@ -62,11 +62,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           echo "Creating orphan branch ${BRANCH_NAME}…"
-          git switch --orphan "$BRANCH_NAME"
+          git checkout -b "$BRANCH_NAME"
 
           echo "Copying built artifacts to branch root…"
-          cp -R out/. ./
-          cp out/.nojekyll .nojekyll
+          mv out release
 
           echo "Committing and pushing release to branch ${BRANCH_NAME}…"
           git add --all
