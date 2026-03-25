@@ -24,13 +24,6 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
-
-      - name: Ensure clean git working tree
-        run: |
-          git status
-          git reset --hard
-          git clean -ffdx
-
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
