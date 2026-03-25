@@ -25,6 +25,11 @@ theme = "hugo-brewm"
   name = "Pipery"
   email = "hello@pipery.dev"
 
+[params.favicon]
+  ico = "/favicon.ico"
+  png = "/favicon.png"
+  apple = "/apple-touch-icon.png"
+
 [params.logo]
   logoMark = "/images/pipery-logo-dark.png"
   logoMarkDark = "/images/pipery-logo-light.png"
