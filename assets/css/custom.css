@@ -1,0 +1,91 @@
+/* Custom color palette for Pipery */
+:root {
+  --color-primary: #6366F1;
+  --color-secondary: #7C3AED;
+  --color-accent: #06B6D4;
+  --color-background: #0F172A;
+  --color-text: #E5E7EB;
+  --color-text-secondary: #CBD5E1;
+  --color-border: rgba(99, 102, 241, 0.2);
+  --color-card-bg: rgba(30, 41, 59, 0.8);
+}
+
+/* Override theme colors */
+body {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.text-accent {
+  color: var(--color-accent) !important;
+}
+
+.bg-accent {
+  background-color: var(--color-accent) !important;
+}
+
+.border-primary {
+  border-color: var(--color-primary) !important;
+}
+
+.card, .feature-card {
+  background-color: var(--color-card-bg) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, var(--color-background) 0%, rgba(99, 102, 241, 0.1) 100%) !important;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%) !important;
+  color: var(--color-background) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-background) !important;
+}
+
+.btn-secondary {
+  background-color: transparent !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-text) !important;
+}
+
+.btn:hover {
+  opacity: 0.9 !important;
+}
+
+/* Logo styling */
+.logo {
+  background-image: url('/images/pipery.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 180px;
+  height: 60px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    background-image: url('/images/pipery-color.png');
+  }
+}

@@ -1,0 +1,49 @@
+baseURL = "https://pipery.dev"
+languageCode = "en-us"
+title = "Pipery — Production-grade CI/CD pipelines"
+theme = "hugo-brewm"
+
+[params]
+  author = "Pipery"
+  description = "Verified, reusable, and observable CI/CD pipelines for modern DevOps teams."
+  keywords = ["CI/CD", "DevOps", "pipelines", "GitHub Actions", "GitLab CI", "CircleCI", "continuous integration", "continuous delivery"]
+
+  # Color palette customization
+  primaryColor = "#6366F1"
+  secondaryColor = "#7C3AED"
+  accentColor = "#06B6D4"
+  backgroundColor = "#0F172A"
+  textColor = "#E5E7EB"
+
+  # Logo
+  logo = "/images/pipery.png"
+  logoDark = "/images/pipery-color.png"
+
+  # Social
+  twitter = "https://twitter.com/pipery"
+  github = "https://github.com/pipery"
+
+  # SEO
+  googleAnalytics = ""
+
+  # Custom CSS
+  customCSS = ["css/custom.css"]
+  [[menu.main]]
+    name = "Pipelines"
+    url = "#pipelines"
+    weight = 1
+
+  [[menu.main]]
+    name = "Features"
+    url = "#features"
+    weight = 2
+
+  [[menu.main]]
+    name = "Get Started"
+    url = "#cta"
+    weight = 3
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
