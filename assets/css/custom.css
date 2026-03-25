@@ -144,19 +144,20 @@ section[id] {
   scroll-margin-top: 6rem;
 }
 
-/* Logo styling */
-.logo {
-  background-image: url('/images/pipery.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 180px;
-  height: 60px;
+/* Header logo */
+#logo {
+  max-width: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    background-image: url('/images/pipery-color.png');
-  }
+#logo a {
+  align-items: center;
+}
+
+#logo #logomark,
+#logo #logomark--dark {
+  width: clamp(180px, 22vw, 240px);
+  height: auto;
+  max-width: none;
 }
 
 @media (min-width: 768px) {

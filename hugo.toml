@@ -26,9 +26,9 @@ theme = "hugo-brewm"
   email = "hello@pipery.dev"
 
 [params.logo]
-  logoMark = "/images/pipery.png"
-  logoMarkDark = "/images/pipery-color.png"
-  logoType = true
+  logoMark = "/images/pipery-logo-light.png"
+  logoMarkDark = "/images/pipery-logo-dark.png"
+  logoType = false
 
 [params.home]
   disableSlide = true
