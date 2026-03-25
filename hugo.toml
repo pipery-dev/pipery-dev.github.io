@@ -31,8 +31,8 @@ theme = "hugo-brewm"
   logoType = false
 
 [params.home]
-  disableSlide = false
-  disableListing = false
+  disableSlide = true
+  disableListing = true
 
 [params.posts]
   share = false
