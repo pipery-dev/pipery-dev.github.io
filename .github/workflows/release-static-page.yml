@@ -75,7 +75,7 @@ jobs:
             git switch --create "$BRANCH_NAME" --track "origin/$BRANCH_NAME" || git switch "$BRANCH_NAME"
           else
             echo  "Branch ${BRANCH_NAME} does not exist. Creating orphan branch…"
-            git switch --orphan "$BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME"
             git rm -rf . >/dev/null 2>&1 || true
           fi
 
