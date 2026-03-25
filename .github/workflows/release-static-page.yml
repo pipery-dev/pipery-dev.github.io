@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: release
+      BRANCH_NAME: release/${{ github.sha }}
       RELEASE_VERSION: ${{ github.sha }}
 
     steps:
@@ -57,56 +57,17 @@ jobs:
         run: |
           set -eu
           echo "Publishing release ${RELEASE_VERSION} to branch ${BRANCH_NAME}…"
-          REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
-          RELEASE_PATH="releases/${RELEASE_VERSION}"
-          if [[ "$REPOSITORY_NAME" == *.github.io ]]; then
-            SITE_PATH="/${RELEASE_PATH}/"
-          else
-            SITE_PATH="/${REPOSITORY_NAME}/${RELEASE_PATH}/"
-          fi
-          TEMP_DIR="$(mktemp -d)"
-          echo "Using temporary directory ${TEMP_DIR} for intermediate files."
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo "Checking out branch ${BRANCH_NAME}…"
-          if git ls-remote --exit-code --heads origin "$BRANCH_NAME" >/dev/null 2>&1; then
-            echo "Branch ${BRANCH_NAME} already exists. Checking it out…"
-            git fetch origin "$BRANCH_NAME"
-            git switch --create "$BRANCH_NAME" --track "origin/$BRANCH_NAME" || git switch "$BRANCH_NAME"
-          else
-            echo  "Branch ${BRANCH_NAME} does not exist. Creating orphan branch…"
-            git checkout -b "$BRANCH_NAME"
-            git rm -rf . >/dev/null 2>&1 || true
-          fi
 
-          echo "Publishing release to ${RELEASE_PATH}…"
-          mkdir -p "$RELEASE_PATH"
+          echo "Creating orphan branch ${BRANCH_NAME}…"
+          git switch --orphan "$BRANCH_NAME"
 
-          if [ -e "$RELEASE_PATH/index.html" ]; then
-            echo "Release ${RELEASE_VERSION} already exists at ${RELEASE_PATH}." >&2
-            exit 1
-          fi
-
-          cp -R out/. "$RELEASE_PATH"/
-
-          cat <<EOF > "$TEMP_DIR/index.html"
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8" />
-              <title>Redirecting…</title>
-              <meta http-equiv="refresh" content="0; url=${SITE_PATH}" />
-              <link rel="canonical" href="${SITE_PATH}" />
-            </head>
-            <body>
-              <p><a href="${SITE_PATH}">Open latest release</a></p>
-            </body>
-          </html>
-          EOF
-
-          cp "$TEMP_DIR/index.html" index.html
-          cp "$TEMP_DIR/index.html" 404.html
+          echo "Copying built artifacts to branch root…"
+          cp -R out/. ./
           cp out/.nojekyll .nojekyll
+
           echo "Committing and pushing release to branch ${BRANCH_NAME}…"
           git add --all
           git commit -m "Release static site ${RELEASE_VERSION}"
