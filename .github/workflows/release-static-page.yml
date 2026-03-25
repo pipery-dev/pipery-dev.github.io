@@ -1,0 +1,103 @@
+name: Release Static Page
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: release
+      RELEASE_VERSION: ${{ github.sha }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build static export
+        env:
+          GITHUB_ACTIONS: 'true'
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+        run: npm run build
+
+      - name: Add GitHub Pages markers
+        run: |
+          touch out/.nojekyll
+
+      - name: Publish versioned static files to release branch
+        run: |
+          set -eu
+
+          REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
+          RELEASE_PATH="releases/${RELEASE_VERSION}"
+          if [[ "$REPOSITORY_NAME" == *.github.io ]]; then
+            SITE_PATH="/${RELEASE_PATH}/"
+          else
+            SITE_PATH="/${REPOSITORY_NAME}/${RELEASE_PATH}/"
+          fi
+          TEMP_DIR="$(mktemp -d)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH_NAME" >/dev/null 2>&1; then
+            git fetch origin "$BRANCH_NAME"
+            git switch --create "$BRANCH_NAME" --track "origin/$BRANCH_NAME" || git switch "$BRANCH_NAME"
+          else
+            git switch --orphan "$BRANCH_NAME"
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p "$RELEASE_PATH"
+
+          if [ -e "$RELEASE_PATH/index.html" ]; then
+            echo "Release ${RELEASE_VERSION} already exists at ${RELEASE_PATH}." >&2
+            exit 1
+          fi
+
+          cp -R out/. "$RELEASE_PATH"/
+
+          cat <<EOF > "$TEMP_DIR/index.html"
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <title>Redirecting…</title>
+              <meta http-equiv="refresh" content="0; url=${SITE_PATH}" />
+              <link rel="canonical" href="${SITE_PATH}" />
+            </head>
+            <body>
+              <p><a href="${SITE_PATH}">Open latest release</a></p>
+            </body>
+          </html>
+          EOF
+
+          cp "$TEMP_DIR/index.html" index.html
+          cp "$TEMP_DIR/index.html" 404.html
+          cp out/.nojekyll .nojekyll
+
+          git add --all
+          git commit -m "Release static site ${RELEASE_VERSION}"
+          git push origin "HEAD:${BRANCH_NAME}"
