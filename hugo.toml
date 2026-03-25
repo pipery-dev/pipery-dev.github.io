@@ -26,13 +26,13 @@ theme = "hugo-brewm"
   email = "hello@pipery.dev"
 
 [params.logo]
-  logoMark = "/images/pipery-logo-light.png"
-  logoMarkDark = "/images/pipery-logo-dark.png"
+  logoMark = "/images/pipery-logo-dark.png"
+  logoMarkDark = "/images/pipery-logo-light.png"
   logoType = false
 
 [params.home]
-  disableSlide = true
-  disableListing = true
+  disableSlide = false
+  disableListing = false
 
 [params.posts]
   share = false
@@ -41,7 +41,7 @@ theme = "hugo-brewm"
   justifying = false
 
 [params.search]
-  enable = false
+  enable = true
 
 [params.typeface]
   webSafe = false
