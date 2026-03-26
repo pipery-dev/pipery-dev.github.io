@@ -1,6 +1,6 @@
 baseURL = "https://pipery.dev"
 languageCode = "en-us"
-title = "Pipery — Production-grade CI/CD pipelines"
+title = "Pipery"
 theme = "hugo-brewm"
 
 [params]
@@ -31,9 +31,9 @@ theme = "hugo-brewm"
   apple = "/apple-touch-icon.png"
 
 [params.logo]
-  logoMark = "/images/pipery-logo-dark.png"
-  logoMarkDark = "/images/pipery-logo-light.png"
-  logoType = true
+  logoMark = "/images/pipery-mark-light.png"
+  logoMarkDark = "/images/pipery-mark-dark.png"
+  logoType = false
 
 [params.home]
   disableSlide = true
@@ -46,7 +46,7 @@ theme = "hugo-brewm"
   justifying = false
 
 [params.search]
-  enable = true
+  enable = false
 
 [params.typeface]
   webSafe = false

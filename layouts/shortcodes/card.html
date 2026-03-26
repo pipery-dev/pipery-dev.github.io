@@ -3,5 +3,5 @@
   {{- with $title }}
   <h3>{{ . }}</h3>
   {{- end }}
-  {{ .Inner | markdownify }}
+  {{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}
 </article>

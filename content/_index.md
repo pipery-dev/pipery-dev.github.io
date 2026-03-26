@@ -1,5 +1,5 @@
 ---
-title: "Pipery — Production-grade CI/CD pipelines"
+title: "Pipery"
 description: "Verified, reusable, and observable CI/CD pipelines for modern DevOps teams."
 type: "landing"
 ---
@@ -41,8 +41,6 @@ You do not need another CI tool. You need better pipelines.
 {{< section id="meet-pipery" >}}
 ## Meet Pipery
 
-The Bitnami of CI/CD pipelines.
-
 Pipery provides production-grade, reusable CI/CD pipelines that are standardized, versioned, secure, and observable.
 
 {{< features >}}
@@ -70,14 +68,113 @@ Replace hundreds of lines of brittle workflow logic with a single, trusted pipel
 
 {{< code-compare >}}
 {{< code-block language="yaml" title="Before" >}}
-# messy, duplicated, hard to maintain
-run: npm install && npm test && docker build ...
+name: Node CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  REGISTRY: europe-west1-docker.pkg.dev
+  IMAGE_NAME: pipery/api
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --ci
+      - run: npm run build
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_CI_SA }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - run: |
+          docker build -t $REGISTRY/$IMAGE_NAME:${GITHUB_SHA} .
+          docker push $REGISTRY/$IMAGE_NAME:${GITHUB_SHA}
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+
+      - uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: prod-cluster
+          location: europe-west1
+          project_id: acme-platform-prod
+
+      - run: |
+          kubectl set image deployment/api \
+            api=$REGISTRY/$IMAGE_NAME:${GITHUB_SHA} \
+            --namespace production
+          kubectl rollout status deployment/api --namespace production
 {{< /code-block >}}
 
 {{< code-block language="yaml" title="After" >}}
+name: Node CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  build:
+  ci:
     uses: pipery/node-ci@v1
+    with:
+      node_version: 20
+      package_manager: npm
+      run_lint: true
+      run_tests: true
+      build_command: npm run build
+      docker_build: true
+      image_name: europe-west1-docker.pkg.dev/acme-platform-prod/pipery/api
+
+  deploy:
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    uses: pipery/node-deploy@v1
+    with:
+      image_name: europe-west1-docker.pkg.dev/acme-platform-prod/pipery/api
+      image_tag: ${{ github.sha }}
+      deploy_target: gke
+      gke_project: acme-platform-prod
+      gke_cluster: prod-cluster
+      gke_location: europe-west1
+      gke_namespace: production
+      gke_deployment: api
+      service_account: pipery-deploy@acme-platform-prod.iam.gserviceaccount.com
 {{< /code-block >}}
 {{< /code-compare >}}
 {{< /section >}}

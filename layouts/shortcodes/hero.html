@@ -1,5 +1,16 @@
 <section class="hero-section">
   <div class="landing-shell">
-    {{ .Inner | markdownify }}
+    <div class="brand-lockup" aria-label="{{ site.Title }}">
+      <div class="brand-lockup__copy">
+        <p class="brand-lockup__eyebrow">Verified, reusable, observable pipelines</p>
+        <div class="brand-lockup__title">{{ site.Title }}</div>
+      </div>
+      <img
+        class="brand-lockup__mark"
+        src="{{ site.Params.logo.logoMarkDark }}"
+        alt="{{ site.Title }}"
+      />
+    </div>
+    {{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}
   </div>
 </section>
