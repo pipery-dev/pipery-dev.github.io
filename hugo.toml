@@ -50,7 +50,7 @@ theme = "hugo-brewm"
 
 [params.typeface]
   webSafe = false
-  localHost = true
+  localHost = false
   serif = "Cormorant"
   sans = "Montserrat"
 
