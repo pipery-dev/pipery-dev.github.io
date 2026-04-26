@@ -146,35 +146,32 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
+  packages: write
 
 jobs:
   ci:
-    uses: pipery/node-ci@v1
+    uses: pipery-dev/pipery-npm-ci@v0
     with:
       node_version: 20
       package_manager: npm
       run_lint: true
       run_tests: true
       build_command: npm run build
-      docker_build: true
-      image_name: europe-west1-docker.pkg.dev/acme-platform-prod/pipery/api
+      publish: true
+    secrets: inherit
 
   deploy:
     needs: ci
     if: github.ref == 'refs/heads/main'
-    uses: pipery/node-deploy@v1
+    uses: pipery-dev/pipery-npm-cd@v0
     with:
-      image_name: europe-west1-docker.pkg.dev/acme-platform-prod/pipery/api
-      image_tag: ${{ github.sha }}
-      deploy_target: gke
-      gke_project: acme-platform-prod
-      gke_cluster: prod-cluster
-      gke_location: europe-west1
-      gke_namespace: production
-      gke_deployment: api
-      service_account: pipery-deploy@acme-platform-prod.iam.gserviceaccount.com
+      deploy_target: cloud-run
+      service_name: api
+      region: europe-west1
+      project_id: acme-platform-prod
+    secrets: inherit
 {{< /code-block >}}
 {{< /code-compare >}}
 {{< /section >}}
@@ -211,14 +208,37 @@ Everything your pipelines were missing.
 
 Start with the essentials.
 
+**CI Actions**
+
 {{< cards >}}
-  {{< card title="Node.js CI pipeline" >}}
+  {{< card title="pipery-docker-ci" href="https://github.com/marketplace/actions/pipery-docker-ci" >}}
+    Docker CI: lint (hadolint) → SAST → SCA → build → test → version → push to registry. `pipery-dev/pipery-docker-ci@v0`
   {{< /card >}}
-  {{< card title="Docker build and push" >}}
+  {{< card title="pipery-golang-ci" href="https://github.com/marketplace/actions/pipery-golang-ci" >}}
+    Go CI: SAST → SCA → lint (golangci-lint) → build → test → version → cross-compile → GitHub release. `pipery-dev/pipery-golang-ci@v0`
   {{< /card >}}
-  {{< card title="Kubernetes deployment" >}}
+  {{< card title="pipery-npm-ci" href="https://github.com/marketplace/actions/pipery-npm-ci" >}}
+    npm/Node.js CI: SAST → SCA → lint (ESLint) → build → test → version → npm publish. `pipery-dev/pipery-npm-ci@v0`
   {{< /card >}}
-  {{< card title="Terraform workflows" >}}
+  {{< card title="pipery-python-ci" href="https://github.com/marketplace/actions/pipery-python-ci" >}}
+    Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v0`
+  {{< /card >}}
+{{< /cards >}}
+
+**CD Actions**
+
+{{< cards >}}
+  {{< card title="pipery-docker-cd" href="https://github.com/pipery-dev/pipery-docker-cd" >}}
+    Docker CD: pull image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-docker-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-golang-cd" href="https://github.com/pipery-dev/pipery-golang-cd" >}}
+    Go CD: download artifact/image → deploy → status check. `pipery-dev/pipery-golang-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-npm-cd" href="https://github.com/pipery-dev/pipery-npm-cd" >}}
+    npm CD: download package/image → deploy → status check. `pipery-dev/pipery-npm-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-python-cd" href="https://github.com/pipery-dev/pipery-python-cd" >}}
+    Python CD: download package/image → deploy → status check. `pipery-dev/pipery-python-cd@v0`
   {{< /card >}}
 {{< /cards >}}
 {{< /section >}}
@@ -239,7 +259,7 @@ Stop maintaining pipelines.
 Start shipping faster with Pipery.
 
 {{< buttons >}}
-  {{< button href="https://pipery.dev" primary="true" >}}
+  {{< button href="https://github.com/pipery-dev" primary="true" >}}
     Get started for free
   {{< /button >}}
   {{< button href="mailto:hello@pipery.dev" >}}
