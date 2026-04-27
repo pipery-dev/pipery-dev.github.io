@@ -223,6 +223,15 @@ Start with the essentials.
   {{< card title="pipery-python-ci" href="https://github.com/marketplace/actions/pipery-python-ci" >}}
     Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v0`
   {{< /card >}}
+  {{< card title="pipery-java-ci" href="https://github.com/pipery-dev/pipery-java-ci" >}}
+    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Groovy. `pipery-dev/pipery-java-ci@v0`
+  {{< /card >}}
+  {{< card title="pipery-cpp-ci" href="https://github.com/pipery-dev/pipery-cpp-ci" >}}
+    C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/pipery-cpp-ci@v0`
+  {{< /card >}}
+  {{< card title="pipery-rust-ci" href="https://github.com/pipery-dev/pipery-rust-ci" >}}
+    Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/pipery-rust-ci@v0`
+  {{< /card >}}
 {{< /cards >}}
 
 **CD Actions**
@@ -239,6 +248,15 @@ Start with the essentials.
   {{< /card >}}
   {{< card title="pipery-python-cd" href="https://github.com/pipery-dev/pipery-python-cd" >}}
     Python CD: download package/image → deploy → status check. `pipery-dev/pipery-python-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-java-cd" href="https://github.com/pipery-dev/pipery-java-cd" >}}
+    Java CD: download artifact/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-java-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-cpp-cd" href="https://github.com/pipery-dev/pipery-cpp-cd" >}}
+    C/C++ CD: download artifact/image → deploy → status check. `pipery-dev/pipery-cpp-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-rust-cd" href="https://github.com/pipery-dev/pipery-rust-cd" >}}
+    Rust CD: download artifact/image → deploy → status check. `pipery-dev/pipery-rust-cd@v0`
   {{< /card >}}
 {{< /cards >}}
 {{< /section >}}
