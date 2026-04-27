@@ -1,8 +1,15 @@
 {{- $language := .Get "language" | default "text" -}}
-{{- $title := .Get "title" -}}
-<section class="code-block">
-  {{- with $title }}
-  <h3>{{ . }}</h3>
+{{- $title    := .Get "title" -}}
+{{- $tag      := .Get "tag" -}}
+{{- $tagKind  := .Get "tagKind" | default "before" -}}
+<div class="code-wrap">
+  {{- with $tag }}
+  <div class="code-tag code-tag--{{ $tagKind }}">{{ . }}</div>
   {{- end }}
-  {{ highlight (.Inner | strings.TrimSpace) $language "" }}
-</section>
+  <section class="code-block">
+    {{- with $title }}
+    <h3>{{ . }}</h3>
+    {{- end }}
+    {{ highlight (.Inner | strings.TrimSpace) $language "" }}
+  </section>
+</div>

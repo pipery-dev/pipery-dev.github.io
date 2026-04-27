@@ -1,7 +1,29 @@
 {{- $title := .Get "title" -}}
-<article class="feature-card">
+{{- $icon  := .Get "icon"  -}}
+
+{{- $icons := dict
+  "standard" `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M7 10h10M7 14h6"/></svg>`
+  "box"      `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5v-9Z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg>`
+  "shield"   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v5c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-3Z"/><path d="M9.5 12.5 11 14l3.5-3.5"/></svg>`
+  "chart"    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20v-10M17 20v-4"/></svg>`
+  "bolt"     `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></svg>`
+  "check"    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5 11 15.5 16 9.5"/></svg>`
+  "puzzle"   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><path d="M14 17h7M17.5 13.5v7"/></svg>`
+  "eye"      `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>`
+  "copy"     `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="3.5" width="12" height="12" rx="2"/><path d="M4.5 8.5V19a1.5 1.5 0 0 0 1.5 1.5h10.5"/></svg>`
+  "clock"    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`
+  "alert"    `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.3 2.7 17.4A2 2 0 0 0 4.4 20.4h15.2a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"/><path d="M12 10v4M12 17.5v.5"/></svg>`
+-}}
+
+<article class="feature-card{{ if $icon }} feature-card--iconic{{ end }}">
+  {{- with $icon }}
+  {{- $svg := index $icons . }}
+  {{- with $svg }}
+  <div class="feature-ico">{{ . | safeHTML }}</div>
+  {{- end }}
+  {{- end }}
   {{- with $title }}
   <h3>{{ . }}</h3>
   {{- end }}
-  {{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}
+  <p>{{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}</p>
 </article>
