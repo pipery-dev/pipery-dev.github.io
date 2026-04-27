@@ -16,7 +16,7 @@ theme = "hugo-brewm"
   textColor = "#E5E7EB"
 
   twitter = "https://twitter.com/pipery"
-  github = "https://github.com/pipery"
+  github = "https://github.com/pipery-dev"
 
   googleAnalytics = ""
   customCSS = ["css/custom.css"]
