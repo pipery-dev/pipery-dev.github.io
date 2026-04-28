@@ -1,3 +1,3 @@
 <ul class="pain-list">
-  {{ .Inner | safeHTML }}
+  {{ .InnerDeindent | strings.TrimSpace | safeHTML }}
 </ul>
