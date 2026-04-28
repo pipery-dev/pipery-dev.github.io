@@ -1,0 +1,10 @@
+{{- $label := .Get "label" -}}
+{{- $type  := .Get "type" | default "features" -}}
+<div class="meet-col">
+  {{- with $label }}
+  <div class="col-eyebrow">{{ . }}</div>
+  {{- end }}
+  <div class="{{ if eq $type "stats" }}stat-grid stat-grid--col{{ else }}feature-grid feature-grid--col{{ end }}">
+    {{ .Inner | safeHTML }}
+  </div>
+</div>
