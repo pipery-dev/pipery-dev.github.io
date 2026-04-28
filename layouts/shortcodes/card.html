@@ -1,7 +1,22 @@
 {{- $title := .Get "title" -}}
+{{- $href := .Get "href" -}}
+{{- $icon := .Get "icon" -}}
 <article class="card">
-  {{- with $title }}
-  <h3>{{ . }}</h3>
+  {{- if or $icon $title }}
+  <div class="card__header">
+    {{- with $icon }}
+    <img class="card__icon" src="{{ . }}" alt="" width="24" height="24" loading="lazy" />
+    {{- end }}
+    {{- with $title }}
+    <h3 class="card__title">
+      {{- if $href -}}
+      <a href="{{ $href }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+      {{- else -}}
+      {{ . }}
+      {{- end -}}
+    </h3>
+    {{- end }}
+  </div>
   {{- end }}
   {{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}
 </article>

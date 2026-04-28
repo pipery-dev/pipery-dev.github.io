@@ -232,6 +232,23 @@ body > footer,
   margin-bottom: 0.75rem;
 }
 
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.card__header .card__title {
+  margin-bottom: 0;
+}
+
+.card__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
 .card,
 .feature-card {
   display: flex;
@@ -243,6 +260,15 @@ body > footer,
 .feature-card p {
   margin: 0;
   overflow: visible;
+}
+
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card a:hover {
+  color: var(--color-accent);
 }
 
 .code-compare {
