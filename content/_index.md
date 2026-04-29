@@ -175,10 +175,9 @@ jobs:
   deploy:
     needs: ci
     if: github.ref == 'refs/heads/main'
-    uses: pipery-dev/pipery-npm-cd@v0
+    uses: pipery-dev/pipery-cloudrun-cd@v0
     with:
-      deploy_target: cloud-run
-      service_name: api
+      image_name: api
       region: europe-west1
       project_id: acme-platform-prod
     secrets: inherit
@@ -280,31 +279,31 @@ Start with the essentials.
   {{< card title="pipery-rust-ci" href="https://github.com/pipery-dev/pipery-rust-ci" icon="/images/actions/rust.svg" >}}
     Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/pipery-rust-ci@v0`
   {{< /card >}}
+  {{< card title="pipery-terraform-ci" href="https://github.com/pipery-dev/pipery-terraform-ci" icon="/images/actions/terraform.svg" >}}
+    Terraform CI: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release. `pipery-dev/pipery-terraform-ci@v0`
+  {{< /card >}}
 {{< /cards >}}
 
 **CD Actions**
 
 {{< cards >}}
+  {{< card title="pipery-argocd-cd" href="https://github.com/pipery-dev/pipery-argocd-cd" icon="/images/actions/argocd.svg" >}}
+    ArgoCD CD: update image tag & values → ArgoCD sync → wait for Argo Rollout. GitOps-native deployment. `pipery-dev/pipery-argocd-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-helm-cd" href="https://github.com/pipery-dev/pipery-helm-cd" icon="/images/actions/helm.svg" >}}
+    Helm CD: update chart values → helm upgrade → wait for rollout. Deploy any workload via Helm. `pipery-dev/pipery-helm-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-cloudrun-cd" href="https://github.com/pipery-dev/pipery-cloudrun-cd" icon="/images/actions/cloudrun.svg" >}}
+    Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/pipery-cloudrun-cd@v0`
+  {{< /card >}}
+  {{< card title="pipery-ansible-cd" href="https://github.com/pipery-dev/pipery-ansible-cd" icon="/images/actions/ansible.svg" >}}
+    Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/pipery-ansible-cd@v0`
+  {{< /card >}}
   {{< card title="pipery-docker-cd" href="https://github.com/pipery-dev/pipery-docker-cd" icon="/images/actions/docker.svg" >}}
-    Docker CD: pull image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-docker-cd@v0`
+    Docker CD: docker-compose up or docker swarm deploy → health check. Deploy containerized workloads directly. `pipery-dev/pipery-docker-cd@v0`
   {{< /card >}}
-  {{< card title="pipery-golang-cd" href="https://github.com/pipery-dev/pipery-golang-cd" icon="/images/actions/golang.svg" >}}
-    Go CD: download artifact/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-golang-cd@v0`
-  {{< /card >}}
-  {{< card title="pipery-npm-cd" href="https://github.com/pipery-dev/pipery-npm-cd" icon="/images/actions/npm.svg" >}}
-    npm/Node.js CD: download package/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-npm-cd@v0`
-  {{< /card >}}
-  {{< card title="pipery-python-cd" href="https://github.com/pipery-dev/pipery-python-cd" icon="/images/actions/python.svg" >}}
-    Python CD: download package/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-python-cd@v0`
-  {{< /card >}}
-  {{< card title="pipery-java-cd" href="https://github.com/pipery-dev/pipery-java-cd" icon="/images/actions/java.svg" >}}
-    Java CD: download artifact/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-java-cd@v0`
-  {{< /card >}}
-  {{< card title="pipery-cpp-cd" href="https://github.com/pipery-dev/pipery-cpp-cd" icon="/images/actions/cpp.svg" >}}
-    C/C++ CD: download artifact/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-cpp-cd@v0`
-  {{< /card >}}
-  {{< card title="pipery-rust-cd" href="https://github.com/pipery-dev/pipery-rust-cd" icon="/images/actions/rust.svg" >}}
-    Rust CD: download artifact/image → deploy (ArgoCD/Cloud Run/Helm/Ansible) → status check. `pipery-dev/pipery-rust-cd@v0`
+  {{< card title="pipery-terraform-cd" href="https://github.com/pipery-dev/pipery-terraform-cd" icon="/images/actions/terraform.svg" >}}
+    Terraform CD: terraform plan → terraform apply → state management and drift detection. Infrastructure as code deployment. `pipery-dev/pipery-terraform-cd@v0`
   {{< /card >}}
 {{< /cards >}}
 {{< /section >}}
