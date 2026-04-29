@@ -174,6 +174,23 @@ jobs:
 {{< /code-compare >}}
 {{< /section >}}
 
+{{< section id="observability" >}}
+## Observe and replay every step
+
+Pipery workflows run task scripts through `psh`, the Pipery Shell. Instead of asking every pipeline author to hand-write logging, `psh` observes each command as it runs and writes structured events to `pipery.jsonl`.
+
+{{< features >}}
+  {{< feature icon="clock" title="Timing and runtime context" >}}Each logged command carries timing, working directory, runner context, environment details, arguments, exit status, and captured output.{{< /feature >}}
+  {{< feature icon="eye" title="Structured pipeline history" >}}`pipery.jsonl` is line-delimited JSON, so it can be uploaded as a GitHub Actions artifact, searched in the dashboard, or inspected locally with ordinary CLI tools.{{< /feature >}}
+  {{< feature icon="bolt" title="Replay for debugging" >}}Because the log records what ran and how it ran, Pipery can replay the captured execution path so a developer can reproduce a failing step with the same command shape.{{< /feature >}}
+{{< /features >}}
+
+{{< code-block language="json" title="pipery.jsonl" tag="Replayable execution log" tagKind="after" >}}
+{"timestamp":"2026-04-29T10:21:18.492351Z","started_at":"2026-04-29T10:21:15.083104Z","finished_at":"2026-04-29T10:21:18.492351Z","duration":"3.409247s","duration_ms":3409,"system_cpu_cores":4,"system_memory_bytes":17179869184,"process_user_cpu_ms":812,"process_system_cpu_ms":143,"process_max_rss_bytes":73400320,"mode":"shell","builtin":false,"command":"/bin/bash","args":["-lc","docker build -t ghcr.io/acme/api:sha-abc123 ."],"raw_command":"docker build -t ghcr.io/acme/api:sha-abc123 .","before_cwd":"/github/workspace","cwd":"/github/workspace","before_env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"stdin":"","stdout":"Successfully built image\\n","stderr":"","exit_code":0,"pid":12842}
+{"timestamp":"2026-04-29T10:22:07.819604Z","started_at":"2026-04-29T10:22:04.112008Z","finished_at":"2026-04-29T10:22:07.819604Z","duration":"3.707596s","duration_ms":3707,"system_cpu_cores":4,"system_memory_bytes":17179869184,"process_user_cpu_ms":1204,"process_system_cpu_ms":196,"process_max_rss_bytes":104857600,"mode":"shell","builtin":false,"command":"/bin/bash","args":["-lc","npm test -- --ci"],"raw_command":"npm test -- --ci","before_cwd":"/github/workspace","cwd":"/github/workspace","before_env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"stdin":"","stdout":"","stderr":"1 failing test\\n","exit_code":1,"pid":12911}
+{{< /code-block >}}
+{{< /section >}}
+
 {{< section id="features" >}}
 ## Features
 
