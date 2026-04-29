@@ -1,0 +1,48 @@
+{{- $siteName := or site.Params.seo.siteName site.Title "Pipery" -}}
+{{- $title := cond .IsHome (or site.Params.seo.title site.Title) (printf "%s | %s" .Title $siteName) -}}
+{{- $description := or .Params.description site.Params.seo.description site.Params.description -}}
+{{- $image := "" -}}
+{{- with or site.Params.seo.image .Params.images site.Params.images site.Params.socialCard.images -}}
+  {{- if reflect.IsSlice . -}}
+    {{- $image = index . 0 | absURL -}}
+  {{- else -}}
+    {{- $image = . | absURL -}}
+  {{- end -}}
+{{- end -}}
+{{- $keywords := or .Params.keywords site.Params.keywords -}}
+<meta name="application-name" content="{{ $siteName }}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+{{- with $keywords }}
+<meta name="keywords" content="{{ delimit . ", " }}">
+{{- end }}
+{{- with $image }}
+<meta property="og:image" content="{{ . }}">
+<meta property="og:image:secure_url" content="{{ . }}">
+<meta name="twitter:image" content="{{ . }}">
+<meta name="twitter:image:alt" content="Pipery CI/CD pipeline observability">
+{{- end }}
+<meta property="og:site_name" content="{{ $siteName }}">
+<script type="application/ld+json">
+{{- dict
+  "@context" "https://schema.org"
+  "@type" "Organization"
+  "name" $siteName
+  "url" site.BaseURL
+  "logo" ("/images/pipery-mark-dark.png" | absURL)
+  "sameAs" (slice "https://github.com/pipery-dev" "https://pipery.dev" "https://dash.pipery.dev")
+| jsonify | safeJS -}}
+</script>
+<script type="application/ld+json">
+{{- dict
+  "@context" "https://schema.org"
+  "@type" "SoftwareApplication"
+  "name" "Pipery"
+  "applicationCategory" "DeveloperApplication"
+  "operatingSystem" "GitHub Actions"
+  "url" site.BaseURL
+  "description" $description
+  "image" $image
+  "offers" (dict "@type" "Offer" "price" "0" "priceCurrency" "USD")
+  "publisher" (dict "@type" "Organization" "name" $siteName "url" site.BaseURL)
+| jsonify | safeJS -}}
+</script>

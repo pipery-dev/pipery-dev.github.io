@@ -1,11 +1,13 @@
-baseURL = "https://pipery.dev"
+baseURL = "https://pipery.dev/"
 languageCode = "en-us"
-title = "Pipery"
+title = "Pipery - Production-grade CI/CD pipelines"
 theme = "hugo-brewm"
+enableRobotsTXT = true
 
 [params]
-  description = "Verified, reusable, and observable CI/CD pipelines for modern DevOps teams."
-  keywords = ["CI/CD", "DevOps", "pipelines", "GitHub Actions", "GitLab CI", "CircleCI", "continuous integration", "continuous delivery"]
+  description = "Pipery provides verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+  keywords = ["Pipery", "CI/CD pipelines", "GitHub Actions CI", "GitHub Actions CD", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
+  images = "/images/pipery-color.png"
   extMeta = true
   DisableFootBar = false
 
@@ -34,6 +36,20 @@ theme = "hugo-brewm"
   logoMark = "/images/pipery-mark-light.png"
   logoMarkDark = "/images/pipery-mark-dark.png"
   logoType = false
+
+[params.socialCard]
+  enable = true
+  opengraph = true
+  twitter = true
+  twitterSite = "pipery"
+  twitterCreator = "pipery"
+  images = "/images/pipery-color.png"
+
+[params.seo]
+  siteName = "Pipery"
+  title = "Pipery - Production-grade CI/CD pipelines"
+  description = "Verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+  image = "/images/pipery-color.png"
 
 [params.home]
   disableSlide = true

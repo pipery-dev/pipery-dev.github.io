@@ -1,7 +1,19 @@
 ---
 title: "Pipery"
-description: "Verified, reusable, and observable CI/CD pipelines for modern DevOps teams."
+description: "Verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
 type: "landing"
+keywords:
+  - CI/CD pipelines
+  - GitHub Actions
+  - DevOps automation
+  - pipeline observability
+  - structured CI logs
+  - pipery.jsonl
+  - psh
+  - Pipery Dashboard
+sitemap:
+  priority: 1.0
+  changefreq: weekly
 ---
 
 {{< hero >}}
@@ -189,6 +201,39 @@ Pipery workflows run task scripts through `psh`, the Pipery Shell. Instead of as
 {"timestamp":"2026-04-29T10:21:18.492351Z","started_at":"2026-04-29T10:21:15.083104Z","finished_at":"2026-04-29T10:21:18.492351Z","duration":"3.409247s","duration_ms":3409,"system_cpu_cores":4,"system_memory_bytes":17179869184,"process_user_cpu_ms":812,"process_system_cpu_ms":143,"process_max_rss_bytes":73400320,"mode":"shell","builtin":false,"command":"/bin/bash","args":["-lc","docker build -t ghcr.io/acme/api:sha-abc123 ."],"raw_command":"docker build -t ghcr.io/acme/api:sha-abc123 .","before_cwd":"/github/workspace","cwd":"/github/workspace","before_env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"stdin":"","stdout":"Successfully built image\\n","stderr":"","exit_code":0,"pid":12842}
 {"timestamp":"2026-04-29T10:22:07.819604Z","started_at":"2026-04-29T10:22:04.112008Z","finished_at":"2026-04-29T10:22:07.819604Z","duration":"3.707596s","duration_ms":3707,"system_cpu_cores":4,"system_memory_bytes":17179869184,"process_user_cpu_ms":1204,"process_system_cpu_ms":196,"process_max_rss_bytes":104857600,"mode":"shell","builtin":false,"command":"/bin/bash","args":["-lc","npm test -- --ci"],"raw_command":"npm test -- --ci","before_cwd":"/github/workspace","cwd":"/github/workspace","before_env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"env":["GITHUB_ACTIONS=true","RUNNER_OS=Linux"],"stdin":"","stdout":"","stderr":"1 failing test\\n","exit_code":1,"pid":12911}
 {{< /code-block >}}
+{{< /section >}}
+
+{{< section id="dashboard" >}}
+## Pipery Dashboard
+
+Pipery Dashboard turns raw pipeline logs into a searchable debugging workspace. Open a workflow run, inspect the `pipery.jsonl` timeline, and move from “the build failed” to the exact command, output, timing, and context that explain why.
+
+{{< buttons >}}
+  {{< button href="https://dash.pipery.dev" primary="true" >}}
+    Open Dashboard
+  {{< /button >}}
+  {{< button href="https://github.com/pipery-dev/pipery-dashboard" >}}
+    View Source
+  {{< /button >}}
+{{< /buttons >}}
+
+{{< features >}}
+  {{< feature icon="eye" title="Find the run that matters" >}}Browse recent workflow runs and open their Pipery logs without digging through downloaded artifacts by hand.{{< /feature >}}
+  {{< feature icon="standard" title="Search command history" >}}Filter entries by command, output, status, timing, or environment context so the noisy parts of CI stay out of the way.{{< /feature >}}
+  {{< feature icon="box" title="Keep useful logs close" >}}Reopen recent logs for offline review, compare what changed between runs, and share a clearer failure story with the team.{{< /feature >}}
+{{< /features >}}
+
+{{< cards >}}
+  {{< card title="Local-first by design" href="https://dash.pipery.dev" icon="/images/actions/pipery-docker-ci.svg" >}}
+    Logs you open stay available for quick follow-up, even when you need to revisit a failure after the build page has gone cold.
+  {{< /card >}}
+  {{< card title="Private repo aware" href="https://dash.pipery.dev" icon="/images/actions/pipery-golang-ci.svg" >}}
+    Teams can inspect the same private workflow runs they already have access to, without copying logs into a separate system.
+  {{< /card >}}
+  {{< card title="Browser and terminal friendly" href="https://dash.pipery.dev" icon="/images/actions/pipery-npm-ci.svg" >}}
+    Use the dashboard for visual inspection, or the CLI when you want the same log-browsing flow from a terminal.
+  {{< /card >}}
+{{< /cards >}}
 {{< /section >}}
 
 {{< section id="features" >}}
