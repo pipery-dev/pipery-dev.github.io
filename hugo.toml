@@ -8,7 +8,7 @@ enableRobotsTXT = true
   description = "Pipery provides verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
   keywords = ["Pipery", "CI/CD pipelines", "GitHub Actions CI", "GitHub Actions CD", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
   images = "/images/pipery-color.png"
-  extMeta = true
+  extMeta = false
   DisableFootBar = false
 
   primaryColor = "#6366F1"
@@ -39,8 +39,8 @@ enableRobotsTXT = true
 
 [params.socialCard]
   enable = true
-  opengraph = true
-  twitter = true
+  opengraph = false
+  twitter = false
   twitterSite = "pipery"
   twitterCreator = "pipery"
   images = "/images/pipery-color.png"
@@ -72,18 +72,23 @@ enableRobotsTXT = true
 
 [[menu.main]]
   name = "Pipelines"
-  url = "#pipelines"
+  url = "/#pipelines"
   weight = 1
 
 [[menu.main]]
   name = "Features"
-  url = "#features"
+  url = "/#features"
   weight = 2
 
 [[menu.main]]
-  name = "Get Started"
-  url = "#cta"
+  name = "Guides"
+  url = "/#guides"
   weight = 3
+
+[[menu.main]]
+  name = "Get Started"
+  url = "/#cta"
+  weight = 4
 
 [markup]
   [markup.goldmark]

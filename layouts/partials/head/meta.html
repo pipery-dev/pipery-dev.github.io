@@ -1,0 +1,30 @@
+{{ "<!-- meta.html -->" | safeHTML -}}
+{{- $author := or .Params.author .Params.authors site.Params.author.name site.Params.Author.Name "Pipery" -}}
+{{- $siteTitle := or site.Params.seo.siteName site.Title "Pipery" -}}
+{{- $title := cond .IsHome (or site.Params.seo.title site.Title) (printf "%s | %s" .Title $siteTitle) | plainify -}}
+{{- $desc := or .Params.description .Params.subtitle .Description site.Params.seo.description site.Params.description -}}
+{{- $desc = $desc | plainify | htmlUnescape | truncate 160 -}}
+{{- $keywords := or .Params.keywords site.Params.keywords -}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ $title }}</title>
+<meta name="author" content="{{ $author }}">
+{{- with $desc }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+{{- with $keywords }}
+<meta name="keywords" content="{{ delimit . "," }}">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" -}}
+{{ printf `<link rel="%s" type="%s" href="%s" title="%s (RSS)" />` .Rel .MediaType.Type .Permalink $title | safeHTML }}
+{{- end }}
+{{- with site.Params.favicon }}
+  {{- $appTitle := default .appTitle site.Title -}}
+  {{- with .ico }}<link rel="shortcut icon" href="{{ . }}" />{{ end -}}
+  {{- with .apple }}<link rel="apple-touch-icon" sizes="180x180" href="{{ . }}" /><meta name="apple-mobile-web-app-title" content="{{ $appTitle }}" />{{ end -}}
+  {{- with .png }}<link rel="icon" type="image/png" href="{{ . }}" sizes="96x96" />{{ end -}}
+  {{- with .svg }}<link rel="icon" type="image/svg+xml" href="{{ . }}" />{{ end -}}
+  {{- with .webmanifest }}<link rel="manifest" href="{{ . }}" />{{ end -}}
+{{- end }}

@@ -308,6 +308,30 @@ Start with the essentials.
 {{< /cards >}}
 {{< /section >}}
 
+{{< section id="guides" >}}
+## Start with a guide
+
+If you want a faster path than reading every README, start with one of these action-specific guides. Each one shows the workflow shape, the inputs that matter first, and where Pipery observability helps when a run fails.
+
+{{< cards >}}
+  {{< card title="Start with npm CI" href="/post/getting-started-with-pipery-npm-ci/" icon="/images/actions/npm.svg" >}}
+    Set up a reusable Node.js pipeline for scanning, linting, testing, packaging, and npm release.
+  {{< /card >}}
+  {{< card title="Start with Python CI" href="/post/getting-started-with-pipery-python-ci/" icon="/images/actions/python.svg" >}}
+    Adopt a Python pipeline covering Bandit, Ruff, pytest, packaging, and PyPI release.
+  {{< /card >}}
+  {{< card title="Start with Docker CI" href="/post/getting-started-with-pipery-docker-ci/" icon="/images/actions/docker.svg" >}}
+    Standardize container build, scan, smoke test, tag, and registry push workflows.
+  {{< /card >}}
+  {{< card title="Start with Terraform CI" href="/post/getting-started-with-pipery-terraform-ci/" icon="/images/actions/terraform.svg" >}}
+    Add validation and plan checks to infrastructure repos without rebuilding the workflow by hand.
+  {{< /card >}}
+  {{< card title="Deploy with Cloud Run CD" href="/post/deploying-to-cloud-run-with-pipery-cloudrun-cd/" icon="/images/actions/cloudrun.svg" >}}
+    Ship a built image to Cloud Run with reusable deploy, traffic migration, and status checks.
+  {{< /card >}}
+{{< /cards >}}
+{{< /section >}}
+
 {{< section id="built-for-teams" >}}
 ## Built for real-world teams
 

@@ -1,6 +1,10 @@
 {{- $title := .Get "title" -}}
 {{- $href := .Get "href" -}}
 {{- $icon := .Get "icon" -}}
+{{- $isExternal := false -}}
+{{- with $href -}}
+  {{- $isExternal = or (hasPrefix . "http://") (hasPrefix . "https://") -}}
+{{- end -}}
 <article class="card">
   {{- if or $icon $title }}
   <div class="card__header">
@@ -10,7 +14,7 @@
     {{- with $title }}
     <h3 class="card__title">
       {{- if $href -}}
-      <a href="{{ $href }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+      <a href="{{ $href }}"{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ . }}</a>
       {{- else -}}
       {{ . }}
       {{- end -}}

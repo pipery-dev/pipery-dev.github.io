@@ -9,12 +9,12 @@
     {{- $image = . | absURL -}}
   {{- end -}}
 {{- end -}}
-{{- $keywords := or .Params.keywords site.Params.keywords -}}
 <meta name="application-name" content="{{ $siteName }}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-{{- with $keywords }}
-<meta name="keywords" content="{{ delimit . ", " }}">
-{{- end }}
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
 {{- with $image }}
 <meta property="og:image" content="{{ . }}">
 <meta property="og:image:secure_url" content="{{ . }}">
@@ -22,6 +22,15 @@
 <meta name="twitter:image:alt" content="Pipery CI/CD pipeline observability">
 {{- end }}
 <meta property="og:site_name" content="{{ $siteName }}">
+<meta name="twitter:card" content="{{ if $image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{- with site.Params.socialCard.twitterSite }}
+<meta name="twitter:site" content="@{{ . }}">
+{{- end }}
+{{- with site.Params.socialCard.twitterCreator }}
+<meta name="twitter:creator" content="@{{ . }}">
+{{- end }}
 <script type="application/ld+json">
 {{- dict
   "@context" "https://schema.org"
@@ -46,3 +55,19 @@
   "publisher" (dict "@type" "Organization" "name" $siteName "url" site.BaseURL)
 | jsonify | safeJS -}}
 </script>
+{{- if .IsPage }}
+<script type="application/ld+json">
+{{- dict
+  "@context" "https://schema.org"
+  "@type" "TechArticle"
+  "headline" .Title
+  "description" $description
+  "url" .Permalink
+  "image" $image
+  "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+  "author" (dict "@type" "Organization" "name" $siteName)
+  "publisher" (dict "@type" "Organization" "name" $siteName "logo" (dict "@type" "ImageObject" "url" ("/images/pipery-mark-dark.png" | absURL)))
+| jsonify | safeJS -}}
+</script>
+{{- end }}
