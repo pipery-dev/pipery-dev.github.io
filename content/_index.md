@@ -32,7 +32,7 @@ Stop rewriting fragile workflows. Use reusable, secure, observable Pipery pipeli
 {{< /hero >}}
 
 {{< section id="problem" >}}
-## The Problem
+<h2>The Problem</h2>
 
 CI/CD pipelines should not be this hard.
 
@@ -49,7 +49,7 @@ You do not need another CI tool. You need better pipelines.
 {{< /section >}}
 
 {{< section id="meet-pipery" >}}
-## Meet Pipery
+<h2>Meet Pipery</h2>
 
 Pipery provides production-grade, reusable CI/CD pipelines that are standardized, versioned, secure, and observable.
 
@@ -70,7 +70,7 @@ Pipery provides production-grade, reusable CI/CD pipelines that are standardized
 {{< /section >}}
 
 {{< section id="how-it-works" >}}
-## How it works
+<h2>How it works</h2>
 
 From YAML chaos to clean pipelines.
 
@@ -186,7 +186,7 @@ jobs:
 {{< /section >}}
 
 {{< section id="observability" >}}
-## Observe and replay every step
+<h2>Observe and replay every step</h2>
 
 Pipery workflows run task scripts through `psh`, the Pipery Shell. Instead of asking every pipeline author to hand-write logging, `psh` observes each command as it runs and writes structured events to `pipery.jsonl`.
 
@@ -203,7 +203,7 @@ Pipery workflows run task scripts through `psh`, the Pipery Shell. Instead of as
 {{< /section >}}
 
 {{< section id="dashboard" >}}
-## Pipery Dashboard
+<h2>Pipery Dashboard</h2>
 
 Pipery Dashboard turns raw pipeline logs into a searchable debugging workspace. Open a workflow run, inspect the `pipery.jsonl` timeline, and move from “the build failed” to the exact command, output, timing, and context that explain why.
 
@@ -236,7 +236,7 @@ Pipery Dashboard turns raw pipeline logs into a searchable debugging workspace. 
 {{< /section >}}
 
 {{< section id="features" >}}
-## Features
+<h2>Features</h2>
 
 Everything your pipelines were missing.
 
@@ -251,7 +251,7 @@ Everything your pipelines were missing.
 {{< /section >}}
 
 {{< section id="pipelines" >}}
-## Pipeline catalog
+<h2>Pipeline catalog</h2>
 
 Start with the essentials.
 
@@ -309,7 +309,7 @@ Start with the essentials.
 {{< /section >}}
 
 {{< section id="guides" >}}
-## Start with a guide
+<h2>Start with a guide</h2>
 
 If you want a faster path than reading every README, start with one of these action-specific guides. Each one shows the workflow shape, the inputs that matter first, and where Pipery observability helps when a run fails.
 
@@ -333,7 +333,7 @@ If you want a faster path than reading every README, start with one of these act
 {{< /section >}}
 
 {{< section id="built-for-teams" >}}
-## Built for real-world teams
+<h2>Built for real-world teams</h2>
 
 Built for the teams tired of rewriting pipelines.
 
@@ -341,7 +341,7 @@ Pipery is designed for startups and platform teams that want faster, safer, and 
 {{< /section >}}
 
 {{< cta id="cta" >}}
-## Get started
+<h2>Get started</h2>
 
 Stop maintaining pipelines.
 

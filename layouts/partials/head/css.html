@@ -152,8 +152,8 @@
     {{- $justifying := or site.Params.Posts.Justifying .Params.Justifying }}
     <style>
         /* graceful degradation fallback */
-        body {max-width: 786px; margin: auto; padding: 2rem;}
-        img {max-width: 86vw;}
+        body {margin: 0;}
+        img {max-width: 100%; height: auto;}
         {{- if $noIndent }}
             * p {text-indent: unset !important;}
         {{- end }}
