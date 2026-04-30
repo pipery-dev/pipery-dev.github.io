@@ -948,6 +948,15 @@ body > header.pagewidth,
   max-width: 58rem;
 }
 
+#main-article section > p,
+#content > ul,
+#content > ol,
+#content > blockquote,
+#content .textwidth {
+  width: 100%;
+  max-width: 100%;
+}
+
 #content .highlight,
 #content pre,
 #content .highlight > pre,
