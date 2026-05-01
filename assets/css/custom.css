@@ -935,10 +935,6 @@ body > header.pagewidth,
   color: var(--pipery-fg-2) !important;
 }
 
-#main-article.pagewidth {
-  max-width: 64rem;
-}
-
 #main-article.sf > header,
 #content,
 #keywords,
