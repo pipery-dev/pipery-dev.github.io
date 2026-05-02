@@ -31,6 +31,12 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
+      - name: Generate action catalog and docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: pipery-dev
+        run: python3 scripts/generate_action_docs.py
+
       - name: Build static site
         env:
           HUGO_ENVIRONMENT: production

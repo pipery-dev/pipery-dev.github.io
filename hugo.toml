@@ -1,8 +1,9 @@
 baseURL = "https://pipery.dev/"
 languageCode = "en-us"
 title = "Pipery - Production-grade CI/CD pipelines"
-theme = "hugo-brewm"
+theme = ["hugo-brewm", "hugo-book"]
 enableRobotsTXT = true
+disablePathToLower = true
 
 [params]
   description = "Pipery provides verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
@@ -22,6 +23,16 @@ enableRobotsTXT = true
 
   googleAnalytics = ""
   customCSS = ["css/custom.css"]
+  BookTheme = "dark"
+  BookToC = true
+  BookLogo = "images/pipery-mark-dark.png"
+  BookFavicon = "favicon.png"
+  BookSection = "docs"
+  BookSearch = true
+  BookComments = false
+  BookRepo = "https://github.com/pipery-dev/pipery-dev.github.io"
+  BookEditLink = "https://github.com/pipery-dev/pipery-dev.github.io/edit/main/{{ .Path }}"
+  BookDateFormat = "January 2, 2006"
 
 [params.author]
   name = "Pipery"
@@ -72,7 +83,7 @@ enableRobotsTXT = true
 
 [[menu.main]]
   name = "Pipelines"
-  url = "/#pipelines"
+  url = "/catalog/"
   weight = 1
 
 [[menu.main]]
@@ -86,11 +97,38 @@ enableRobotsTXT = true
   weight = 3
 
 [[menu.main]]
-  name = "Get Started"
-  url = "/#cta"
+  name = "Docs"
+  url = "/docs/"
   weight = 4
+
+[[menu.main]]
+  name = "Get Started"
+  url = "https://start.pipery.dev"
+  weight = 5
+
+[[menu.after]]
+  name = "Home"
+  url = "https://pipery.dev/"
+  weight = 10
+
+[[menu.after]]
+  name = "Catalog"
+  url = "https://pipery.dev/catalog/"
+  weight = 20
+
+[[menu.after]]
+  name = "Start"
+  url = "https://start.pipery.dev"
+  weight = 30
+
+[[menu.after]]
+  name = "GitHub"
+  url = "https://github.com/pipery-dev"
+  weight = 40
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1

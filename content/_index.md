@@ -22,10 +22,10 @@ sitemap:
 Stop rewriting fragile workflows. Use reusable, secure, observable Pipery pipelines and focus on delivering product value.
 
 {{< buttons >}}
-  {{< button href="#pipelines" primary="true" >}}
+  {{< button href="/catalog/" primary="true" >}}
     Browse Pipelines
   {{< /button >}}
-  {{< button href="#cta" >}}
+  {{< button href="https://start.pipery.dev" >}}
     Get Started
   {{< /button >}}
 {{< /buttons >}}
@@ -348,7 +348,7 @@ Stop maintaining pipelines.
 Start shipping faster with Pipery.
 
 {{< buttons >}}
-  {{< button href="https://github.com/pipery-dev" primary="true" >}}
+  {{< button href="https://start.pipery.dev" primary="true" >}}
     Get started for free
   {{< /button >}}
   {{< button href="mailto:hello@pipery.dev" >}}
