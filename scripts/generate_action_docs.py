@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 WORKSPACE = ROOT.parent
 ORG = os.environ.get("GITHUB_REPOSITORY_OWNER", "pipery-dev")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
+FORCE_REMOTE = os.environ.get("PIPERY_FORCE_REMOTE", "").lower() in {"1", "true", "yes"}
 
 
 @dataclass
@@ -79,6 +80,10 @@ def discover_remote_repo_names() -> list[str]:
     return sorted(names)
 
 
+def repo_info(repo: str) -> dict:
+    return api_json(f"https://api.github.com/repos/{ORG}/{repo}")
+
+
 def latest_tag(repo: str) -> str:
     try:
         release = api_json(f"https://api.github.com/repos/{ORG}/{repo}/releases/latest")
@@ -97,6 +102,15 @@ def remote_file(repo: str, ref: str, path: str) -> str:
     return fetch_text(raw_url)
 
 
+def try_remote_file(repo: str, ref: str, path: str) -> str | None:
+    try:
+        return remote_file(repo, ref, path)
+    except HTTPError as exc:
+        if exc.code == 404:
+            return None
+        raise
+
+
 def local_repo_to_action(path: Path) -> ActionRepo:
     with (path / "pipery-action.toml").open("rb") as handle:
         meta = tomllib.load(handle)
@@ -110,10 +124,36 @@ def local_repo_to_action(path: Path) -> ActionRepo:
 
 
 def remote_repo_to_action(repo: str) -> ActionRepo:
-    tag = latest_tag(repo)
-    meta = tomllib.loads(remote_file(repo, tag, "pipery-action.toml"))
-    readme = remote_file(repo, tag, "README.md")
-    return build_action(name=repo, meta=meta, readme=readme, tag=tag)
+    info = repo_info(repo)
+    default_branch = info.get("default_branch", "main")
+    candidates: list[str] = []
+    for ref in (latest_tag(repo), default_branch, "main", "master"):
+        if ref and ref not in candidates:
+            candidates.append(ref)
+
+    last_missing: tuple[str, str] | None = None
+    for ref in candidates:
+        meta_text = try_remote_file(repo, ref, "pipery-action.toml")
+        if meta_text is None:
+            last_missing = (ref, "pipery-action.toml")
+            continue
+
+        readme_text = try_remote_file(repo, ref, "README.md")
+        if readme_text is None:
+            last_missing = (ref, "README.md")
+            continue
+
+        meta = tomllib.loads(meta_text)
+        return build_action(name=repo, meta=meta, readme=readme_text, tag=ref)
+
+    missing_ref, missing_path = last_missing or (default_branch, "README.md")
+    raise HTTPError(
+        url=f"https://raw.githubusercontent.com/{ORG}/{repo}/{quote(missing_ref)}/{missing_path}",
+        code=404,
+        msg=f"Missing {missing_path} for {repo} at refs: {', '.join(candidates)}",
+        hdrs=None,
+        fp=None,
+    )
 
 
 def build_action(name: str, meta: dict, readme: str, tag: str) -> ActionRepo:
@@ -243,7 +283,7 @@ def main():
         for child in directory.glob("*.md"):
             child.unlink()
 
-    local_repos = discover_local_repos()
+    local_repos = [] if FORCE_REMOTE else discover_local_repos()
     actions = []
     if local_repos:
         actions = [local_repo_to_action(path) for path in local_repos]
