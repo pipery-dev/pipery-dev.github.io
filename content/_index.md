@@ -31,6 +31,14 @@ Stop rewriting fragile workflows. Use reusable, secure, observable Pipery pipeli
 {{< /buttons >}}
 {{< /hero >}}
 
+{{< section id="introduction" class="video-section" >}}
+<h2>Watch Pipery in action</h2>
+
+See how Pipery turns reusable GitHub Actions pipelines, structured `psh` logs, and replayable `pipery.jsonl` output into a clearer CI/CD workflow.
+
+{{< youtube-intro id="ZdAa6235pA8" title="Pipery platform introduction" thumbnail="/images/pipery-introduction-thumbnail.png" >}}
+{{< /section >}}
+
 {{< section id="problem" >}}
 <h2>The Problem</h2>
 

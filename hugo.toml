@@ -18,7 +18,8 @@ disablePathToLower = true
   backgroundColor = "#0F172A"
   textColor = "#E5E7EB"
 
-  twitter = "https://twitter.com/pipery"
+  twitter = "https://x.com/piperydev"
+  youtube = "https://www.youtube.com/@pipery_dev"
   github = "https://github.com/pipery-dev"
 
   googleAnalytics = ""
@@ -52,8 +53,8 @@ disablePathToLower = true
   enable = true
   opengraph = false
   twitter = false
-  twitterSite = "pipery"
-  twitterCreator = "pipery"
+  twitterSite = "piperydev"
+  twitterCreator = "piperydev"
   images = "/images/pipery-color.png"
 
 [params.seo]
@@ -125,6 +126,37 @@ disablePathToLower = true
   name = "GitHub"
   url = "https://github.com/pipery-dev"
   weight = 40
+
+[[menu.after]]
+  name = "X"
+  url = "https://x.com/piperydev"
+  weight = 50
+
+[[menu.after]]
+  name = "YouTube"
+  url = "https://www.youtube.com/@pipery_dev"
+  weight = 60
+
+[[menu.footer]]
+  identifier = "github"
+  name = "GitHub"
+  url = "https://github.com/pipery-dev"
+  pre = "GH"
+  weight = 10
+
+[[menu.footer]]
+  identifier = "x"
+  name = "X"
+  url = "https://x.com/piperydev"
+  pre = "X"
+  weight = 20
+
+[[menu.footer]]
+  identifier = "youtube"
+  name = "YouTube"
+  url = "https://www.youtube.com/@pipery_dev"
+  pre = "YT"
+  weight = 30
 
 [markup]
   [markup.goldmark]
