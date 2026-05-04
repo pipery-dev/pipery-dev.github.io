@@ -34,6 +34,8 @@ disablePathToLower = true
   BookRepo = "https://github.com/pipery-dev/pipery-dev.github.io"
   BookEditLink = "https://github.com/pipery-dev/pipery-dev.github.io/edit/main/{{ .Path }}"
   BookDateFormat = "January 2, 2006"
+  unifiedFooter = true
+  copyright = "Pipery"
 
 [params.author]
   name = "Pipery"

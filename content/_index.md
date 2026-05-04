@@ -39,6 +39,21 @@ See how Pipery turns reusable GitHub Actions pipelines, structured `psh` logs, a
 {{< youtube-intro id="ZdAa6235pA8" title="Pipery platform introduction" thumbnail="/images/pipery-introduction-thumbnail.png" >}}
 {{< /section >}}
 
+{{< section id="social-accounts" class="social-section" >}}
+<h2>Social accounts</h2>
+
+Follow Pipery for platform updates, demos, and release notes.
+
+{{< buttons >}}
+  {{< button href="https://x.com/piperydev" primary="true" >}}
+    Follow on X
+  {{< /button >}}
+  {{< button href="https://www.youtube.com/@pipery_dev" >}}
+    Watch on YouTube
+  {{< /button >}}
+{{< /buttons >}}
+{{< /section >}}
+
 {{< section id="problem" >}}
 <h2>The Problem</h2>
 

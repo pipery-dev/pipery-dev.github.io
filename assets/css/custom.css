@@ -313,6 +313,26 @@ body > header {
   border: 0;
 }
 
+/* ---------- Social ---------- */
+.social-section {
+  margin-bottom: var(--section-gap);
+}
+
+.social-section > p {
+  max-width: 42rem;
+}
+
+#main-footer {
+  border-top: 1px solid var(--pipery-border-soft);
+}
+
+#menu-footer a {
+  width: auto;
+  min-width: 2.75rem;
+  padding: 0.45rem 0.7rem;
+  color: var(--pipery-fg-1);
+}
+
 .card-grid,
 .feature-grid {
   display: grid;
