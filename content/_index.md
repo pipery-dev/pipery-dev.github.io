@@ -1,10 +1,13 @@
 ---
 title: "Pipery"
-description: "Verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+description: "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions and GitLab CI."
 type: "landing"
 keywords:
   - CI/CD pipelines
   - GitHub Actions
+  - GitLab CI
+  - vendor-neutral CI/CD
+  - CI/CD abstraction
   - DevOps automation
   - pipeline observability
   - structured CI logs
@@ -17,9 +20,9 @@ sitemap:
 ---
 
 {{< hero >}}
-# Production-grade CI/CD pipelines — ship faster with confidence.
+# Define your pipelines once. Run them across platforms.
 
-Stop rewriting fragile workflows. Use reusable, secure, observable Pipery pipelines and focus on delivering product value.
+Pipery is a vendor-neutral CI/CD standardization layer for reusable delivery workflows. Start with GitHub Actions, run the same delivery logic on GitLab CI, and keep your pipelines portable as your platform changes.
 
 {{< buttons >}}
   {{< button href="/catalog/" primary="true" >}}
@@ -34,7 +37,7 @@ Stop rewriting fragile workflows. Use reusable, secure, observable Pipery pipeli
 {{< section id="introduction" class="video-section" >}}
 <h2>Watch Pipery in action</h2>
 
-See how Pipery turns reusable GitHub Actions pipelines, structured `psh` logs, and replayable `pipery.jsonl` output into a clearer CI/CD workflow.
+See how Pipery turns reusable GitHub Actions and GitLab CI pipelines, structured `psh` logs, and replayable `pipery.jsonl` output into a clearer CI/CD workflow.
 
 {{< youtube-intro id="ZdAa6235pA8" title="Pipery platform introduction" thumbnail="/images/pipery-introduction-thumbnail.png" >}}
 {{< /section >}}
@@ -48,6 +51,9 @@ Follow Pipery for platform updates, demos, and release notes.
   {{< button href="https://x.com/piperydev" primary="true" >}}
     Follow on X
   {{< /button >}}
+  {{< button href="https://gitlab.com/pipery-dev" >}}
+    Follow on GitLab
+  {{< /button >}}
   {{< button href="https://www.youtube.com/@pipery_dev" >}}
     Watch on YouTube
   {{< /button >}}
@@ -59,12 +65,13 @@ Follow Pipery for platform updates, demos, and release notes.
 
 CI/CD pipelines should not be this hard.
 
-Every team ends up rebuilding the same pipelines: copy-pasted YAML, slow and flaky builds, security risks from untrusted workflows, and almost no visibility into what is actually going wrong.
+Every team ends up rebuilding the same pipelines: copy-pasted YAML, slow and flaky builds, security risks from untrusted workflows, vendor-specific delivery logic, and almost no visibility into what is actually going wrong.
 
-You do not need another CI tool. You need better pipelines.
+You do not need another CI tool. You need portable delivery logic.
 
 {{< pain-list >}}
   {{< pain-item icon="copy" >}}Copy-pasted YAML across repositories{{< /pain-item >}}
+  {{< pain-item icon="puzzle" >}}Pipeline logic tied to one CI vendor{{< /pain-item >}}
   {{< pain-item icon="clock" >}}Slow, flaky builds{{< /pain-item >}}
   {{< pain-item icon="alert" >}}Security risks from untrusted workflows{{< /pain-item >}}
   {{< pain-item icon="eye" >}}No visibility into performance or failures{{< /pain-item >}}
@@ -74,14 +81,16 @@ You do not need another CI tool. You need better pipelines.
 {{< section id="meet-pipery" >}}
 <h2>Meet Pipery</h2>
 
-Pipery provides production-grade, reusable CI/CD pipelines that are standardized, versioned, secure, and observable.
+Pipery lets teams define CI/CD once and run it across platforms like GitHub Actions and GitLab CI.
+
+It provides production-grade, reusable CI/CD pipelines that are standardized, versioned, secure, observable, and designed to reduce CI/CD vendor lock-in.
 
 {{< meet >}}
   {{< meet-col label="What you get" type="features" >}}
-    {{< feature icon="standard" title="Standardized" >}}Consistent pipelines across repos and teams.{{< /feature >}}
+    {{< feature icon="standard" title="Standardized" >}}Consistent pipelines across repos, teams, and CI platforms.{{< /feature >}}
     {{< feature icon="box" title="Versioned" >}}Stable releases with predictable upgrades.{{< /feature >}}
     {{< feature icon="shield" title="Secure" >}}Reviewed and maintained to reduce workflow risk.{{< /feature >}}
-    {{< feature icon="chart" title="Observable" >}}Understand performance, failures, and trends.{{< /feature >}}
+    {{< feature icon="chart" title="Portable" >}}Move delivery logic across vendors without starting from blank YAML.{{< /feature >}}
   {{< /meet-col >}}
   {{< meet-col label="What teams see" type="stats" >}}
     {{< stat n="60%" l="less YAML per repo" s="Measured across migrated repos." icon="copy" >}}{{< /stat >}}
@@ -92,12 +101,86 @@ Pipery provides production-grade, reusable CI/CD pipelines that are standardized
 {{< /meet >}}
 {{< /section >}}
 
+{{< section id="vendor-neutral" >}}
+<h2>Vendor-neutral by design</h2>
+
+Your delivery logic should not be trapped inside one CI vendor.
+
+Pipery is moving CI/CD from provider-specific workflow files toward reusable delivery standards. Use the same Pipery pipeline family from GitHub Actions or GitLab CI today, and keep a path open for future platforms like Bitbucket Pipelines, CircleCI, Jenkins, and Azure DevOps.
+
+{{< features >}}
+  {{< feature icon="puzzle" title="Define once" >}}Standardize the build, scan, package, release, and deploy flow as Pipery pipeline logic instead of rewriting it per repository.{{< /feature >}}
+  {{< feature icon="standard" title="Run across platforms" >}}Generate GitHub Actions workflows or GitLab CI YAML from the same catalog of CI and CD building blocks.{{< /feature >}}
+  {{< feature icon="bolt" title="Switch with less rewrite" >}}When teams move between GitHub, GitLab, or future providers, the delivery model stays familiar.{{< /feature >}}
+  {{< feature icon="chart" title="Keep observability" >}}`psh` and `pipery.jsonl` give every supported backend the same structured debugging trail.{{< /feature >}}
+{{< /features >}}
+
+{{< code-compare >}}
+{{< code-block language="yaml" title="GitHub Actions" tag="Same pipeline logic" tagKind="after" >}}
+name: Pipery JavaScript Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: JavaScript CI
+        uses: pipery-dev/pipery-npm-ci@v1
+        with:
+          project_path: .
+
+  cd:
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: JavaScript CD
+        uses: pipery-dev/pipery-npm-cd@v1
+        with:
+          project_path: .
+          deploy_target: argocd
+{{< /code-block >}}
+
+{{< code-block language="yaml" title="GitLab CI" tag="Same pipeline logic" tagKind="after" >}}
+include:
+  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-ci/v1/.gitlab-ci.yml
+  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-cd/v1/.gitlab-ci.yml
+
+stages:
+  - ci
+  - cd
+
+variables:
+  PIPERY_PROJECT_PATH: .
+  PIPERY_DEPLOY_TARGET: argocd
+
+pipery_npm_ci:
+  stage: ci
+  extends: .pipery_npm_ci
+
+pipery_npm_cd:
+  stage: cd
+  extends: .pipery_npm_cd
+  needs:
+    - pipery_npm_ci
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+{{< /code-block >}}
+{{< /code-compare >}}
+{{< /section >}}
+
 {{< section id="how-it-works" >}}
 <h2>How it works</h2>
 
 From YAML chaos to clean pipelines.
 
-Replace hundreds of lines of brittle workflow logic with a single, trusted pipeline.
+Replace hundreds of lines of brittle vendor-specific workflow logic with a single, trusted pipeline.
 
 {{< code-compare >}}
 {{< code-block language="yaml" title="Before" tag="Before · 62 lines" tagKind="before" >}}
@@ -215,7 +298,7 @@ Pipery workflows run task scripts through `psh`, the Pipery Shell. Instead of as
 
 {{< features >}}
   {{< feature icon="clock" title="Timing and runtime context" >}}Each logged command carries timing, working directory, runner context, environment details, arguments, exit status, and captured output.{{< /feature >}}
-  {{< feature icon="eye" title="Structured pipeline history" >}}`pipery.jsonl` is line-delimited JSON, so it can be uploaded as a GitHub Actions artifact, searched in the dashboard, or inspected locally with ordinary CLI tools.{{< /feature >}}
+  {{< feature icon="eye" title="Structured pipeline history" >}}`pipery.jsonl` is line-delimited JSON, so it can be uploaded as a workflow artifact, searched in the dashboard, or inspected locally with ordinary CLI tools.{{< /feature >}}
   {{< feature icon="bolt" title="Replay for debugging" >}}Because the log records what ran and how it ran, Pipery can replay the captured execution path so a developer can reproduce a failing step with the same command shape.{{< /feature >}}
 {{< /features >}}
 
@@ -264,12 +347,12 @@ Pipery Dashboard turns raw pipeline logs into a searchable debugging workspace. 
 Everything your pipelines were missing.
 
 {{< features >}}
-  {{< feature icon="puzzle" title="Reusable building blocks" >}}Use the same proven pipelines across all your repositories.{{< /feature >}}
+  {{< feature icon="puzzle" title="Reusable building blocks" >}}Use the same proven pipelines across repositories and CI providers.{{< /feature >}}
   {{< feature icon="shield" title="Secure by default" >}}Reduce exposure to risky third-party actions and fragile workflow logic.{{< /feature >}}
   {{< feature icon="box" title="Versioned and stable" >}}Pin versions, manage upgrades cleanly, and avoid breaking changes.{{< /feature >}}
   {{< feature icon="chart" title="Built-in observability" >}}Track runtime, failures, and trends across your pipelines.{{< /feature >}}
   {{< feature icon="bolt" title="Optimized performance" >}}Ship with faster builds, better defaults, and less CI waste.{{< /feature >}}
-  {{< feature icon="check" title="Verified pipelines" >}}Tested, documented, and maintained for real-world production use.{{< /feature >}}
+  {{< feature icon="check" title="Multi-platform direction" >}}GitHub Actions and GitLab CI are supported now, with Bitbucket and other CI ecosystems on the roadmap.{{< /feature >}}
 {{< /features >}}
 {{< /section >}}
 
@@ -358,15 +441,15 @@ If you want a faster path than reading every README, start with one of these act
 {{< section id="built-for-teams" >}}
 <h2>Built for real-world teams</h2>
 
-Built for the teams tired of rewriting pipelines.
+Built for teams tired of rewriting pipelines every time repositories, standards, or vendors change.
 
-Pipery is designed for startups and platform teams that want faster, safer, and more maintainable CI/CD without rebuilding the same workflows over and over again.
+Pipery is designed for startups and platform teams that want faster, safer, and more maintainable CI/CD without rebuilding the same workflows over and over again. It gives platform engineering teams a practical delivery portability layer today, without requiring a heavy custom DSL before the value is obvious.
 {{< /section >}}
 
 {{< cta id="cta" >}}
 <h2>Get started</h2>
 
-Stop maintaining pipelines.
+Stop maintaining vendor-specific pipelines.
 
 Start shipping faster with Pipery.
 

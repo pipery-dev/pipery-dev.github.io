@@ -11,7 +11,7 @@
             {{- $label := or .Name .Pre .Identifier }}
             <li><a href="{{ .URL }}" aria-label="{{ $label }}">
                 {{- with .Pre }}
-                    <i class="icon">{{ . }}</i>
+                    <i class="icon {{ . }} sri" aria-hidden="true"></i>
                     <span class="t" role="tooltip">{{ $label }}</span>
                 {{- end }}
                 </a>

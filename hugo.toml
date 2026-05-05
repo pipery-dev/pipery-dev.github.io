@@ -1,13 +1,13 @@
 baseURL = "https://pipery.dev/"
 languageCode = "en-us"
-title = "Pipery - Production-grade CI/CD pipelines"
+title = "Pipery - Vendor-neutral CI/CD pipelines"
 theme = ["hugo-brewm", "hugo-book"]
 enableRobotsTXT = true
 disablePathToLower = true
 
 [params]
-  description = "Pipery provides verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
-  keywords = ["Pipery", "CI/CD pipelines", "GitHub Actions CI", "GitHub Actions CD", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
+  description = "Pipery provides verified, reusable, and observable CI/CD pipelines across platforms like GitHub Actions and GitLab CI, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+  keywords = ["Pipery", "CI/CD pipelines", "vendor-neutral CI/CD", "CI/CD abstraction", "GitHub Actions CI", "GitLab CI", "Bitbucket pipelines", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
   images = "/images/pipery-color.png"
   extMeta = false
   DisableFootBar = false
@@ -21,6 +21,7 @@ disablePathToLower = true
   twitter = "https://x.com/piperydev"
   youtube = "https://www.youtube.com/@pipery_dev"
   github = "https://github.com/pipery-dev"
+  gitlab = "https://gitlab.com/pipery-dev"
 
   googleAnalytics = ""
   customCSS = ["css/custom.css"]
@@ -61,8 +62,8 @@ disablePathToLower = true
 
 [params.seo]
   siteName = "Pipery"
-  title = "Pipery - Production-grade CI/CD pipelines"
-  description = "Verified, reusable, and observable CI/CD pipelines for GitHub Actions, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+  title = "Pipery - Vendor-neutral CI/CD pipelines"
+  description = "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions and GitLab CI."
   image = "/images/pipery-color.png"
 
 [params.home]
@@ -130,6 +131,11 @@ disablePathToLower = true
   weight = 40
 
 [[menu.after]]
+  name = "GitLab"
+  url = "https://gitlab.com/pipery-dev"
+  weight = 45
+
+[[menu.after]]
   name = "X"
   url = "https://x.com/piperydev"
   weight = 50
@@ -143,21 +149,28 @@ disablePathToLower = true
   identifier = "github"
   name = "GitHub"
   url = "https://github.com/pipery-dev"
-  pre = "GH"
+  pre = "github"
   weight = 10
+
+[[menu.footer]]
+  identifier = "gitlab"
+  name = "GitLab"
+  url = "https://gitlab.com/pipery-dev"
+  pre = "gitlab"
+  weight = 15
 
 [[menu.footer]]
   identifier = "x"
   name = "X"
   url = "https://x.com/piperydev"
-  pre = "X"
+  pre = "twitter"
   weight = 20
 
 [[menu.footer]]
   identifier = "youtube"
   name = "YouTube"
   url = "https://www.youtube.com/@pipery_dev"
-  pre = "YT"
+  pre = "youtube"
   weight = 30
 
 [markup]
