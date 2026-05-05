@@ -106,7 +106,7 @@ It provides production-grade, reusable CI/CD pipelines that are standardized, ve
 
 Your delivery logic should not be trapped inside one CI vendor.
 
-Pipery is moving CI/CD from provider-specific workflow files toward reusable delivery standards. Use the same Pipery pipeline family from GitHub Actions or GitLab CI today, and keep a path open for future platforms like Bitbucket Pipelines, CircleCI, Jenkins, and Azure DevOps.
+Pipery is moving CI/CD from provider-specific workflow files toward reusable delivery standards. Use the same Pipery pipeline family from GitHub Actions or GitLab CI today, and keep a path open for future platforms like Bitbucket Cloud, CircleCI, Jenkins, and Azure DevOps.
 
 {{< features >}}
   {{< feature icon="puzzle" title="Define once" >}}Standardize the build, scan, package, release, and deploy flow as Pipery pipeline logic instead of rewriting it per repository.{{< /feature >}}
@@ -114,65 +114,6 @@ Pipery is moving CI/CD from provider-specific workflow files toward reusable del
   {{< feature icon="bolt" title="Switch with less rewrite" >}}When teams move between GitHub, GitLab, or future providers, the delivery model stays familiar.{{< /feature >}}
   {{< feature icon="chart" title="Keep observability" >}}`psh` and `pipery.jsonl` give every supported backend the same structured debugging trail.{{< /feature >}}
 {{< /features >}}
-
-{{< code-compare >}}
-{{< code-block language="yaml" title="GitHub Actions" tag="Same pipeline logic" tagKind="after" >}}
-name: Pipery JavaScript Pipeline
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: JavaScript CI
-        uses: pipery-dev/pipery-npm-ci@v1
-        with:
-          project_path: .
-
-  cd:
-    needs: ci
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: JavaScript CD
-        uses: pipery-dev/pipery-npm-cd@v1
-        with:
-          project_path: .
-          deploy_target: argocd
-{{< /code-block >}}
-
-{{< code-block language="yaml" title="GitLab CI" tag="Same pipeline logic" tagKind="after" >}}
-include:
-  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-ci/v1/.gitlab-ci.yml
-  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-cd/v1/.gitlab-ci.yml
-
-stages:
-  - ci
-  - cd
-
-variables:
-  PIPERY_PROJECT_PATH: .
-  PIPERY_DEPLOY_TARGET: argocd
-
-pipery_npm_ci:
-  stage: ci
-  extends: .pipery_npm_ci
-
-pipery_npm_cd:
-  stage: cd
-  extends: .pipery_npm_cd
-  needs:
-    - pipery_npm_ci
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-{{< /code-block >}}
-{{< /code-compare >}}
 {{< /section >}}
 
 {{< section id="how-it-works" >}}
@@ -180,10 +121,32 @@ pipery_npm_cd:
 
 From YAML chaos to clean pipelines.
 
-Replace hundreds of lines of brittle vendor-specific workflow logic with a single, trusted pipeline.
+Replace hundreds of lines of brittle vendor-specific workflow logic with a single, trusted pipeline. Pick a platform to see the before and after.
 
+<div class="platform-compare">
+  <input class="platform-compare__radio" type="radio" name="platform-compare" id="platform-github" checked>
+  <input class="platform-compare__radio" type="radio" name="platform-compare" id="platform-gitlab">
+  <input class="platform-compare__radio" type="radio" name="platform-compare" id="platform-bitbucket">
+
+  <div class="platform-tabs" aria-label="Pipeline platform examples">
+    <label class="platform-tab platform-tab--github" for="platform-github">
+      <i class="icon github sri" aria-hidden="true"></i>
+      <span>GitHub Actions</span>
+    </label>
+    <label class="platform-tab platform-tab--gitlab" for="platform-gitlab">
+      <i class="icon gitlab sri" aria-hidden="true"></i>
+      <span>GitLab CI</span>
+    </label>
+    <label class="platform-tab platform-tab--bitbucket" for="platform-bitbucket">
+      <i class="icon bitbucket sri" aria-hidden="true"></i>
+      <span>Bitbucket Cloud</span>
+      <small>Coming soon</small>
+    </label>
+  </div>
+
+  <div class="platform-panel platform-panel--github">
 {{< code-compare >}}
-{{< code-block language="yaml" title="Before" tag="Before · 62 lines" tagKind="before" >}}
+{{< code-block language="yaml" title="Before · GitHub Actions" tag="Before · 62 lines" tagKind="before" >}}
 name: Node CI/CD
 
 on:
@@ -289,6 +252,95 @@ jobs:
     secrets: inherit
 {{< /code-block >}}
 {{< /code-compare >}}
+  </div>
+
+  <div class="platform-panel platform-panel--gitlab">
+{{< code-compare >}}
+{{< code-block language="yaml" title="Before · GitLab CI" tag="Before · vendor YAML" tagKind="before" >}}
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: pipery/api
+  REGISTRY: registry.gitlab.com/acme/platform
+
+npm_test:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm run lint
+    - npm test -- --ci
+    - npm run build
+
+docker_build:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t "$REGISTRY/$IMAGE_NAME:$CI_COMMIT_SHA" .
+    - docker push "$REGISTRY/$IMAGE_NAME:$CI_COMMIT_SHA"
+
+deploy:
+  stage: deploy
+  image: google/cloud-sdk:slim
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - gcloud auth activate-service-account --key-file "$GCP_SERVICE_ACCOUNT_KEY"
+    - kubectl set image deployment/api api="$REGISTRY/$IMAGE_NAME:$CI_COMMIT_SHA" --namespace production
+    - kubectl rollout status deployment/api --namespace production
+{{< /code-block >}}
+
+{{< code-block language="yaml" title="After · GitLab CI" tag="After · Pipery templates" tagKind="after" >}}
+include:
+  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-ci/v1/.gitlab-ci.yml
+  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-cloudrun-cd/v1/.gitlab-ci.yml
+
+stages:
+  - ci
+  - cd
+
+variables:
+  PIPERY_PROJECT_PATH: .
+  PIPERY_NODE_VERSION: "20"
+  PIPERY_RUN_LINT: "true"
+  PIPERY_RUN_TESTS: "true"
+  PIPERY_BUILD_COMMAND: npm run build
+  PIPERY_IMAGE_NAME: api
+  PIPERY_REGION: europe-west1
+  PIPERY_PROJECT_ID: acme-platform-prod
+
+pipery_npm_ci:
+  stage: ci
+  extends: .pipery_npm_ci
+
+pipery_cloudrun_cd:
+  stage: cd
+  extends: .pipery_cloudrun_cd
+  needs:
+    - pipery_npm_ci
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+{{< /code-block >}}
+{{< /code-compare >}}
+  </div>
+
+  <div class="platform-panel platform-panel--bitbucket">
+    <div class="coming-soon-card">
+      <div class="coming-soon-card__eyebrow">
+        <i class="icon bitbucket sri" aria-hidden="true"></i>
+        <span>Bitbucket Cloud</span>
+      </div>
+      <h3>Bitbucket support is coming soon</h3>
+      <p>Pipery's platform model is designed to extend beyond GitHub Actions and GitLab CI. Bitbucket Cloud is on the roadmap so teams using Atlassian tooling can adopt the same standardized delivery logic without rewriting pipelines from scratch.</p>
+    </div>
+  </div>
+</div>
 {{< /section >}}
 
 {{< section id="observability" >}}
@@ -352,7 +404,7 @@ Everything your pipelines were missing.
   {{< feature icon="box" title="Versioned and stable" >}}Pin versions, manage upgrades cleanly, and avoid breaking changes.{{< /feature >}}
   {{< feature icon="chart" title="Built-in observability" >}}Track runtime, failures, and trends across your pipelines.{{< /feature >}}
   {{< feature icon="bolt" title="Optimized performance" >}}Ship with faster builds, better defaults, and less CI waste.{{< /feature >}}
-  {{< feature icon="check" title="Multi-platform direction" >}}GitHub Actions and GitLab CI are supported now, with Bitbucket and other CI ecosystems on the roadmap.{{< /feature >}}
+  {{< feature icon="check" title="Multi-platform direction" >}}GitHub Actions and GitLab CI are supported now, with Bitbucket Cloud and other CI ecosystems on the roadmap.{{< /feature >}}
 {{< /features >}}
 {{< /section >}}
 
