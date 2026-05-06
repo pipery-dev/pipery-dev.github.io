@@ -11,82 +11,216 @@ weight: 8
 - Release tag: `v3`
 - Catalog: [/catalog/](/catalog/)
 
-CI pipeline for Terraform: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release
+Reusable GitHub Action for a complete Terraform CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
-## Status
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Terraform%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-terraform-ci)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-- Owner: `pipery-dev`
-- Repository: `pipery-terraform-ci`
-- Marketplace category: `continuous-integration`
-- Current version: `3.0.0`
+## Table of Contents
 
-## Usage
+- [Quick Start](#quick-start)
+- [Pipeline Overview](#pipeline-overview)
+- [Configuration Options](#configuration-options)
+- [Usage Examples](#usage-examples)
+- [GitLab CI](#gitlab-ci)
+- [Bitbucket Pipelines](#bitbucket-pipelines)
+- [About Pipery](#about-pipery)
+- [Development](#development)
+
+## Quick Start
 
 ```yaml
-name: Example
-on: [push]
+name: CI
+on: [push, pull_request]
 
 jobs:
-  run-action:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-terraform-ci@v3
+      - uses: pipery-dev/pipery-terraform-ci@v1
         with:
           project_path: .
-          config_file: .github/pipery/config.yaml
           terraform_version: latest
-          backend_config: 
-          var_file: 
-          working_directory: .
-          skip_sast: false
-          skip_sca: false
-          skip_lint: false
-          skip_validate: false
-          skip_plan: false
-          skip_version: false
-          skip_release: false
-          log_file: pipery.jsonl
 ```
 
-## Inputs
+## Pipeline Overview
 
-| Name | Required | Default | Description |
+| Step | Tool | Skip Input | Description |
 | --- | --- | --- | --- |
-| `project_path` | no | `.` | Path to the Terraform root module. |
-| `config_file` | no | `.github/pipery/config.yaml` | Path to the pipery config file. |
-| `terraform_version` | no | `latest` | Terraform CLI version to use. |
-| `backend_config` | no | `` | Comma-separated backend config vars (key=val). |
-| `var_file` | no | `` | Path to a .tfvars file. |
-| `working_directory` | no | `.` | Working directory for Terraform commands. |
-| `skip_sast` | no | `false` | Skip tfsec SAST scan. |
-| `skip_sca` | no | `false` | Skip SCA dependency scan. |
-| `skip_lint` | no | `false` | Skip tflint lint. |
-| `skip_validate` | no | `false` | Skip terraform validate. |
-| `skip_plan` | no | `false` | Skip terraform plan. |
-| `skip_version` | no | `false` | Skip version step. |
-| `skip_release` | no | `false` | Skip release step. |
-| `log_file` | no | `pipery.jsonl` | Path to write the JSONL log file. |
+| SAST | tfsec | `skip_sast` | Detects Terraform security misconfigurations |
+| SCA | dependency-check | `skip_sca` | Identifies vulnerable dependencies |
+| Lint | tflint | `skip_lint` | Enforces Terraform style and best practices |
+| Validate | terraform validate | `skip_validate` | Validates Terraform configuration syntax |
+| Plan | terraform plan | `skip_plan` | Creates deployment plan |
+| Version | Semantic versioning | `skip_versioning` | Bumps version and creates git tag |
+| Release | GitHub Release | `skip_release` | Publishes plan artifacts to GitHub |
+| Reintegrate | Git merge | `skip_reintegration` | Merges back to default branch |
 
-## Outputs
+## Configuration Options
 
-No outputs.
+| Name | Default | Description |
+| --- | --- | --- |
+| `project_path` | `.` | Path to the Terraform root module. |
+| `config_file` | `.pipery/config.yaml` | Path to Pipery config file. |
+| `terraform_version` | `latest` | Terraform CLI version to use. |
+| `backend_config` | `` | Comma-separated backend config vars (key=val). |
+| `var_file` | `` | Path to a .tfvars file. |
+| `working_directory` | `.` | Working directory for Terraform commands. |
+| `log_file` | `pipery.jsonl` | Path to write the JSONL log file. |
+| `skip_sast` | `false` | Skip tfsec SAST scan. |
+| `skip_sca` | `false` | Skip SCA dependency scan. |
+| `skip_lint` | `false` | Skip tflint lint. |
+| `skip_validate` | `false` | Skip terraform validate. |
+| `skip_plan` | `false` | Skip terraform plan. |
+| `skip_versioning` | `false` | Skip versioning step. |
+| `skip_release` | `false` | Skip release step. |
+| `skip_reintegration` | `false` | Skip reintegration step. |
+
+## Usage Examples
+
+### Example 1: Basic Terraform validation and plan
+
+```yaml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pipery-dev/pipery-terraform-ci@v1
+        with:
+          project_path: .
+          terraform_version: latest
+```
+
+### Example 2: With backend configuration
+
+```yaml
+- uses: pipery-dev/pipery-terraform-ci@v1
+  with:
+    project_path: ./infrastructure
+    terraform_version: 1.7
+    backend_config: bucket=my-bucket,key=prod/terraform.tfstate,region=us-east-1
+```
+
+### Example 3: Using variables file
+
+```yaml
+- uses: pipery-dev/pipery-terraform-ci@v1
+  with:
+    project_path: .
+    terraform_version: latest
+    var_file: terraform.tfvars
+```
+
+### Example 4: Skip security checks
+
+```yaml
+- uses: pipery-dev/pipery-terraform-ci@v1
+  with:
+    project_path: .
+    skip_sast: true
+    skip_sca: true
+```
+
+### Example 5: Multiple workspaces
+
+```yaml
+- uses: pipery-dev/pipery-terraform-ci@v1
+  with:
+    project_path: ./terraform/prod
+    working_directory: ./terraform/prod
+    terraform_version: latest
+    var_file: prod.tfvars
+```
+
+### Example 6: Custom Terraform version with release
+
+```yaml
+- uses: pipery-dev/pipery-terraform-ci@v1
+  with:
+    project_path: .
+    terraform_version: 1.6
+    backend_config: bucket=my-state-bucket
+```
+
+## GitLab CI
+
+This repository includes a GitLab CI equivalent at `.gitlab-ci.yml`. Copy it into a GitLab project or use it as a reference implementation for running the same Pipery pipeline outside GitHub Actions.
+
+The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jsonl` as an artifact, and maintains the same skip controls. Store credentials as protected GitLab CI/CD variables.
+
+```yaml
+include:
+  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-terraform-ci/v1/.gitlab-ci.yml
+```
+
+### GitLab CI Variables
+
+Configure these protected variables in **Settings > CI/CD > Variables**:
+
+- `TERRAFORM_VERSION` - Terraform version (default: latest)
+- `BACKEND_CONFIG` - Backend configuration (key=val format)
+- `VAR_FILE` - Path to .tfvars file
+
+## Bitbucket Pipelines
+
+Bitbucket Cloud pipelines provide an alternative to GitHub Actions. The equivalent pipeline configuration is in `bitbucket-pipelines.yml`.
+
+### Getting Started
+
+1. Copy `bitbucket-pipelines.yml` to your Bitbucket repository root
+2. Configure Protected Variables in **Repository Settings > Pipelines > Repository Variables**:
+   - `TERRAFORM_VERSION` - Terraform version (default: latest)
+   - `BACKEND_CONFIG` - Backend configuration variables
+3. Commit and push to trigger the pipeline
+
+### Pipeline Stages
+
+The Bitbucket equivalent follows the same structure:
+
+checkout → setup → SAST (tfsec) → SCA (dependency-check) → lint (tflint) → validate → plan → versioning → release → reintegration → logs
+
+### Skip Flags
+
+Disable any stage using environment variables:
+
+- `SKIP_SAST`, `SKIP_SCA`, `SKIP_LINT`, `SKIP_VALIDATE`, `SKIP_PLAN`, `SKIP_VERSIONING`, `SKIP_RELEASE`, `SKIP_REINTEGRATION`
+
+Example: Set `SKIP_SAST=true` to skip security scanning.
+
+### Features
+
+- Terraform security scanning (tfsec)
+- Linting and best practices (tflint)
+- Syntax validation
+- Plan artifact generation
+- Dependency vulnerability checking
+- Automatic versioning and tagging
+- JSONL-based pipeline logging
+- 30-90 day artifact retention
+
+## About Pipery
+
+<img src="https://avatars.githubusercontent.com/u/270923927?s=32" alt="Pipery" width="22" align="center" /> [**Pipery**](https://pipery.dev) is an open-source CI/CD observability platform. Every step script runs under **psh** (Pipery Shell), which intercepts all commands and emits structured JSONL events — giving you full visibility into your pipeline without any manual instrumentation.
+
+- Browse logs in the [Pipery Dashboard](https://github.com/pipery-dev/pipery-dashboard)
+- Find all Pipery actions on [GitHub Marketplace](https://github.com/marketplace?q=pipery&type=actions)
+- Source code: [pipery-dev](https://github.com/pipery-dev)
 
 ## Development
 
-This repository is managed with `pipery-tooling`.
-
 ```bash
+# Run the action locally against test-project/
 pipery-actions test --repo .
+
+# Regenerate docs
 pipery-actions docs --repo .
+
+# Dry-run release
 pipery-actions release --repo . --dry-run
 ```
-
-By default, `pipery-actions test --repo .` executes the action against `test-project` and validates `pipery.jsonl`.
-
-## Marketplace Release Flow
-
-1. Update the implementation and changelog.
-2. Run `pipery-actions release --repo .`.
-3. Push the created git tag and major tag alias.
-4. Publish the GitHub release.

@@ -1,11 +1,11 @@
 ---
-title: "Pipery Action Catalog"
-description: "Catalog of Pipery CI and CD GitHub Actions, with links to source repositories and release-tag documentation."
+title: "Pipery Pipeline Catalog"
+description: "Catalog of Pipery CI and CD pipelines for GitHub Actions, GitLab CI, and Bitbucket Pipelines, with links to source repositories and release-tag documentation."
 ---
 
-# Pipery Action Catalog
+# Pipery Pipeline Catalog
 
-Browse Pipery GitHub Actions by pipeline type. Each entry links to the source repository and its docs page generated from the latest release-tag README.
+Browse Pipery pipelines by type. Each entry links to the source repository and its docs page, including GitHub Actions usage plus equivalent GitLab CI and Bitbucket Pipelines configuration where available.
 
 ## CI Actions
 

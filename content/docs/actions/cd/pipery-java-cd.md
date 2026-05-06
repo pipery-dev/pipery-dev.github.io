@@ -57,7 +57,7 @@ jobs:
 | `image_name` | `` | Container image to pull (alternative to artifact). |
 | `image_tag` | `latest` | Container image tag. |
 | `project_path` | `.` | Path to the project source tree. |
-| `config_file` | `.github/pipery/config.yaml` | Path to Pipery config file. |
+| `config_file` | `.pipery/config.yaml` | Path to Pipery config file. |
 | `deploy_target` | `argocd` | Deployment target: `argocd`, `cloud-run`, `helm`, or `ansible`. |
 | `deploy_strategy` | `rolling` | Deployment strategy: `rolling`, `blue-green`, or `canary`. |
 | `argocd_server` | `` | ArgoCD server URL. |

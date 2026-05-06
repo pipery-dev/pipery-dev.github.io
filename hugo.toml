@@ -6,8 +6,8 @@ enableRobotsTXT = true
 disablePathToLower = true
 
 [params]
-  description = "Pipery provides verified, reusable, and observable CI/CD pipelines across platforms like GitHub Actions and GitLab CI, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
-  keywords = ["Pipery", "CI/CD pipelines", "vendor-neutral CI/CD", "CI/CD abstraction", "GitHub Actions CI", "GitLab CI", "Bitbucket pipelines", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
+  description = "Pipery provides verified, reusable, and observable CI/CD pipelines across platforms like GitHub Actions, GitLab CI, and Bitbucket Pipelines, with structured psh logs, replayable pipery.jsonl output, and a dashboard for debugging workflow runs."
+  keywords = ["Pipery", "CI/CD pipelines", "vendor-neutral CI/CD", "CI/CD abstraction", "GitHub Actions CI", "GitLab CI", "Bitbucket Pipelines", "Bitbucket Cloud", "DevOps automation", "pipeline observability", "structured CI logs", "pipery.jsonl", "psh", "Pipery Dashboard", "continuous integration", "continuous delivery"]
   images = "/images/pipery-color.png"
   extMeta = false
   DisableFootBar = false
@@ -63,7 +63,7 @@ disablePathToLower = true
 [params.seo]
   siteName = "Pipery"
   title = "Pipery - Vendor-neutral CI/CD pipelines"
-  description = "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions and GitLab CI."
+  description = "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions, GitLab CI, and Bitbucket Pipelines."
   image = "/images/pipery-color.png"
 
 [params.home]

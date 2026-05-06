@@ -1,11 +1,13 @@
 ---
 title: "Pipery"
-description: "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions and GitLab CI."
+description: "Define CI/CD once and run reusable, observable delivery workflows across platforms like GitHub Actions, GitLab CI, and Bitbucket Pipelines."
 type: "landing"
 keywords:
   - CI/CD pipelines
   - GitHub Actions
   - GitLab CI
+  - Bitbucket Pipelines
+  - Bitbucket Cloud
   - vendor-neutral CI/CD
   - CI/CD abstraction
   - DevOps automation
@@ -22,7 +24,7 @@ sitemap:
 {{< hero >}}
 # Define your pipelines once. Run them across platforms.
 
-Pipery is a vendor-neutral CI/CD standardization layer for reusable delivery workflows. Start with GitHub Actions, run the same delivery logic on GitLab CI, and keep your pipelines portable as your platform changes.
+Pipery is a vendor-neutral CI/CD standardization layer for reusable delivery workflows. Start with GitHub Actions, run the same delivery logic on GitLab CI or Bitbucket Pipelines, and keep your pipelines portable as your platform changes.
 
 {{< buttons >}}
   {{< button href="/catalog/" primary="true" >}}
@@ -37,7 +39,7 @@ Pipery is a vendor-neutral CI/CD standardization layer for reusable delivery wor
 {{< section id="introduction" class="video-section" >}}
 <h2>Watch Pipery in action</h2>
 
-See how Pipery turns reusable GitHub Actions and GitLab CI pipelines, structured `psh` logs, and replayable `pipery.jsonl` output into a clearer CI/CD workflow.
+See how Pipery turns reusable GitHub Actions, GitLab CI, and Bitbucket Pipelines workflows, structured `psh` logs, and replayable `pipery.jsonl` output into a clearer CI/CD workflow.
 
 {{< youtube-intro id="ZdAa6235pA8" title="Pipery platform introduction" thumbnail="/images/pipery-introduction-thumbnail.png" >}}
 {{< /section >}}
@@ -81,7 +83,7 @@ You do not need another CI tool. You need portable delivery logic.
 {{< section id="meet-pipery" >}}
 <h2>Meet Pipery</h2>
 
-Pipery lets teams define CI/CD once and run it across platforms like GitHub Actions and GitLab CI.
+Pipery lets teams define CI/CD once and run it across platforms like GitHub Actions, GitLab CI, and Bitbucket Pipelines.
 
 It provides production-grade, reusable CI/CD pipelines that are standardized, versioned, secure, observable, and designed to reduce CI/CD vendor lock-in.
 
@@ -106,11 +108,11 @@ It provides production-grade, reusable CI/CD pipelines that are standardized, ve
 
 Your delivery logic should not be trapped inside one CI vendor.
 
-Pipery is moving CI/CD from provider-specific workflow files toward reusable delivery standards. Use the same Pipery pipeline family from GitHub Actions or GitLab CI today, and keep a path open for future platforms like Bitbucket Cloud, CircleCI, Jenkins, and Azure DevOps.
+Pipery is moving CI/CD from provider-specific workflow files toward reusable delivery standards. Use the same Pipery pipeline family from GitHub Actions, GitLab CI, or Bitbucket Pipelines today, and keep a path open for future platforms like CircleCI, Jenkins, and Azure DevOps.
 
 {{< features >}}
   {{< feature icon="puzzle" title="Define once" >}}Standardize the build, scan, package, release, and deploy flow as Pipery pipeline logic instead of rewriting it per repository.{{< /feature >}}
-  {{< feature icon="standard" title="Run across platforms" >}}Generate GitHub Actions workflows or GitLab CI YAML from the same catalog of CI and CD building blocks.{{< /feature >}}
+  {{< feature icon="standard" title="Run across platforms" >}}Generate GitHub Actions workflows, GitLab CI YAML, or Bitbucket Pipelines YAML from the same catalog of CI and CD building blocks.{{< /feature >}}
   {{< feature icon="bolt" title="Switch with less rewrite" >}}When teams move between GitHub, GitLab, or future providers, the delivery model stays familiar.{{< /feature >}}
   {{< feature icon="chart" title="Keep observability" >}}`psh` and `pipery.jsonl` give every supported backend the same structured debugging trail.{{< /feature >}}
 {{< /features >}}
@@ -140,7 +142,6 @@ Replace hundreds of lines of brittle vendor-specific workflow logic with a singl
     <label class="platform-tab platform-tab--bitbucket" for="platform-bitbucket">
       <i class="icon bitbucket sri" aria-hidden="true"></i>
       <span>Bitbucket Cloud</span>
-      <small>Coming soon</small>
     </label>
   </div>
 
@@ -331,14 +332,92 @@ pipery_cloudrun_cd:
   </div>
 
   <div class="platform-panel platform-panel--bitbucket">
-    <div class="coming-soon-card">
-      <div class="coming-soon-card__eyebrow">
-        <i class="icon bitbucket sri" aria-hidden="true"></i>
-        <span>Bitbucket Cloud</span>
-      </div>
-      <h3>Bitbucket support is coming soon</h3>
-      <p>Pipery's platform model is designed to extend beyond GitHub Actions and GitLab CI. Bitbucket Cloud is on the roadmap so teams using Atlassian tooling can adopt the same standardized delivery logic without rewriting pipelines from scratch.</p>
-    </div>
+{{< code-compare >}}
+{{< code-block language="yaml" title="Before · Bitbucket Pipelines" tag="Before · vendor YAML" tagKind="before" >}}
+image: node:20
+
+definitions:
+  services:
+    docker:
+      memory: 2048
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Test and build
+          caches:
+            - node
+          script:
+            - npm ci
+            - npm run lint
+            - npm test -- --ci
+            - npm run build
+      - step:
+          name: Build image
+          services:
+            - docker
+          script:
+            - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+            - docker build -t "$REGISTRY/pipery/api:$BITBUCKET_COMMIT" .
+            - docker push "$REGISTRY/pipery/api:$BITBUCKET_COMMIT"
+      - step:
+          name: Deploy
+          deployment: production
+          script:
+            - gcloud auth activate-service-account --key-file "$GCP_SERVICE_ACCOUNT_KEY"
+            - kubectl set image deployment/api api="$REGISTRY/pipery/api:$BITBUCKET_COMMIT" --namespace production
+            - kubectl rollout status deployment/api --namespace production
+{{< /code-block >}}
+
+{{< code-block language="yaml" title="After · Bitbucket Pipelines" tag="After · Pipery pipeline" tagKind="after" >}}
+definitions:
+  steps:
+    - step: &setup-step
+        name: Setup npm Environment
+        image: node:20-alpine
+        caches:
+          - node
+        script:
+          - cd ${PROJECT_PATH:-.}
+          - npm ci
+
+    - step: &sast-scan
+        name: SAST Security Scan
+        image: python:3.11-alpine
+        script:
+          - pip install --quiet pipery-tooling
+          - pipery-tooling sast --project-path ${PROJECT_PATH:-.} --log-file ${LOG_FILE:-pipery.jsonl}
+
+    - step: &build-step
+        name: Build Application
+        image: node:20-alpine
+        script:
+          - cd ${PROJECT_PATH:-.}
+          - npm run build
+
+    - step: &logs-step
+        name: Publish Pipery Logs
+        script:
+          - test -f ${LOG_FILE:-pipery.jsonl} && tail -n 20 ${LOG_FILE:-pipery.jsonl} || true
+
+    # The full template also defines SCA, lint, test, release, and reintegration steps.
+
+pipelines:
+  branches:
+    main:
+      - step: *setup-step
+      - parallel:
+          - step: *sast-scan
+          - step: *sca-scan
+      - step: *lint-step
+      - step: *build-step
+      - step: *test-step
+      - step: *release-step
+      - step: *reintegration-step
+      - step: *logs-step
+{{< /code-block >}}
+{{< /code-compare >}}
   </div>
 </div>
 {{< /section >}}
@@ -404,7 +483,7 @@ Everything your pipelines were missing.
   {{< feature icon="box" title="Versioned and stable" >}}Pin versions, manage upgrades cleanly, and avoid breaking changes.{{< /feature >}}
   {{< feature icon="chart" title="Built-in observability" >}}Track runtime, failures, and trends across your pipelines.{{< /feature >}}
   {{< feature icon="bolt" title="Optimized performance" >}}Ship with faster builds, better defaults, and less CI waste.{{< /feature >}}
-  {{< feature icon="check" title="Multi-platform direction" >}}GitHub Actions and GitLab CI are supported now, with Bitbucket Cloud and other CI ecosystems on the roadmap.{{< /feature >}}
+  {{< feature icon="check" title="Multi-platform support" >}}GitHub Actions, GitLab CI, and Bitbucket Pipelines are supported now, with more CI ecosystems on the roadmap.{{< /feature >}}
 {{< /features >}}
 {{< /section >}}
 

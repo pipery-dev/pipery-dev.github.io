@@ -66,7 +66,6 @@ def discover_local_repos() -> list[Path]:
         if path.is_dir()
         and re.fullmatch(r"pipery-.+-(ci|cd)", path.name)
         and (path / "README.md").exists()
-        and (path / "pipery-action.toml").exists()
     )
 
 
@@ -112,14 +111,65 @@ def try_remote_file(repo: str, ref: str, path: str) -> str | None:
 
 
 def local_repo_to_action(path: Path) -> ActionRepo:
-    with (path / "pipery-action.toml").open("rb") as handle:
-        meta = tomllib.load(handle)
+    meta_path = path / "pipery-action.toml"
+    if meta_path.exists():
+        with meta_path.open("rb") as handle:
+            meta = tomllib.load(handle)
+        tag = f"v{str(meta.get('version', 'main')).split('.')[0]}"
+    else:
+        meta, tag = existing_doc_meta(path.name)
     readme = (path / "README.md").read_text()
     return build_action(
         name=path.name,
         meta=meta,
         readme=readme,
-        tag=f"v{str(meta.get('version', 'main')).split('.')[0]}",
+        tag=tag,
+    )
+
+
+def existing_doc_meta(name: str) -> tuple[dict, str]:
+    action_kind = "ci" if name.endswith("-ci") else "cd"
+    existing_doc = ROOT / "content/docs/actions" / action_kind / f"{name}.md"
+    title = name
+    description = ""
+    tag = "main"
+
+    if existing_doc.exists():
+        text = existing_doc.read_text()
+        frontmatter = re.match(r"---\n(.*?)\n---", text, re.S)
+        if frontmatter:
+            for line in frontmatter.group(1).splitlines():
+                key, _, value = line.partition(":")
+                value = value.strip().strip('"')
+                if key == "title":
+                    title = value
+                elif key == "description":
+                    description = value
+        tag_match = re.search(r"- Release tag: `([^`]+)`", text)
+        if tag_match:
+            tag = tag_match.group(1)
+
+    return {"title": title, "description": description, "version": tag}, tag
+
+
+def existing_doc_action(path: Path) -> ActionRepo:
+    name = path.stem
+    action_kind = "ci" if name.endswith("-ci") else "cd"
+    meta, tag = existing_doc_meta(name)
+    text = path.read_text()
+    source_match = re.search(r"- Repository: \[`[^`]+`\]\(([^)]+)\)", text)
+    source_url = source_match.group(1) if source_match else f"https://github.com/{ORG}/{name}"
+    return ActionRepo(
+        name=name,
+        title=meta.get("title", name),
+        description=meta.get("description", ""),
+        version=str(meta.get("version", tag)),
+        action_kind=action_kind,
+        source_url=source_url,
+        docs_path=f"/docs/actions/{action_kind}/{name}/",
+        icon_url=f"https://raw.githubusercontent.com/{ORG}/{name}/{quote(tag)}/assets/icon.png",
+        readme="",
+        tag=tag,
     )
 
 
@@ -220,13 +270,13 @@ def generate_catalog(actions: list[ActionRepo]) -> str:
     cd = [a for a in actions if a.action_kind == "cd"]
     lines = [
         "---",
-        'title: "Pipery Action Catalog"',
-        'description: "Catalog of Pipery CI and CD GitHub Actions, with links to source repositories and release-tag documentation."',
+        'title: "Pipery Pipeline Catalog"',
+        'description: "Catalog of Pipery CI and CD pipelines for GitHub Actions, GitLab CI, and Bitbucket Pipelines, with links to source repositories and release-tag documentation."',
         "---",
         "",
-        "# Pipery Action Catalog",
+        "# Pipery Pipeline Catalog",
         "",
-        "Browse Pipery GitHub Actions by pipeline type. Each entry links to the source repository and its docs page generated from the latest release-tag README.",
+        "Browse Pipery pipelines by type. Each entry links to the source repository and its docs page, including GitHub Actions usage plus equivalent GitLab CI and Bitbucket Pipelines configuration where available.",
         "",
         "## CI Actions",
         "",
@@ -277,25 +327,29 @@ def write_text(path: Path, content: str):
 
 
 def main():
-    docs_ci_dir = ROOT / "content/docs/actions/ci"
-    docs_cd_dir = ROOT / "content/docs/actions/cd"
-    for directory in (docs_ci_dir, docs_cd_dir):
-        for child in directory.glob("*.md"):
-            child.unlink()
-
     local_repos = [] if FORCE_REMOTE else discover_local_repos()
     actions = []
     if local_repos:
         actions = [local_repo_to_action(path) for path in local_repos]
+        discovered = {action.name for action in actions}
+        for docs_dir in (ROOT / "content/docs/actions/ci", ROOT / "content/docs/actions/cd"):
+            for existing in sorted(docs_dir.glob("*.md")):
+                if existing.stem not in discovered:
+                    actions.append(existing_doc_action(existing))
     else:
         actions = [remote_repo_to_action(name) for name in discover_remote_repo_names()]
+
+    docs_ci_dir = ROOT / "content/docs/actions/ci"
+    docs_cd_dir = ROOT / "content/docs/actions/cd"
 
     actions.sort(key=lambda item: (item.action_kind, item.title.lower()))
 
     for index, action in enumerate([a for a in actions if a.action_kind == "ci"], start=1):
-        write_text(docs_ci_dir / f"{action.name}.md", generate_doc_page(action, index))
+        if action.readme:
+            write_text(docs_ci_dir / f"{action.name}.md", generate_doc_page(action, index))
     for index, action in enumerate([a for a in actions if a.action_kind == "cd"], start=1):
-        write_text(docs_cd_dir / f"{action.name}.md", generate_doc_page(action, index))
+        if action.readme:
+            write_text(docs_cd_dir / f"{action.name}.md", generate_doc_page(action, index))
 
     catalog_dir = ROOT / "content/catalog"
     if catalog_dir.exists():
