@@ -371,51 +371,61 @@ pipelines:
 {{< /code-block >}}
 
 {{< code-block language="yaml" title="After · Bitbucket Pipelines" tag="After · Pipery pipeline" tagKind="after" >}}
+# Pipery shared template repository in the same Bitbucket workspace:
+# pipery-workflows/.bitbucket/shared-pipelines.yml
+export: true
+
 definitions:
-  steps:
-    - step: &setup-step
-        name: Setup npm Environment
-        image: node:20-alpine
-        caches:
-          - node
-        script:
-          - cd ${PROJECT_PATH:-.}
-          - npm ci
+  pipelines:
+    npm_to_cloudrun:
+      - step:
+          name: Setup npm Environment
+          image: node:20-alpine
+          caches:
+            - node
+          script:
+            - cd ${PROJECT_PATH:-.}
+            - npm ci
+      - parallel:
+          - step:
+              name: SAST Security Scan
+              image: python:3.11-alpine
+              script:
+                - pip install --quiet pipery-tooling
+                - pipery-tooling sast --project-path ${PROJECT_PATH:-.} --log-file ${LOG_FILE:-pipery.jsonl}
+          - step:
+              name: SCA Security Scan
+              image: python:3.11-alpine
+              script:
+                - pip install --quiet pipery-tooling
+                - pipery-tooling sca --project-path ${PROJECT_PATH:-.} --log-file ${LOG_FILE:-pipery.jsonl}
+      - step:
+          name: Build Application
+          image: node:20-alpine
+          script:
+            - cd ${PROJECT_PATH:-.}
+            - npm run build
+      - step:
+          name: Deploy to Cloud Run
+          image: google/cloud-sdk:alpine
+          script:
+            - pipery-cloudrun deploy
+      - step:
+          name: Publish Pipery Logs
+          script:
+            - test -f ${LOG_FILE:-pipery.jsonl} && tail -n 20 ${LOG_FILE:-pipery.jsonl} || true
 
-    - step: &sast-scan
-        name: SAST Security Scan
-        image: python:3.11-alpine
-        script:
-          - pip install --quiet pipery-tooling
-          - pipery-tooling sast --project-path ${PROJECT_PATH:-.} --log-file ${LOG_FILE:-pipery.jsonl}
-
-    - step: &build-step
-        name: Build Application
-        image: node:20-alpine
-        script:
-          - cd ${PROJECT_PATH:-.}
-          - npm run build
-
-    - step: &logs-step
-        name: Publish Pipery Logs
-        script:
-          - test -f ${LOG_FILE:-pipery.jsonl} && tail -n 20 ${LOG_FILE:-pipery.jsonl} || true
-
-    # The full template also defines SCA, lint, test, release, and reintegration steps.
+---
+# Application repository:
+# bitbucket-pipelines.yml
+definitions:
+  imports:
+    pipery-workflows: pipery-workflows:v1:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
     main:
-      - step: *setup-step
-      - parallel:
-          - step: *sast-scan
-          - step: *sca-scan
-      - step: *lint-step
-      - step: *build-step
-      - step: *test-step
-      - step: *release-step
-      - step: *reintegration-step
-      - step: *logs-step
+      import: npm_to_cloudrun@pipery-workflows
 {{< /code-block >}}
 {{< /code-compare >}}
   </div>
