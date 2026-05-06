@@ -375,12 +375,12 @@ pipelines:
 
 {{< code-block language="yaml" title="After · Bitbucket Pipelines" tag="After · Pipery pipeline" tagKind="after" >}}
 # Pipery shared template repository in the same Bitbucket workspace:
-# pipery-workflows/.bitbucket/shared-pipelines.yml
+# shared-pipelines/.bitbucket/shared-pipelines.yml
 export: true
 
 definitions:
   pipelines:
-    npm_to_cloudrun:
+    pipery-npm-to-cloudrun:
       - step:
           name: Setup npm Environment
           image: node:20-alpine
@@ -423,12 +423,17 @@ definitions:
 # bitbucket-pipelines.yml
 definitions:
   imports:
-    pipery-workflows: pipery-workflows:v1:.bitbucket/shared-pipelines.yml
+    pipery-custom: shared-pipelines:master:.bitbucket/shared-pipelines.yml
+    pipery-standard: shared-pipelines:master
 
 pipelines:
   branches:
     main:
-      import: npm_to_cloudrun@pipery-workflows
+      import: pipery-npm-to-cloudrun@pipery-custom
+
+  custom:
+    run-pipery-npm-to-cloudrun:
+      import: pipery-npm-to-cloudrun@pipery-standard
 {{< /code-block >}}
 {{< /code-compare >}}
   </div>
