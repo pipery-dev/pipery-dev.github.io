@@ -59,6 +59,9 @@ Follow Pipery for platform updates, demos, and release notes.
   {{< button href="https://www.youtube.com/@pipery_dev" >}}
     Watch on YouTube
   {{< /button >}}
+  {{< button href="https://discord.gg/bXwQT9npdN" >}}
+    Contact us on Discord
+  {{< /button >}}
 {{< /buttons >}}
 {{< /section >}}
 
