@@ -1,9 +1,13 @@
-{{ "<!-- Google Tag Manager (gtag.js) -->" | safeHTML }}
+{{ "<!-- Google Tag Manager (gtag.js) with Consent Mode v2 -->" | safeHTML }}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9H7YEK7XC8"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-9H7YEK7XC8');
+  gtag('config', 'G-9H7YEK7XC8', {
+    'anonymize_ip': true,
+    'allow_google_signals': false,
+    'allow_ad_personalization_signals': false
+  });
 </script>

@@ -186,6 +186,18 @@ disablePathToLower = true
   pre = "discord"
   weight = 40
 
+[[menu.footer]]
+  identifier = "privacy"
+  name = "Privacy Policy"
+  url = "/privacy-policy/"
+  weight = 50
+
+[[menu.footer]]
+  identifier = "terms"
+  name = "Terms of Service"
+  url = "/terms-of-service/"
+  weight = 60
+
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
