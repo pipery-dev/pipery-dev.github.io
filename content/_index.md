@@ -44,27 +44,6 @@ See how Pipery turns reusable GitHub Actions, GitLab CI, and Bitbucket Pipelines
 {{< youtube-intro id="ZdAa6235pA8" title="Pipery platform introduction" thumbnail="/images/pipery-introduction-thumbnail.png" >}}
 {{< /section >}}
 
-{{< section id="social-accounts" class="social-section" >}}
-<h2>Social accounts</h2>
-
-Follow Pipery for platform updates, demos, and release notes.
-
-{{< buttons >}}
-  {{< button href="https://x.com/piperydev" primary="true" >}}
-    Follow on X
-  {{< /button >}}
-  {{< button href="https://gitlab.com/pipery-dev" >}}
-    Follow on GitLab
-  {{< /button >}}
-  {{< button href="https://www.youtube.com/@pipery_dev" >}}
-    Watch on YouTube
-  {{< /button >}}
-  {{< button href="https://discord.gg/bXwQT9npdN" >}}
-    Contact us on Discord
-  {{< /button >}}
-{{< /buttons >}}
-{{< /section >}}
-
 {{< section id="problem" >}}
 <h2>The Problem</h2>
 
@@ -611,3 +590,24 @@ Start shipping faster with Pipery.
   {{< /button >}}
 {{< /buttons >}}
 {{< /cta >}}
+
+{{< section id="social-accounts" class="social-section" >}}
+<h2>Social accounts</h2>
+
+Follow Pipery for platform updates, demos, and release notes.
+
+{{< buttons >}}
+  {{< button href="https://x.com/piperydev" primary="true" >}}
+    Follow on X
+  {{< /button >}}
+  {{< button href="https://gitlab.com/pipery-dev" >}}
+    Follow on GitLab
+  {{< /button >}}
+  {{< button href="https://www.youtube.com/@pipery_dev" >}}
+    Watch on YouTube
+  {{< /button >}}
+  {{< button href="https://discord.gg/bXwQT9npdN" >}}
+    Contact us on Discord
+  {{< /button >}}
+{{< /buttons >}}
+{{< /section >}}
