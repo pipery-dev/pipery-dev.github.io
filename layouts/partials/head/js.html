@@ -19,12 +19,17 @@
     var mainScript = document.createElement('script');
     mainScript.src = '/tarteaucitron/tarteaucitron.min.js';
     mainScript.onload = function() {
-      var servicesScript = document.createElement('script');
-      servicesScript.src = '/tarteaucitron/tarteaucitron.services.min.js';
-      servicesScript.onload = function() {
-        initTarteaucitron();
+      var langScript = document.createElement('script');
+      langScript.src = '/tarteaucitron/tarteaucitron.en.min.js';
+      langScript.onload = function() {
+        var servicesScript = document.createElement('script');
+        servicesScript.src = '/tarteaucitron/tarteaucitron.services.min.js';
+        servicesScript.onload = function() {
+          initTarteaucitron();
+        };
+        document.head.appendChild(servicesScript);
       };
-      document.head.appendChild(servicesScript);
+      document.head.appendChild(langScript);
     };
     document.head.appendChild(mainScript);
   }
