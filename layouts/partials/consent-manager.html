@@ -13,72 +13,93 @@
   });
 </script>
 
-<script type="text/javascript" src="https://unpkg.com/tarteaucitronjs/tarteaucitron.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/tarteaucitronjs/tarteaucitron.services.min.js"></script>
-
 <script type="text/javascript">
-  // Initialize Tarteaucitron after scripts load
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof tarteaucitron !== 'undefined') {
-      tarteaucitron.init({
-        'privacyUrl': 'https://pipery.dev/privacy-policy/',
-        'identifyingCookiesPolicy': 'simple',
-        'delayBeforeAllowingFbelangenConflictedNonConsent': undefined,
-        'highPrivacyOffsetScroll': false,
-        'orientation': 'top',
-        'groupServices': false,
-        'showAlertSmall': true,
-        'cookieslist': false,
-        'showIcon': true,
-        'iconPosition': 'BottomRight',
-        'handleBrowserDNTRequest': false,
-        'removeCredit': false,
-        'mandatory': false,
-        'mandatoryCookie': 'UserConsent',
-        'mode': 'gdpr',
-        'useExternalCss': true,
-        'useExternalJs': true,
-        'moreInfoLink': true,
-        'googleConsentMode': true
-      });
+  // Load tarteaucitron sequentially to ensure proper initialization
+  function loadTarteaucitron() {
+    var mainScript = document.createElement('script');
+    mainScript.src = 'https://unpkg.com/tarteaucitronjs/tarteaucitron.min.js';
+    mainScript.onload = function() {
+      var servicesScript = document.createElement('script');
+      servicesScript.src = 'https://unpkg.com/tarteaucitronjs/tarteaucitron.services.min.js';
+      servicesScript.onload = function() {
+        initTarteaucitron();
+      };
+      document.head.appendChild(servicesScript);
+    };
+    document.head.appendChild(mainScript);
+  }
 
-      // Add Google Analytics service
-      tarteaucitron.services.google_analytics = {
-        'key': 'google-analytics',
-        'type': 'analytics',
-        'name': 'Google Analytics',
-        'uri': 'https://business.safety.google/',
-        'needConsent': true,
-        'cookies': ['_ga', '_gat_gtag_UA_*', '_gid', '_gat'],
-        'js': function() {
-          if (tarteaucitron.user.analyticsPermission()) {
-            gtag('consent', 'update', {
-              'analytics_storage': 'granted'
-            });
-          }
-        },
-        'fallback': function() {
+  function initTarteaucitron() {
+    if (typeof tarteaucitron === 'undefined') {
+      setTimeout(initTarteaucitron, 100);
+      return;
+    }
+
+    tarteaucitron.init({
+      'privacyUrl': 'https://pipery.dev/privacy-policy/',
+      'identifyingCookiesPolicy': 'simple',
+      'delayBeforeAllowingFbelangenConflictedNonConsent': undefined,
+      'highPrivacyOffsetScroll': false,
+      'orientation': 'top',
+      'groupServices': false,
+      'showAlertSmall': true,
+      'cookieslist': false,
+      'showIcon': true,
+      'iconPosition': 'BottomRight',
+      'handleBrowserDNTRequest': false,
+      'removeCredit': false,
+      'mandatory': false,
+      'mandatoryCookie': 'UserConsent',
+      'mode': 'gdpr',
+      'useExternalCss': true,
+      'useExternalJs': true,
+      'moreInfoLink': true,
+      'googleConsentMode': true
+    });
+
+    // Add Google Analytics service
+    tarteaucitron.services.google_analytics = {
+      'key': 'google-analytics',
+      'type': 'analytics',
+      'name': 'Google Analytics',
+      'uri': 'https://business.safety.google/',
+      'needConsent': true,
+      'cookies': ['_ga', '_gat_gtag_UA_*', '_gid', '_gat'],
+      'js': function() {
+        if (tarteaucitron.user.analyticsPermission()) {
           gtag('consent', 'update', {
-            'analytics_storage': 'denied'
+            'analytics_storage': 'granted'
           });
         }
+      },
+      'fallback': function() {
+        gtag('consent', 'update', {
+          'analytics_storage': 'denied'
+        });
+      }
+    };
+
+    // Handle consent changes
+    tarteaucitron.addEventListener('UserConsent', function() {
+      var consentState = {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
       };
 
-      // Handle consent changes
-      tarteaucitron.addEventListener('UserConsent', function() {
-        var consentState = {
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        };
+      if (tarteaucitron.user.analyticsPermission()) {
+        consentState.analytics_storage = 'granted';
+      }
 
-        if (tarteaucitron.user.analyticsPermission()) {
-          consentState.analytics_storage = 'granted';
-        }
+      gtag('consent', 'update', consentState);
+    });
+  }
 
-        gtag('consent', 'update', consentState);
-      });
-    }
-  });
+  // Start loading when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadTarteaucitron);
+  } else {
+    loadTarteaucitron();
+  }
 </script>
