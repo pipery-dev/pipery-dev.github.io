@@ -13,6 +13,8 @@
                 {{- with .Pre }}
                     <i class="icon {{ . }} sri" aria-hidden="true"></i>
                     <span class="t" role="tooltip">{{ $label }}</span>
+                {{- else }}
+                    <span class="t">{{ .Name }}</span>
                 {{- end }}
                 </a>
             </li>
