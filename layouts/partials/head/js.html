@@ -69,11 +69,9 @@
       'needConsent': true,
       'cookies': ['_ga', '_gat_gtag_UA_*', '_gid', '_gat'],
       'js': function() {
-        if (tarteaucitron.user.analyticsPermission()) {
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted'
-          });
-        }
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
       },
       'fallback': function() {
         gtag('consent', 'update', {
@@ -81,8 +79,6 @@
         });
       }
     };
-
-    tarteaucitron.engage('google_analytics');
   }
 
   if (document.readyState === 'loading') {
