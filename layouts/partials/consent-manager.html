@@ -1,6 +1,5 @@
 {{ "<!-- Tarteaucitron Consent Manager -->" | safeHTML }}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/tarteaucitronjs(tarteaucitron.css)" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/g/tarteaucitronjs(tarteaucitron.min.js)"></script>
 
 <script type="text/javascript">
   // Initialize Google Consent Mode v2 defaults before loading analytics
@@ -12,9 +11,18 @@
     'ad_user_data': 'denied',
     'ad_personalization': 'denied'
   });
+</script>
 
-  // Initialize Tarteaucitron
-  document.addEventListener('DOMContentLoaded', function() {
+<script type="text/javascript" src="https://cdn.jsdelivr.net/g/tarteaucitronjs(tarteaucitron.min.js)" defer></script>
+
+<script type="text/javascript" defer>
+  // Initialize Tarteaucitron after script loads
+  function initTarteaucitron() {
+    if (typeof tarteaucitron === 'undefined') {
+      setTimeout(initTarteaucitron, 100);
+      return;
+    }
+
     tarteaucitron.init({
       'privacyUrl': 'https://pipery.dev/privacy-policy/',
       'identifyingCookiesPolicy': 'simple',
@@ -74,5 +82,8 @@
 
       gtag('consent', 'update', consentState);
     });
-  });
+  }
+
+  // Start initialization
+  initTarteaucitron();
 </script>
