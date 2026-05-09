@@ -40,7 +40,8 @@ https://github.com/alex-shpak/hugo-book
   <script defer src="{{ $swJS.RelPermalink }}" {{ template "integrity" $swJS }}></script>
 {{ end -}}
 
-{{ partial "consent-manager.html" . }}
+{{ partial "consent_manager.html" . }}
+<p>Hello, World!!</p>
 {{ partial "google_analytics.html" . }}
 
 {{- with .OutputFormats.Get "rss" -}}

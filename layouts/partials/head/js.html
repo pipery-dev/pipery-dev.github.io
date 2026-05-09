@@ -1,4 +1,91 @@
 {{ "<!-- js.html -->" | safeHTML }}
+{{ "<!-- Tarteaucitron Consent Manager -->" | safeHTML }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AmauriC/tarteaucitron.js@1.14.0/tarteaucitron.css" />
+
+<script type="text/javascript">
+  // Initialize Google Consent Mode v2 defaults before loading analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied'
+  });
+</script>
+
+<script type="text/javascript">
+  function loadTarteaucitron() {
+    var mainScript = document.createElement('script');
+    mainScript.src = 'https://cdn.jsdelivr.net/gh/AmauriC/tarteaucitron.js@1.14.0/tarteaucitron.min.js';
+    mainScript.onload = function() {
+      var servicesScript = document.createElement('script');
+      servicesScript.src = 'https://cdn.jsdelivr.net/gh/AmauriC/tarteaucitron.js@1.14.0/tarteaucitron.services.min.js';
+      servicesScript.onload = function() {
+        initTarteaucitron();
+      };
+      document.head.appendChild(servicesScript);
+    };
+    document.head.appendChild(mainScript);
+  }
+
+  function initTarteaucitron() {
+    if (typeof tarteaucitron === 'undefined') {
+      setTimeout(initTarteaucitron, 100);
+      return;
+    }
+
+    tarteaucitron.init({
+      'privacyUrl': 'https://pipery.dev/privacy-policy/',
+      'identifyingCookiesPolicy': 'simple',
+      'highPrivacyOffsetScroll': false,
+      'orientation': 'top',
+      'groupServices': false,
+      'showAlertSmall': true,
+      'cookieslist': false,
+      'showIcon': true,
+      'iconPosition': 'BottomRight',
+      'handleBrowserDNTRequest': false,
+      'removeCredit': false,
+      'mandatory': false,
+      'mandatoryCookie': 'UserConsent',
+      'mode': 'gdpr',
+      'useExternalCss': true,
+      'useExternalJs': true,
+      'moreInfoLink': true,
+      'googleConsentMode': true
+    });
+
+    tarteaucitron.services.google_analytics = {
+      'key': 'google-analytics',
+      'type': 'analytics',
+      'name': 'Google Analytics',
+      'uri': 'https://business.safety.google/',
+      'needConsent': true,
+      'cookies': ['_ga', '_gat_gtag_UA_*', '_gid', '_gat'],
+      'js': function() {
+        if (tarteaucitron.user.analyticsPermission()) {
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+          });
+        }
+      },
+      'fallback': function() {
+        gtag('consent', 'update', {
+          'analytics_storage': 'denied'
+        });
+      }
+    };
+
+    tarteaucitron.engage('google_analytics');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadTarteaucitron);
+  } else {
+    loadTarteaucitron();
+  }
+</script>
 {{ "<!-- Google Tag Manager (gtag.js) -->" | safeHTML }}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9H7YEK7XC8"></script>
 <script>
