@@ -1,106 +1,10 @@
 {{ "<!-- js.html -->" | safeHTML }}
-{{ "<!-- Tarteaucitron Consent Manager -->" | safeHTML }}
-<link rel="stylesheet" href="/tarteaucitron/tarteaucitron.css" />
 
-<script type="text/javascript">
-  // Initialize Google Consent Mode v2 defaults before loading analytics
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied'
-  });
-</script>
 
-<script type="text/javascript">
-  function loadTarteaucitron() {
-    var mainScript = document.createElement('script');
-    mainScript.src = '/tarteaucitron/tarteaucitron.min.js';
-    mainScript.onload = function() {
-      var langScript = document.createElement('script');
-      langScript.src = '/tarteaucitron/tarteaucitron.en.min.js';
-      langScript.onload = function() {
-        var servicesScript = document.createElement('script');
-        servicesScript.src = '/tarteaucitron/tarteaucitron.services.min.js';
-        servicesScript.onload = function() {
-          initTarteaucitron();
-        };
-        document.head.appendChild(servicesScript);
-      };
-      document.head.appendChild(langScript);
-    };
-    document.head.appendChild(mainScript);
-  }
+{{ partial "consent_manager.html" . }}
+{{ partial "google_analytics.html" . }}
 
-  function initTarteaucitron() {
-    if (typeof tarteaucitron === 'undefined') {
-      setTimeout(initTarteaucitron, 100);
-      return;
-    }
 
-    tarteaucitron.init({
-      'privacyUrl': 'https://pipery.dev/privacy-policy/',
-      'identifyingCookiesPolicy': 'simple',
-      'highPrivacyOffsetScroll': false,
-      'orientation': 'top',
-      'groupServices': false,
-      'showAlertSmall': true,
-      'cookieslist': false,
-      'showIcon': true,
-      'iconPosition': 'BottomRight',
-      'handleBrowserDNTRequest': false,
-      'removeCredit': false,
-      'mandatory': false,
-      'mandatoryCookie': 'UserConsent',
-      'mode': 'gdpr',
-      'useExternalCss': true,
-      'useExternalJs': true,
-      'moreInfoLink': true,
-      'googleConsentMode': true
-    });
-
-    tarteaucitron.services.google_analytics = {
-      'key': 'google-analytics',
-      'type': 'analytics',
-      'name': 'Google Analytics',
-      'uri': 'https://business.safety.google/',
-      'needConsent': true,
-      'cookies': ['_ga', '_ga_9H7YEK7XC8'],
-      'js': function() {
-        gtag('consent', 'update', {
-          'analytics_storage': 'granted'
-        });
-      },
-      'fallback': function() {
-        gtag('consent', 'update', {
-          'analytics_storage': 'denied'
-        });
-      }
-    };
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadTarteaucitron);
-  } else {
-    loadTarteaucitron();
-  }
-</script>
-{{ "<!-- Google Tag Manager (gtag.js) -->" | safeHTML }}
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9H7YEK7XC8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9H7YEK7XC8', {
-    'anonymize_ip': true,
-    'allow_google_signals': false,
-    'allow_ad_personalization_signals': false,
-    'cookie_prefix': '_ga'
-  });
-</script>
 
 {{- $js_files := slice
     (resources.Get "js/default.js")

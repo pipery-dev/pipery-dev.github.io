@@ -10,10 +10,21 @@
         {{- range . }}
             {{- $label := or .Name .Pre .Identifier }}
             <li><a href="{{ .URL }}" aria-label="{{ $label }}">
-                {{- with .Pre }}
-                    <i class="icon {{ . }} sri" aria-hidden="true"></i>
+                {{- if .Pre }}
+                    {{- $provider := "bootstrap" }}
+                    {{- $icon := .Pre }}
+                    {{- if eq 2 ("@" | split .Pre | len ) }}
+                        {{- $icon = index ("@" | split .Pre ) 0 }}
+                        {{- $provider = index ("@" | split .Pre) 1 }}
+                    {{- end }}
+                    {{- $ctx := dict
+                        "vendor" $provider
+                        "name" $icon
+                    }}
+                    {{ partial "icons/icon" $ctx }}
                     <span class="t" role="tooltip">{{ $label }}</span>
                 {{- else }}
+                    <i class="icon sri" aria-hidden="true">{{ .Identifier }}</i>
                     <span class="t">{{ .Name }}</span>
                 {{- end }}
                 </a>
