@@ -198,8 +198,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-java-ci:v1
-    pipery-custom: pipery-java-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-java-ci:v1
+    pipery-custom: pipery-dev/pipery-java-ci:v1:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

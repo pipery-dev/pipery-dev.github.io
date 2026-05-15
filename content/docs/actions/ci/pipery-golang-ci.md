@@ -186,8 +186,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-golang-ci:v1
-    pipery-custom: pipery-golang-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-golang-ci:v1
+    pipery-custom: pipery-dev/pipery-golang-ci:v1:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

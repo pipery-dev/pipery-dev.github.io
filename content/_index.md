@@ -406,8 +406,8 @@ definitions:
 # bitbucket-pipelines.yml
 definitions:
   imports:
-    pipery-npm-ci: pipery-npm-ci:v1
-    pipery-cloudrun-cd: pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1
+    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
