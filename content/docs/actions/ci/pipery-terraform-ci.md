@@ -193,7 +193,7 @@ pipelines:
       import: pipery-terraform-ci@pipery-custom
 ```
 
-Use `{repo-slug}:{branch-or-tag}` for a shared repository `bitbucket-pipelines.yml`, or `{repo-slug}:{branch-or-tag}:{config-filepath}` for another exported YAML file.
+Use `{project-path}/{repo-slug}:{branch-or-tag}` for a shared repository `bitbucket-pipelines.yml`, or `{project-path}/{repo-slug}:{branch-or-tag}:{config-filepath}` for another exported YAML file.
 
 2. Configure Protected Variables in **Repository Settings > Pipelines > Repository Variables**:
    - `TERRAFORM_VERSION` - Terraform version (default: latest)
