@@ -2,12 +2,12 @@
 title: "Getting started with Pipery Docker CI"
 date: 2026-04-30
 draft: false
-description: "Adopt Pipery Docker CI to lint Dockerfiles, scan images, build containers, run smoke tests, tag images, and push them through GitHub Actions."
+description: "Adopt Pipery Docker CI to lint Dockerfiles, scan images, build containers, run smoke tests, tag images, and push them across CI providers."
 keywords:
   - Pipery Docker CI
   - Docker CI
   - container security scanning
-  - GitHub Actions docker build
+  - Docker CI
   - GHCR automation
 ---
 
@@ -65,4 +65,4 @@ Docker builds can fail for reasons that are annoyingly context-heavy: auth, miss
 
 That is the difference between “the image push step failed somewhere” and “this exact command failed with this exact output.”
 
-Source and docs: [pipery-docker-ci](https://github.com/pipery-dev/pipery-docker-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/pipery-docker-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-docker-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-docker-ci).

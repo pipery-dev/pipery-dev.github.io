@@ -22,6 +22,7 @@ disablePathToLower = true
   youtube = "https://www.youtube.com/@pipery_dev"
   github = "https://github.com/pipery-dev"
   gitlab = "https://gitlab.com/pipery-dev"
+  bitbucket = "https://bitbucket.org/pipery-dev"
   discord = "https://discord.gg/bXwQT9npdN"
 
   googleAnalytics = ""
@@ -137,6 +138,11 @@ disablePathToLower = true
   weight = 45
 
 [[menu.after]]
+  name = "Bitbucket"
+  url = "https://bitbucket.org/pipery-dev"
+  weight = 47
+
+[[menu.after]]
   name = "X"
   url = "https://x.com/piperydev"
   weight = 50
@@ -164,6 +170,13 @@ disablePathToLower = true
   url = "https://gitlab.com/pipery-dev"
   pre = "gitlab"
   weight = 15
+
+[[menu.footer]]
+  identifier = "bitbucket"
+  name = "Bitbucket"
+  url = "https://bitbucket.org/pipery-dev"
+  pre = "bitbucket@font-awesome-brands"
+  weight = 17
 
 [[menu.footer]]
   identifier = "x"

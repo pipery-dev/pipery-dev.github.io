@@ -56,4 +56,4 @@ Terraform workflows often grow hidden complexity around backends, environments, 
 
 If your team is trying to standardize infrastructure checks before merge, this is a strong first action to adopt.
 
-Source and docs: [pipery-terraform-ci](https://github.com/pipery-dev/pipery-terraform-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/pipery-terraform-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-terraform-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-terraform-ci).

@@ -2,11 +2,11 @@
 title: "Getting started with Pipery Python CI"
 date: 2026-04-30
 draft: false
-description: "Use Pipery Python CI to run Bandit, dependency scanning, Ruff, pytest, packaging, and PyPI release in one reusable GitHub Actions workflow."
+description: "Use Pipery Python CI to run Bandit, dependency scanning, Ruff, pytest, packaging, and PyPI release in one reusable pipeline."
 keywords:
   - Pipery Python CI
   - Python CI
-  - pytest GitHub Actions
+  - pytest CI
   - Ruff CI
   - PyPI release automation
 ---
@@ -67,4 +67,4 @@ Python repos tend to drift over time. One project uses Poetry, another uses plai
 
 That makes it easier to adopt a standard without losing debuggability.
 
-Source and docs: [pipery-python-ci](https://github.com/pipery-dev/pipery-python-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/pipery-python-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-python-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-python-ci).

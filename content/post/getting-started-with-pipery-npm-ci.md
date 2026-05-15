@@ -2,11 +2,11 @@
 title: "Getting started with Pipery npm CI"
 date: 2026-04-30
 draft: false
-description: "Set up Pipery npm CI in a Node.js repository to run scanning, linting, tests, packaging, and npm release with structured pipeline logs."
+description: "Set up Pipery npm CI in a Node.js repository to run scanning, linting, tests, packaging, and npm release with structured logs across CI providers."
 keywords:
   - Pipery npm CI
   - Node.js CI
-  - npm GitHub Actions
+  - npm CI
   - ESLint CI
   - pipery.jsonl
 ---
@@ -23,7 +23,7 @@ It is especially helpful when your team wants:
 
 - the same CI behavior across several services
 - predictable release behavior for npm packages
-- searchable logs instead of long unstructured GitHub output
+- searchable logs instead of long unstructured CI output
 
 ## Minimal workflow
 
@@ -73,4 +73,4 @@ That means the repo owner gets a full CI path without rewriting the same workflo
 
 Node pipelines often fail in the annoying middle: lockfile drift, a flaky test, a publish auth issue, an unexpected build script change. Pipery logs each executed command and its output in `pipery.jsonl`, so you can inspect the exact step in the dashboard instead of reconstructing the failure by hand.
 
-Start with the action repo here: [pipery-npm-ci](https://github.com/pipery-dev/pipery-npm-ci).
+Start with the repository that matches your provider: [GitHub](https://github.com/pipery-dev/pipery-npm-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-npm-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-npm-ci).

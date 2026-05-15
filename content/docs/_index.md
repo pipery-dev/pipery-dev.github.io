@@ -8,7 +8,7 @@ weight: 1
 
 # Pipery Documentation
 
-This section collects Pipery pipeline documentation, organized as a tree and refreshed from release-tag README files in the `pipery-dev` GitHub organization. The pipeline repositories host GitHub Actions integrations, GitLab CI templates, and Bitbucket Pipelines configurations from the same CI/CD catalog.
+This section collects Pipery pipeline documentation, organized as a tree and refreshed from release-tag README files in the mirrored `pipery-dev` repositories. The pipeline repositories host GitHub Actions integrations, GitLab CI templates, and Bitbucket Pipelines configurations from the same CI/CD catalog.
 
 - [Action Catalog](/catalog/)
 - [CI Actions](/docs/actions/ci/)

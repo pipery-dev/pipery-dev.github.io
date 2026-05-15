@@ -6,7 +6,7 @@ description: "Ship a container to Google Cloud Run with Pipery Cloud Run CD, inc
 keywords:
   - Pipery Cloud Run CD
   - Cloud Run deployment
-  - GitHub Actions CD
+  - Cloud Run CD
   - Google Cloud Run CI/CD
   - deployment observability
 ---
@@ -54,4 +54,4 @@ The deployment path is straightforward:
 
 Cloud Run deployment is simple enough to start casually and tricky enough to drift over time. One team adds traffic handling, another adds status checks, another copies an old auth pattern. A shared action gives you the same deployment shape everywhere, and Pipery’s `psh` logs make post-deploy debugging much calmer when a rollout does not behave the way you expected.
 
-Source and docs: [pipery-cloudrun-cd](https://github.com/pipery-dev/pipery-cloudrun-cd).
+Source and docs: [GitHub](https://github.com/pipery-dev/pipery-cloudrun-cd), [GitLab](https://gitlab.com/pipery-dev/pipery-cloudrun-cd), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-cloudrun-cd).

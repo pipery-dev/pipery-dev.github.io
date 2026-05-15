@@ -5,7 +5,7 @@ description: "Catalog of Pipery CI and CD pipelines for GitHub Actions, GitLab C
 
 # Pipery Pipeline Catalog
 
-Browse Pipery pipelines by type. Each entry links to the source repository and its docs page, including GitHub Actions usage plus equivalent GitLab CI and Bitbucket Pipelines configuration where available.
+Browse Pipery pipelines by type. Each entry links to the source repository and its docs page, including GitHub Actions usage plus equivalent GitLab CI and Bitbucket Pipelines configuration where available. Pipery repositories are mirrored for provider-native adoption on [GitLab](https://gitlab.com/pipery-dev) and [Bitbucket](https://bitbucket.org/pipery-dev).
 
 ## CI Actions
 

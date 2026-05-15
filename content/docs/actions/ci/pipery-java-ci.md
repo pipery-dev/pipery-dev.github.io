@@ -166,13 +166,15 @@ jobs:
 
 ## GitLab CI
 
-This repository includes a GitLab CI equivalent at `.gitlab-ci.yml`. Copy it into a GitLab project or use it as a reference implementation for running the same Pipery pipeline outside GitHub Actions.
+Use the GitLab mirror template when `.gitlab-ci.yml` is published for this pipeline family. Import it from the mirrored GitLab project or use it as a reference implementation for running the same Pipery pipeline outside GitHub Actions.
 
 The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jsonl` as an artifact, and maintains the same skip controls. Store credentials as protected GitLab CI/CD variables.
 
 ```yaml
 include:
-  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-java-ci/v1/.gitlab-ci.yml
+  - project: pipery-dev/pipery-java-ci
+    ref: v1
+    file: /.gitlab-ci.yml
 ```
 
 ### GitLab CI Variables

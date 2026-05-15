@@ -281,8 +281,12 @@ deploy:
 
 {{< code-block language="yaml" title="After · GitLab CI" tag="After · Pipery templates" tagKind="after" >}}
 include:
-  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-npm-ci/v1/.gitlab-ci.yml
-  - remote: https://raw.githubusercontent.com/pipery-dev/pipery-cloudrun-cd/v1/.gitlab-ci.yml
+  - project: pipery-dev/pipery-npm-ci
+    ref: v1
+    file: /.gitlab-ci.yml
+  - project: pipery-dev/pipery-cloudrun-cd
+    ref: v1
+    file: /.gitlab-ci.yml
 
 stages:
   - ci
@@ -548,6 +552,15 @@ Start with the essentials.
 If you want a faster path than reading every README, start with one of these action-specific guides. Each one shows the workflow shape, the inputs that matter first, and where Pipery observability helps when a run fails.
 
 {{< cards >}}
+  {{< card title="Run Pipery on GitLab" href="/post/running-pipery-on-gitlab-ci/" icon="/images/pipeline.svg" >}}
+    Use GitLab mirror repositories, remote includes, protected variables, and pipery.jsonl artifacts.
+  {{< /card >}}
+  {{< card title="Run Pipery on Bitbucket" href="/post/running-pipery-on-bitbucket-pipelines/" icon="/images/pipeline.svg" >}}
+    Adopt Bitbucket Pipelines with mirrored templates, repository variables, artifacts, and dashboard links.
+  {{< /card >}}
+  {{< card title="New cross-platform features" href="/post/new-cross-platform-features-in-pipery/" icon="/images/pipeline.svg" >}}
+    Review the mirror, template, skip flag, artifact, and dashboard changes across Pipery pipelines.
+  {{< /card >}}
   {{< card title="Start with npm CI" href="/post/getting-started-with-pipery-npm-ci/" icon="/images/actions/npm.svg" >}}
     Set up a reusable Node.js pipeline for scanning, linting, testing, packaging, and npm release.
   {{< /card >}}
@@ -602,6 +615,9 @@ Follow Pipery for platform updates, demos, and release notes.
   {{< /button >}}
   {{< button href="https://gitlab.com/pipery-dev" >}}
     Follow on GitLab
+  {{< /button >}}
+  {{< button href="https://bitbucket.org/pipery-dev" >}}
+    Follow on Bitbucket
   {{< /button >}}
   {{< button href="https://www.youtube.com/@pipery_dev" >}}
     Watch on YouTube
