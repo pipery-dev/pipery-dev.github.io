@@ -201,11 +201,30 @@ Configure these protected variables in **Settings > CI/CD > Variables**:
 
 ## Bitbucket Pipelines
 
-Bitbucket Cloud pipelines provide an alternative to GitHub Actions. The equivalent pipeline configuration is in `bitbucket-pipelines.yml`.
+Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucket shared pipeline imports to reference the exported Pipery pipeline instead of copying YAML into every application repository.
 
 ### Getting Started
 
-1. Copy `bitbucket-pipelines.yml` to your Bitbucket repository root
+1. Add a Bitbucket import source for the shared Pipery pipeline and import the exported pipeline by name:
+
+```yaml
+definitions:
+  imports:
+    pipery-shared: pipery-cloudrun-cd:v1
+    pipery-custom: pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
+
+pipelines:
+  branches:
+    main:
+      import: pipery-cloudrun-cd@pipery-shared
+
+  custom:
+    run-pipery:
+      import: pipery-cloudrun-cd@pipery-custom
+```
+
+Use `{repo-slug}:{branch-or-tag}` for a shared repository `bitbucket-pipelines.yml`, or `{repo-slug}:{branch-or-tag}:{config-filepath}` for another exported YAML file.
+
 2. Configure Protected Variables in **Repository Settings > Pipelines > Repository Variables**:
    - `GCLOUD_SERVICE_KEY_BASE64` - GCP service account key
    - `GCP_PROJECT_ID` - Google Cloud project ID

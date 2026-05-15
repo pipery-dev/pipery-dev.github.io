@@ -357,8 +357,8 @@ pipelines:
 {{< /code-block >}}
 
 {{< code-block language="yaml" title="After · Bitbucket Pipelines" tag="After · Pipery pipeline" tagKind="after" >}}
-# Pipery shared template repository in the same Bitbucket workspace:
-# shared-pipelines/.bitbucket/shared-pipelines.yml
+# Pipery shared pipeline repository in the same Bitbucket workspace:
+# https://bitbucket.org/pipery-dev/pipery-npm-ci/
 export: true
 
 definitions:
@@ -406,17 +406,17 @@ definitions:
 # bitbucket-pipelines.yml
 definitions:
   imports:
-    pipery-custom: shared-pipelines:master:.bitbucket/shared-pipelines.yml
-    pipery-standard: shared-pipelines:master
+    pipery-npm-ci: pipery-npm-ci:v1
+    pipery-cloudrun-cd: pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
     main:
-      import: pipery-npm-to-cloudrun@pipery-custom
+      import: pipery-npm-ci@pipery-npm-ci
 
   custom:
-    run-pipery-npm-to-cloudrun:
-      import: pipery-npm-to-cloudrun@pipery-standard
+    deploy-cloudrun:
+      import: pipery-cloudrun-cd@pipery-cloudrun-cd
 {{< /code-block >}}
 {{< /code-compare >}}
   </div>
@@ -556,7 +556,7 @@ If you want a faster path than reading every README, start with one of these act
     Use GitLab mirror repositories, remote includes, protected variables, and pipery.jsonl artifacts.
   {{< /card >}}
   {{< card title="Run Pipery on Bitbucket" href="/post/running-pipery-on-bitbucket-pipelines/" icon="/images/pipeline.svg" >}}
-    Adopt Bitbucket Pipelines with mirrored templates, repository variables, artifacts, and dashboard links.
+    Adopt Bitbucket Pipelines with shared imports, repository variables, artifacts, and dashboard links.
   {{< /card >}}
   {{< card title="New cross-platform features" href="/post/new-cross-platform-features-in-pipery/" icon="/images/pipeline.svg" >}}
     Review the mirror, template, skip flag, artifact, and dashboard changes across Pipery pipelines.

@@ -29,7 +29,7 @@ include:
     file: /.gitlab-ci.yml
 ```
 
-For Bitbucket, start from the mirrored repository and review the matching `bitbucket-pipelines.yml` together with the `src/` step scripts it calls. When you adopt the template in an application repository, keep those script paths valid.
+For Bitbucket, export shared pipelines from a Pipery pipeline repository and import them from application repositories with `definitions.imports` plus `import: pipeline-name@source-name`.
 
 ## Provider-native templates
 
@@ -39,7 +39,7 @@ Instead, each pipeline family keeps equivalent behavior in provider-native form:
 
 - GitHub Actions uses reusable action calls and `with:` inputs.
 - GitLab CI uses `include: remote`, variables, artifacts, and protected variables.
-- Bitbucket Pipelines uses sequential steps, repository variables, secured values, and artifacts.
+- Bitbucket Pipelines uses shared pipeline imports, repository variables, secured values, and artifacts.
 
 The implementation changes, but the intent stays consistent.
 

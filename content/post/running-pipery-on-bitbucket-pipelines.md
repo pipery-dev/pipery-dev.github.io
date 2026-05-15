@@ -2,7 +2,7 @@
 title: "Running Pipery on Bitbucket Pipelines"
 date: 2026-05-15
 draft: false
-description: "Adopt Pipery on Bitbucket Pipelines with mirrored repositories, repository variables, sequential steps, artifacts, and dashboard links."
+description: "Adopt Pipery on Bitbucket Pipelines with shared pipeline imports, repository variables, artifacts, and dashboard links."
 keywords:
   - Pipery Bitbucket
   - Bitbucket Pipelines
@@ -11,37 +11,57 @@ keywords:
   - Bitbucket CI/CD
 ---
 
-Bitbucket Pipelines is now a first-class Pipery target. Pipery repositories include `bitbucket-pipelines.yml` equivalents, and the mirror repositories on Bitbucket make it easier to review or copy those templates from the same provider your team uses for source control.
+Bitbucket Pipelines is now a first-class Pipery target. Pipery repositories in the `pipery-dev` Bitbucket workspace, such as `https://bitbucket.org/pipery-dev/pipery-npm-ci/` or `https://bitbucket.org/pipery-dev/pipery-cloudrun-cd/`, can expose shared pipeline definitions. Application repositories can import those definitions instead of copying the whole pipeline YAML into every repo.
 
-The important difference is that Bitbucket does not work like GitHub Actions or GitLab stages. Pipery maps the standard pipeline flow into Bitbucket steps, artifacts, secured repository variables, and optional manual release or deploy steps.
+The important difference is that Bitbucket sharing is import-based. You define import sources under `definitions.imports`, then use `import: pipeline-name@import-source-name` under any supported start condition, including `branches`, `pull-requests`, `tags`, and `custom`.
 
-## Start from a mirrored template
+## Import a shared pipeline
 
-In the Pipery Bitbucket workspace, open the pipeline family you want and review its `bitbucket-pipelines.yml` alongside the `src/` step scripts it calls.
-
-The current Bitbucket templates are script-backed. If you copy a template into an application repository, make sure the matching Pipery step scripts are available at the paths used by the YAML, or adapt those paths before committing. A copied YAML file that still calls `bash ./src/step-build.sh` will fail if the application repository does not also contain that `src/` directory.
-
-For an npm project, the provider-native flow is:
+In your application repository, point an import source at the Pipery Bitbucket repository that exports the pipeline. If the exported pipeline lives in that repository's `bitbucket-pipelines.yml`, the import source uses the Pipery repo slug and branch or tag:
 
 ```yaml
-pipelines:
-  default:
-    - step:
-        name: Setup npm Environment
-        script:
-          - cd ${PROJECT_PATH:-.}
-          - npm ci
+definitions:
+  imports:
+    pipery-npm-ci: pipery-npm-ci:v1
 
-    - step:
-        name: Run Pipery build and test steps
-        script:
-          - bash ./path-to-pipery-scripts/step-build.sh
-          - bash ./path-to-pipery-scripts/step-test.sh
-        artifacts:
-          - pipery.jsonl
+pipelines:
+  branches:
+    main:
+      import: pipery-npm-ci@pipery-npm-ci
+
+  custom:
+    run-pipery-npm-ci:
+      import: pipery-npm-ci@pipery-npm-ci
 ```
 
-Use the full Pipery template for production projects. It includes the standard security, lint, build, test, version, package, release, reintegration, log collection, and dashboard-link steps for the selected pipeline.
+If the exported pipeline lives in another file, include the file path in the import source:
+
+```yaml
+definitions:
+  imports:
+    pipery-cloudrun-cd: pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
+
+pipelines:
+  custom:
+    deploy-cloudrun:
+      import: pipery-cloudrun-cd@pipery-cloudrun-cd
+```
+
+## Import source formats
+
+Bitbucket import sources can use three formats:
+
+- `{config-filepath}` for imports within the same repository
+- `{repo-slug}:{branch-or-tag}` for imports from another repository's `bitbucket-pipelines.yml`, such as `pipery-npm-ci:v1`
+- `{repo-slug}:{branch-or-tag}:{config-filepath}` for imports from another file in another repository, such as `pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml`
+
+An import statement always uses:
+
+```text
+{pipeline-name}@{import-source-name}
+```
+
+For external repositories, Bitbucket imports the HEAD commit of the targeted branch. Use a tag instead of a branch when you want application repositories pinned to a specific exported pipeline revision. Pipeline names are matched exactly; glob pattern matching is not supported for import statements.
 
 ## Configure repository variables
 
@@ -80,11 +100,11 @@ That gives reviewers a stable path from a Bitbucket build to the structured Pipe
 
 ## Adoption checklist
 
-1. Choose the matching mirror repository in the Pipery Bitbucket workspace.
-2. Review `bitbucket-pipelines.yml` and the `src/` scripts it references together.
-3. Copy or adapt the template so those script paths exist in your application repository.
+1. Choose the shared Pipery pipeline repository and exported pipeline name.
+2. Add a `definitions.imports` source for the repository, branch or tag, and optional config file path.
+3. Reference the pipeline with `import: pipeline-name@import-source-name`.
 4. Add secured repository variables for credentials.
-5. Start with validation steps and keep release or deploy manual at first.
+5. Start with validation imports and keep release or deploy imports manual at first.
 6. Confirm `pipery.jsonl` appears in artifacts.
 7. Open the generated dashboard link after the first successful run.
 
