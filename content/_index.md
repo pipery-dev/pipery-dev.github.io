@@ -125,10 +125,12 @@ Replace hundreds of lines of brittle vendor-specific workflow logic with a singl
       <i class="icon bitbucket sri" aria-hidden="true"></i>
       <span>Bitbucket Cloud</span>
     </label>
+    <a class="platform-tabs__link platform-tabs__link--github" href="https://github.com/pipery-dev">View on GitHub</a>
+    <a class="platform-tabs__link platform-tabs__link--gitlab" href="https://gitlab.com/pipery-dev">View on GitLab</a>
+    <a class="platform-tabs__link platform-tabs__link--bitbucket" href="https://bitbucket.org/pipery-dev">View on Bitbucket</a>
   </div>
 
   <div class="platform-panel platform-panel--github">
-<p class="platform-panel__link"><a href="https://github.com/pipery-dev">View Pipery on GitHub</a></p>
 {{< code-compare >}}
 {{< code-block language="yaml" title="Before · GitHub Actions" tag="Before · 62 lines" tagKind="before" >}}
 name: Node CI/CD
@@ -239,7 +241,6 @@ jobs:
   </div>
 
   <div class="platform-panel platform-panel--gitlab">
-<p class="platform-panel__link"><a href="https://gitlab.com/pipery-dev">View Pipery on GitLab</a></p>
 {{< code-compare >}}
 {{< code-block language="yaml" title="Before · GitLab CI" tag="Before · vendor YAML" tagKind="before" >}}
 stages:
@@ -320,7 +321,6 @@ pipery_cloudrun_cd:
   </div>
 
   <div class="platform-panel platform-panel--bitbucket">
-<p class="platform-panel__link"><a href="https://bitbucket.org/pipery-dev">View Pipery on Bitbucket</a></p>
 {{< code-compare >}}
 {{< code-block language="yaml" title="Before · Bitbucket Pipelines" tag="Before · vendor YAML" tagKind="before" >}}
 image: node:20

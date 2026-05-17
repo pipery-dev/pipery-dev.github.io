@@ -873,6 +873,8 @@ section[id] > p:first-of-type {
 /* ---------- Platform compare ---------- */
 .platform-compare {
   margin-top: 2rem;
+  --platform-hue: 190;
+  --platform-saturation: 82%;
 }
 
 .platform-compare__radio {
@@ -891,9 +893,14 @@ section[id] > p:first-of-type {
   align-items: center;
   margin-bottom: 1.5rem;
   padding: 0.5rem;
-  border: 1px solid var(--pipery-border-soft);
+  border: 1px solid hsl(var(--platform-hue) var(--platform-saturation) 70% / 0.24);
   border-radius: var(--radius-lg);
-  background: rgba(8, 12, 22, 0.48);
+  background:
+    linear-gradient(135deg,
+      hsl(var(--platform-hue) var(--platform-saturation) 54% / 0.18),
+      rgba(8, 12, 22, 0.66) 68%);
+  box-shadow: 0 0 0 1px hsl(var(--platform-hue) var(--platform-saturation) 58% / 0.06) inset;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 .platform-tab {
@@ -934,34 +941,72 @@ section[id] > p:first-of-type {
   display: none;
 }
 
-.platform-panel__link {
-  margin: 0 0 1rem;
+.platform-tabs__link {
+  display: none;
+  margin-left: auto;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid hsl(var(--platform-hue) var(--platform-saturation) 72% / 0.24);
+  border-radius: var(--radius-md);
+  background: hsl(var(--platform-hue) var(--platform-saturation) 54% / 0.12);
+  color: var(--pipery-fg-0);
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
 }
 
-.platform-panel__link a {
-  color: var(--pipery-cyan);
+.platform-tabs__link:hover {
+  border-color: hsl(var(--platform-hue) var(--platform-saturation) 76% / 0.42);
+  background: hsl(var(--platform-hue) var(--platform-saturation) 58% / 0.20);
+  color: #fff;
 }
 
-.platform-panel__link a:hover {
-  color: var(--pipery-fg-0);
+#platform-github:checked ~ .platform-tabs {
+  --platform-hue: 266;
+  --platform-saturation: 78%;
+}
+
+#platform-gitlab:checked ~ .platform-tabs {
+  --platform-hue: 28;
+  --platform-saturation: 88%;
+}
+
+#platform-bitbucket:checked ~ .platform-tabs {
+  --platform-hue: 210;
+  --platform-saturation: 90%;
+}
+
+#platform-github:checked ~ .platform-tabs .platform-tabs__link--github,
+#platform-gitlab:checked ~ .platform-tabs .platform-tabs__link--gitlab,
+#platform-bitbucket:checked ~ .platform-tabs .platform-tabs__link--bitbucket {
+  display: inline-flex;
 }
 
 #platform-github:checked ~ .platform-tabs .platform-tab--github,
 #platform-gitlab:checked ~ .platform-tabs .platform-tab--gitlab,
 #platform-bitbucket:checked ~ .platform-tabs .platform-tab--bitbucket {
   color: var(--pipery-fg-0);
-  border-color: var(--pipery-border-cyan);
-  background: rgba(6, 182, 212, 0.12);
-  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.08) inset;
+  border-color: hsl(var(--platform-hue) var(--platform-saturation) 74% / 0.34);
+  background: hsl(var(--platform-hue) var(--platform-saturation) 56% / 0.16);
+  box-shadow: 0 0 0 1px hsl(var(--platform-hue) var(--platform-saturation) 62% / 0.10) inset;
 }
 
 #platform-github:checked ~ .platform-panel--github,
 #platform-gitlab:checked ~ .platform-panel--gitlab,
 #platform-bitbucket:checked ~ .platform-panel--bitbucket {
   display: block;
+}
+
+@media (max-width: 720px) {
+  .platform-tabs__link {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
 }
 
 /* ---------- CTA ---------- */
