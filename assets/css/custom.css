@@ -934,6 +934,21 @@ section[id] > p:first-of-type {
   display: none;
 }
 
+.platform-panel__link {
+  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.platform-panel__link a {
+  color: var(--pipery-cyan);
+}
+
+.platform-panel__link a:hover {
+  color: var(--pipery-fg-0);
+}
+
 #platform-github:checked ~ .platform-tabs .platform-tab--github,
 #platform-gitlab:checked ~ .platform-tabs .platform-tab--gitlab,
 #platform-bitbucket:checked ~ .platform-tabs .platform-tab--bitbucket {
