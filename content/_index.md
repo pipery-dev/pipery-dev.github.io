@@ -100,6 +100,27 @@ Pipery is moving CI/CD from provider-specific workflow files toward reusable del
 {{< /features >}}
 {{< /section >}}
 
+{{< section id="automation-bots" >}}
+<h2>Release and deploy bots for GitHub</h2>
+
+Pipery also includes GitHub App services for the parts of delivery that should be deliberate: creating release branches, tagging releases, and scheduling one-time deploys with a clear audit trail.
+
+{{< features >}}
+  {{< feature icon="shield" title="pipery-release-bot" >}}Create configured `release/*` branches through a GitHub App, optionally tag them, and publish GitHub Releases from markdown release notes stored in the repository.{{< /feature >}}
+  {{< feature icon="clock" title="pipery-deploy-bot" >}}Schedule a one-time deploy from a workflow, trigger the selected GitHub Actions job at the requested time, and track attempts in Postgres with a dashboard.{{< /feature >}}
+  {{< feature icon="chart" title="ArgoCD handoff" >}}Both bots ship Helm charts and publish ArgoCD Application updates into the private `pipery-argocd` repository on every release.{{< /feature >}}
+{{< /features >}}
+
+{{< buttons >}}
+  {{< button href="/docs/bots/pipery-release-bot/" primary="true" >}}
+    Release Bot Docs
+  {{< /button >}}
+  {{< button href="/docs/bots/pipery-deploy-bot/" >}}
+    Deploy Bot Docs
+  {{< /button >}}
+{{< /buttons >}}
+{{< /section >}}
+
 {{< section id="how-it-works" >}}
 <h2>How it works</h2>
 

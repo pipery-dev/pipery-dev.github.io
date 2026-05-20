@@ -13,4 +13,5 @@ This section collects Pipery pipeline documentation, organized as a tree and ref
 - [Action Catalog](/catalog/)
 - [CI Actions](/docs/actions/ci/)
 - [CD Actions](/docs/actions/cd/)
+- [GitHub Bots](/docs/bots/)
 - [Start Pipery](https://start.pipery.dev)
