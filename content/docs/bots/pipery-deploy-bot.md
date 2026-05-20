@@ -90,7 +90,7 @@ The chart can run the Postgres migration as a Helm pre-install/pre-upgrade hook.
 
 ## ArgoCD Release Flow
 
-The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also updates `pipery-dev/pipery-argocd`:
+The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd` to update `pipery-dev/pipery-argocd`:
 
 - `applications/pipery-deploy-bot/application.yaml`
 - `applications/pipery-deploy-bot/values.yaml`

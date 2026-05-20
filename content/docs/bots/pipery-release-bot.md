@@ -81,7 +81,7 @@ helm upgrade --install pipery-release-bot ./charts/pipery-release-bot \
 
 ## ArgoCD Release Flow
 
-The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also updates `pipery-dev/pipery-argocd`:
+The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd` to update `pipery-dev/pipery-argocd`:
 
 - `applications/pipery-release-bot/application.yaml`
 - `applications/pipery-release-bot/values.yaml`
