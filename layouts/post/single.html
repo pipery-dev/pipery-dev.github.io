@@ -1,0 +1,15 @@
+{{ define "main" }}
+<article id="main-article" class="pagewidth markdown book-post pipery-post-full">
+  <header>
+    <h1>{{ partial "docs/title" . }}</h1>
+    {{ partial "docs/post-meta" . }}
+  </header>
+  <div id="content" class="book-post-content markdown-inner">
+    {{- .Content -}}
+  </div>
+</article>
+{{ end }}
+
+{{ define "footer" }}
+  {{ partial "docs/post-prev-next" . }}
+{{ end }}

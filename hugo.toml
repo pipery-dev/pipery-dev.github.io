@@ -42,7 +42,7 @@ disablePathToLower = true
 
 [params.author]
   name = "Pipery"
-  email = "hello@pipery.dev"
+  email = "admin@pipery.dev"
 
 [params.favicon]
   ico = "/favicon.ico"
@@ -108,9 +108,14 @@ disablePathToLower = true
   weight = 4
 
 [[menu.main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 5
+
+[[menu.main]]
   name = "Get Started"
   url = "https://start.pipery.dev"
-  weight = 5
+  weight = 6
 
 [[menu.after]]
   name = "Home"
@@ -126,6 +131,11 @@ disablePathToLower = true
   name = "Start"
   url = "https://start.pipery.dev"
   weight = 30
+
+[[menu.after]]
+  name = "Contact"
+  url = "https://pipery.dev/contact/"
+  weight = 35
 
 [[menu.after]]
   name = "GitHub"
@@ -156,6 +166,13 @@ disablePathToLower = true
   name = "Discord"
   url = "https://discord.gg/bXwQT9npdN"
   weight = 70
+
+[[menu.footer]]
+  identifier = "contact"
+  name = "Contact"
+  url = "/contact/"
+  pre = "envelope"
+  weight = 5
 
 [[menu.footer]]
   identifier = "github"

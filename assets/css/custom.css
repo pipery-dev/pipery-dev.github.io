@@ -415,6 +415,19 @@ body > header {
   overflow-x: auto;
 }
 
+#observability .feature-grid {
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+#observability .feature-card {
+  min-height: auto;
+}
+
+#observability .code-block {
+  clear: both;
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
 /* ---------- Sections ---------- */
 .hero-section,
 section[id],
@@ -451,6 +464,53 @@ section[id] {
 #built-for-teams,
 #cta {
   padding-inline: 0.5rem;
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 42rem);
+  margin: 1.75rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--pipery-border);
+  border-radius: var(--radius-lg);
+  background: var(--pipery-bg-card);
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--pipery-fg-1);
+  font-weight: 700;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--pipery-border-soft);
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.92);
+  color: var(--pipery-fg-0);
+  font: inherit;
+  padding: 0.75rem 0.85rem;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form button {
+  justify-self: start;
+  border: 1px solid var(--pipery-primary);
+  border-radius: var(--radius-pill);
+  background: var(--pipery-primary);
+  color: #F8FBFF;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.85rem 1.3rem;
 }
 
 section[id] h2 {
@@ -1040,6 +1100,53 @@ main#home {
   padding-bottom: 4rem;
 }
 
+.pipery-post-list,
+.pipery-post-full {
+  width: min(100%, 76rem);
+  max-width: 76rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.pipery-post-list .book-post,
+.pipery-post-full {
+  width: 100%;
+}
+
+.pipery-post-list .book-post-container {
+  align-items: stretch;
+}
+
+.pipery-post-list .book-post-summary {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pipery-post-list .book-post-content,
+.pipery-post-full .book-post-content {
+  width: 100%;
+  max-width: none;
+}
+
+.pipery-post-full h1,
+.pipery-post-full h2,
+.pipery-post-full h3 {
+  max-width: 64rem;
+}
+
+.pipery-post-full p,
+.pipery-post-full ul,
+.pipery-post-full ol,
+.pipery-post-full blockquote {
+  max-width: 64rem;
+}
+
+.pipery-post-full pre,
+.pipery-post-full .highlight,
+.pipery-post-full table {
+  max-width: 100%;
+}
+
 /* ---------- Responsive ---------- */
 @media (min-width: 768px) {
   .code-compare {
@@ -1183,4 +1290,18 @@ body > header.pagewidth,
 #content pre code {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+#main-article.pipery-post-full,
+#main-article.pipery-post-full > header,
+#main-article.pipery-post-full #content {
+  width: min(100%, 76rem);
+  max-width: 76rem;
+}
+
+#main-article.pipery-post-full #content > p,
+#main-article.pipery-post-full #content > ul,
+#main-article.pipery-post-full #content > ol,
+#main-article.pipery-post-full #content > blockquote {
+  max-width: 64rem;
 }

@@ -653,32 +653,8 @@ Start shipping faster with Pipery.
   {{< button href="https://start.pipery.dev" primary="true" >}}
     Get started for free
   {{< /button >}}
-  {{< button href="mailto:hello@pipery.dev" >}}
-    Talk to us
+  {{< button href="/contact/" >}}
+    Contact us
   {{< /button >}}
 {{< /buttons >}}
 {{< /cta >}}
-
-{{< section id="social-accounts" class="social-section" >}}
-<h2>Social accounts</h2>
-
-Follow Pipery for platform updates, demos, and release notes.
-
-{{< buttons >}}
-  {{< button href="https://x.com/piperydev" primary="true" >}}
-    Follow on X
-  {{< /button >}}
-  {{< button href="https://gitlab.com/pipery-dev" >}}
-    Follow on GitLab
-  {{< /button >}}
-  {{< button href="https://bitbucket.org/pipery-dev" >}}
-    Follow on Bitbucket
-  {{< /button >}}
-  {{< button href="https://www.youtube.com/@pipery_dev" >}}
-    Watch on YouTube
-  {{< /button >}}
-  {{< button href="https://discord.gg/bXwQT9npdN" >}}
-    Contact us on Discord
-  {{< /button >}}
-{{< /buttons >}}
-{{< /section >}}
