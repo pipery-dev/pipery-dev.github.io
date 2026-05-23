@@ -8,13 +8,13 @@ weight: 8
 # Pipery Terraform CI
 
 - Repository: [`pipery-terraform-ci`](https://github.com/pipery-dev/pipery-terraform-ci)
-- Release tag: `v3`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete Terraform CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Terraform%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-terraform-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-terraform-ci@v1
+      - uses: pipery-dev/pipery-terraform-ci@v1.1.0
         with:
           project_path: .
           terraform_version: latest
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-terraform-ci@v1
+      - uses: pipery-dev/pipery-terraform-ci@v1.1.0
         with:
           project_path: .
           terraform_version: latest
@@ -100,7 +100,7 @@ jobs:
 ### Example 2: With backend configuration
 
 ```yaml
-- uses: pipery-dev/pipery-terraform-ci@v1
+- uses: pipery-dev/pipery-terraform-ci@v1.1.0
   with:
     project_path: ./infrastructure
     terraform_version: 1.7
@@ -110,7 +110,7 @@ jobs:
 ### Example 3: Using variables file
 
 ```yaml
-- uses: pipery-dev/pipery-terraform-ci@v1
+- uses: pipery-dev/pipery-terraform-ci@v1.1.0
   with:
     project_path: .
     terraform_version: latest
@@ -120,7 +120,7 @@ jobs:
 ### Example 4: Skip security checks
 
 ```yaml
-- uses: pipery-dev/pipery-terraform-ci@v1
+- uses: pipery-dev/pipery-terraform-ci@v1.1.0
   with:
     project_path: .
     skip_sast: true
@@ -130,7 +130,7 @@ jobs:
 ### Example 5: Multiple workspaces
 
 ```yaml
-- uses: pipery-dev/pipery-terraform-ci@v1
+- uses: pipery-dev/pipery-terraform-ci@v1.1.0
   with:
     project_path: ./terraform/prod
     working_directory: ./terraform/prod
@@ -141,7 +141,7 @@ jobs:
 ### Example 6: Custom Terraform version with release
 
 ```yaml
-- uses: pipery-dev/pipery-terraform-ci@v1
+- uses: pipery-dev/pipery-terraform-ci@v1.1.0
   with:
     project_path: .
     terraform_version: 1.6
@@ -157,7 +157,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-terraform-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -180,8 +180,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-terraform-ci:v1
-    pipery-custom: pipery-dev/pipery-terraform-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-terraform-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-terraform-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

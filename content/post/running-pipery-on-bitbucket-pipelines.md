@@ -22,7 +22,7 @@ In your application repository, point an import source at the Pipery Bitbucket r
 ```yaml
 definitions:
   imports:
-    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1
+    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1.1.0
 
 pipelines:
   branches:
@@ -39,7 +39,7 @@ If the exported pipeline lives in another file, include the file path in the imp
 ```yaml
 definitions:
   imports:
-    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   custom:
@@ -52,8 +52,8 @@ pipelines:
 Bitbucket import sources can use three formats:
 
 - `{config-filepath}` for imports within the same repository
-- `{project-path}/{repo-slug}:{branch-or-tag}` for imports from another repository's `bitbucket-pipelines.yml`, such as `pipery-dev/pipery-npm-ci:v1`
-- `{project-path}/{repo-slug}:{branch-or-tag}:{config-filepath}` for imports from another file in another repository, such as `pipery-dev/pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml`
+- `{project-path}/{repo-slug}:{branch-or-tag}` for imports from another repository's `bitbucket-pipelines.yml`, such as `pipery-dev/pipery-npm-ci:v1.1.0`
+- `{project-path}/{repo-slug}:{branch-or-tag}:{config-filepath}` for imports from another file in another repository, such as `pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml`
 
 An import statement always uses:
 

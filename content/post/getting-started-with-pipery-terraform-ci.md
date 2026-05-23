@@ -25,7 +25,7 @@ on:
 
 jobs:
   ci:
-    uses: pipery-dev/pipery-terraform-ci@v1
+    uses: pipery-dev/pipery-terraform-ci@v1.1.0
     with:
       project_path: .
     secrets: inherit

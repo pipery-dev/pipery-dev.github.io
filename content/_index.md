@@ -80,9 +80,31 @@ It provides production-grade, reusable CI/CD pipelines that are standardized, ve
     {{< stat n="60%" l="less YAML per repo" s="Measured across migrated repos." icon="copy" >}}{{< /stat >}}
     {{< stat n="3.4×" l="faster average build" s="Better defaults, cached layers." icon="bolt" >}}{{< /stat >}}
     {{< stat n="100%" l="reviewed pipelines" s="Every release is code-reviewed." icon="shield" >}}{{< /stat >}}
-    {{< stat n="v1+" l="pinned and stable" s="Semver, with predictable upgrades." icon="box" >}}{{< /stat >}}
+    {{< stat n="v1.1.0" l="latest action release" s="Semver, with predictable upgrades." icon="box" >}}{{< /stat >}}
   {{< /meet-col >}}
 {{< /meet >}}
+{{< /section >}}
+
+{{< section id="latest-release" >}}
+<h2>Latest release: v1.1.0</h2>
+
+The current Pipery action release is `v1.1.0` across the supported CI and CD action catalog. This release focuses on portability, release safety, and GitOps handoff: Go and C/C++ actions support cross-platform compilation, action scenario tests run before release, and the ArgoCD CD action can validate Helm charts before publishing deployment updates.
+
+{{< features >}}
+  {{< feature icon="box" title="Pinned action versions" >}}Use exact `v1.1.0` tags in GitHub Actions, GitLab CI includes, and Bitbucket shared pipeline imports when you want fully reproducible adoption.{{< /feature >}}
+  {{< feature icon="standard" title="Cross-platform builds" >}}Go and C/C++ CI can build release artifacts for Linux amd64, Linux arm64, Windows amd64, and Darwin amd64 targets.{{< /feature >}}
+  {{< feature icon="check" title="Release-tested actions" >}}Each action repository keeps runnable test projects and scenario coverage so workflow changes are tested before a new release is published.{{< /feature >}}
+  {{< feature icon="chart" title="GitOps deployment updates" >}}`pipery-argocd-cd@v1.1.0` can validate Helm dependencies, lint charts, render templates, and publish values-driven ArgoCD updates.{{< /feature >}}
+{{< /features >}}
+
+{{< buttons >}}
+  {{< button href="/docs/releases/v1-1/" primary="true" >}}
+    Read v1.1.0 Notes
+  {{< /button >}}
+  {{< button href="/catalog/" >}}
+    Browse v1.1.0 Catalog
+  {{< /button >}}
+{{< /buttons >}}
 {{< /section >}}
 
 {{< section id="vendor-neutral" >}}
@@ -108,7 +130,7 @@ Pipery also includes GitHub App services for the parts of delivery that should b
 {{< features >}}
   {{< feature icon="shield" title="pipery-release-bot" >}}Create configured `release/*` branches through a GitHub App, optionally tag them, and publish GitHub Releases from markdown release notes stored in the repository.{{< /feature >}}
   {{< feature icon="clock" title="pipery-deploy-bot" >}}Schedule a one-time deploy from a workflow, trigger the selected GitHub Actions job at the requested time, and track attempts in Postgres with a dashboard.{{< /feature >}}
-  {{< feature icon="chart" title="ArgoCD handoff" >}}Both bots ship Helm charts and publish ArgoCD Application updates into the private `pipery-argocd` repository on every release.{{< /feature >}}
+  {{< feature icon="chart" title="Dex and ArgoCD handoff" >}}Bots validate Dex-issued tokens, ship Helm charts, and publish ArgoCD Application updates into the private `pipery-argocd` repository on every release.{{< /feature >}}
 {{< /features >}}
 
 {{< buttons >}}
@@ -238,7 +260,7 @@ permissions:
 
 jobs:
   ci:
-    uses: pipery-dev/pipery-npm-ci@v0
+    uses: pipery-dev/pipery-npm-ci@v1.1.0
     with:
       node_version: 20
       package_manager: npm
@@ -251,7 +273,7 @@ jobs:
   deploy:
     needs: ci
     if: github.ref == 'refs/heads/main'
-    uses: pipery-dev/pipery-cloudrun-cd@v0
+    uses: pipery-dev/pipery-cloudrun-cd@v1.1.0
     with:
       image_name: api
       region: europe-west1
@@ -306,10 +328,10 @@ deploy:
 {{< code-block language="yaml" title="After · GitLab CI" tag="After · Pipery templates" tagKind="after" >}}
 include:
   - project: pipery-dev/pipery-npm-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
   - project: pipery-dev/pipery-cloudrun-cd
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 
 stages:
@@ -430,8 +452,8 @@ definitions:
 # bitbucket-pipelines.yml
 definitions:
   imports:
-    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1
-    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1.1.0
+    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
@@ -521,28 +543,28 @@ Start with the essentials.
 
 {{< cards >}}
   {{< card title="pipery-docker-ci" href="https://github.com/pipery-dev/pipery-docker-ci" icon="/images/actions/docker.svg" >}}
-    Docker CI: lint (hadolint) → SAST → SCA → build → test → version → push to registry. `pipery-dev/pipery-docker-ci@v0`
+    Docker CI: lint (hadolint) → SAST → SCA → build → test → version → push to registry. `pipery-dev/pipery-docker-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-golang-ci" href="https://github.com/pipery-dev/pipery-golang-ci" icon="/images/actions/golang.svg" >}}
-    Go CI: SAST → SCA → lint (golangci-lint) → build → test → version → cross-compile → GitHub release. `pipery-dev/pipery-golang-ci@v0`
+    Go CI: SAST → SCA → lint (golangci-lint) → build → test → version → cross-compile → GitHub release. `pipery-dev/pipery-golang-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-npm-ci" href="https://github.com/pipery-dev/pipery-npm-ci" icon="/images/actions/npm.svg" >}}
-    npm/Node.js CI: SAST → SCA → lint (ESLint) → build → test → version → npm publish. `pipery-dev/pipery-npm-ci@v0`
+    npm/Node.js CI: SAST → SCA → lint (ESLint) → build → test → version → npm publish. `pipery-dev/pipery-npm-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-python-ci" href="https://github.com/pipery-dev/pipery-python-ci" icon="/images/actions/python.svg" >}}
-    Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v0`
+    Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-java-ci" href="https://github.com/pipery-dev/pipery-java-ci" icon="/images/actions/java.svg" >}}
-    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Groovy. `pipery-dev/pipery-java-ci@v0`
+    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Groovy. `pipery-dev/pipery-java-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-cpp-ci" href="https://github.com/pipery-dev/pipery-cpp-ci" icon="/images/actions/cpp.svg" >}}
-    C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/pipery-cpp-ci@v0`
+    C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/pipery-cpp-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-rust-ci" href="https://github.com/pipery-dev/pipery-rust-ci" icon="/images/actions/rust.svg" >}}
-    Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/pipery-rust-ci@v0`
+    Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/pipery-rust-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-terraform-ci" href="https://github.com/pipery-dev/pipery-terraform-ci" icon="/images/actions/terraform.svg" >}}
-    Terraform CI: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release. `pipery-dev/pipery-terraform-ci@v0`
+    Terraform CI: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release. `pipery-dev/pipery-terraform-ci@v1.1.0`
   {{< /card >}}
 {{< /cards >}}
 
@@ -550,22 +572,22 @@ Start with the essentials.
 
 {{< cards >}}
   {{< card title="pipery-argocd-cd" href="https://github.com/pipery-dev/pipery-argocd-cd" icon="/images/actions/argocd.svg" >}}
-    ArgoCD CD: update image tag & values → ArgoCD sync → wait for Argo Rollout. GitOps-native deployment. `pipery-dev/pipery-argocd-cd@v0`
+    ArgoCD CD: update image tag & values → ArgoCD sync → wait for Argo Rollout. GitOps-native deployment. `pipery-dev/pipery-argocd-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-helm-cd" href="https://github.com/pipery-dev/pipery-helm-cd" icon="/images/actions/helm.svg" >}}
-    Helm CD: update chart values → helm upgrade → wait for rollout. Deploy any workload via Helm. `pipery-dev/pipery-helm-cd@v0`
+    Helm CD: update chart values → helm upgrade → wait for rollout. Deploy any workload via Helm. `pipery-dev/pipery-helm-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-cloudrun-cd" href="https://github.com/pipery-dev/pipery-cloudrun-cd" icon="/images/actions/cloudrun.svg" >}}
-    Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/pipery-cloudrun-cd@v0`
+    Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/pipery-cloudrun-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-ansible-cd" href="https://github.com/pipery-dev/pipery-ansible-cd" icon="/images/actions/ansible.svg" >}}
-    Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/pipery-ansible-cd@v0`
+    Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/pipery-ansible-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-docker-cd" href="https://github.com/pipery-dev/pipery-docker-cd" icon="/images/actions/docker.svg" >}}
-    Docker CD: docker-compose up or docker swarm deploy → health check. Deploy containerized workloads directly. `pipery-dev/pipery-docker-cd@v0`
+    Docker CD: docker-compose up or docker swarm deploy → health check. Deploy containerized workloads directly. `pipery-dev/pipery-docker-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-terraform-cd" href="https://github.com/pipery-dev/pipery-terraform-cd" icon="/images/actions/terraform.svg" >}}
-    Terraform CD: terraform plan → terraform apply → state management and drift detection. Infrastructure as code deployment. `pipery-dev/pipery-terraform-cd@v0`
+    Terraform CD: terraform plan → terraform apply → state management and drift detection. Infrastructure as code deployment. `pipery-dev/pipery-terraform-cd@v1.1.0`
   {{< /card >}}
 {{< /cards >}}
 {{< /section >}}
@@ -584,6 +606,15 @@ If you want a faster path than reading every README, start with one of these act
   {{< /card >}}
   {{< card title="New cross-platform features" href="/post/new-cross-platform-features-in-pipery/" icon="/images/pipeline.svg" >}}
     Review the mirror, template, skip flag, artifact, and dashboard changes across Pipery pipelines.
+  {{< /card >}}
+  {{< card title="What changed in v1.1.0" href="/post/pipery-1-1-release/" icon="/images/pipeline.svg" >}}
+    See the latest action versions, cross-platform build work, ArgoCD chart publishing, and release-test coverage.
+  {{< /card >}}
+  {{< card title="Use Dex for Pipery auth" href="/post/dex-auth-for-pipery-apps/" icon="/images/actions/argocd.svg" >}}
+    Configure one Dex issuer for bots while dashboard and workflow-gen keep provider OAuth tokens for API work.
+  {{< /card >}}
+  {{< card title="Schedule one-time deploys" href="/post/scheduling-one-time-deploys/" icon="/images/actions/helm.svg" >}}
+    Use pipery-deploy-bot when a deployment has a fixed release window but should not be a recurring cron.
   {{< /card >}}
   {{< card title="Start with npm CI" href="/post/getting-started-with-pipery-npm-ci/" icon="/images/actions/npm.svg" >}}
     Set up a reusable Node.js pipeline for scanning, linting, testing, packaging, and npm release.

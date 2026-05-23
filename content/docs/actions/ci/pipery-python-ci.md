@@ -8,13 +8,13 @@ weight: 6
 # Pipery Python CI
 
 - Repository: [`pipery-python-ci`](https://github.com/pipery-dev/pipery-python-ci)
-- Release tag: `v1`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete Python CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Python%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-python-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-python-ci@v1
+      - uses: pipery-dev/pipery-python-ci@v1.1.0
         with:
           project_path: .
           pypi_token: ${{ secrets.PYPI_TOKEN }}
@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-python-ci@v1
+      - uses: pipery-dev/pipery-python-ci@v1.1.0
         with:
           project_path: .
           python_version: "3.11"
@@ -109,7 +109,7 @@ jobs:
 ### Example 2: Poetry-based project
 
 ```yaml
-- uses: pipery-dev/pipery-python-ci@v1
+- uses: pipery-dev/pipery-python-ci@v1.1.0
   with:
     project_path: .
     package_manager: poetry
@@ -120,7 +120,7 @@ jobs:
 ### Example 3: Run specific test modules
 
 ```yaml
-- uses: pipery-dev/pipery-python-ci@v1
+- uses: pipery-dev/pipery-python-ci@v1.1.0
   with:
     project_path: .
     tests_path: tests/unit tests/integration
@@ -131,7 +131,7 @@ jobs:
 ### Example 4: Skip security checks for quick CI
 
 ```yaml
-- uses: pipery-dev/pipery-python-ci@v1
+- uses: pipery-dev/pipery-python-ci@v1.1.0
   with:
     project_path: .
     skip_sast: true
@@ -142,7 +142,7 @@ jobs:
 ### Example 5: Python 3.9 with uv package manager
 
 ```yaml
-- uses: pipery-dev/pipery-python-ci@v1
+- uses: pipery-dev/pipery-python-ci@v1.1.0
   with:
     project_path: .
     python_version: "3.9"
@@ -154,7 +154,7 @@ jobs:
 ### Example 6: Minor version bump
 
 ```yaml
-- uses: pipery-dev/pipery-python-ci@v1
+- uses: pipery-dev/pipery-python-ci@v1.1.0
   with:
     project_path: .
     version_bump: minor
@@ -171,7 +171,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-python-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -196,8 +196,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-python-ci:v1
-    pipery-custom: pipery-dev/pipery-python-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-python-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-python-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

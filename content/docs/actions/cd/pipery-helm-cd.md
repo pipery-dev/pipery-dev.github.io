@@ -8,13 +8,13 @@ weight: 7
 # Pipery Helm CD
 
 - Repository: [`pipery-helm-cd`](https://github.com/pipery-dev/pipery-helm-cd)
-- Release tag: `v3`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for Helm-based Kubernetes deployment with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Helm%20CD-blue?logo=github)](https://github.com/marketplace/actions/pipery-helm-cd)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-helm-cd@v1
+      - uses: pipery-dev/pipery-helm-cd@v1.1.0
         with:
           release_name: my-release
           chart: ./helm/my-chart
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-helm-cd@v1
+      - uses: pipery-dev/pipery-helm-cd@v1.1.0
         with:
           release_name: my-release
           chart: ./helm/my-chart
@@ -102,7 +102,7 @@ jobs:
 ### Example 2: Deploy from Helm repository
 
 ```yaml
-- uses: pipery-dev/pipery-helm-cd@v1
+- uses: pipery-dev/pipery-helm-cd@v1.1.0
   with:
     release_name: my-app
     chart: bitnami/my-app
@@ -114,7 +114,7 @@ jobs:
 ### Example 3: Custom values with set flags
 
 ```yaml
-- uses: pipery-dev/pipery-helm-cd@v1
+- uses: pipery-dev/pipery-helm-cd@v1.1.0
   with:
     release_name: my-app
     chart: ./helm/my-app
@@ -126,7 +126,7 @@ jobs:
 ### Example 4: Long-running deployment with timeout
 
 ```yaml
-- uses: pipery-dev/pipery-helm-cd@v1
+- uses: pipery-dev/pipery-helm-cd@v1.1.0
   with:
     release_name: my-app
     chart: ./helm/my-app
@@ -138,7 +138,7 @@ jobs:
 ### Example 5: Disable automatic rollback
 
 ```yaml
-- uses: pipery-dev/pipery-helm-cd@v1
+- uses: pipery-dev/pipery-helm-cd@v1.1.0
   with:
     release_name: my-app
     chart: ./helm/my-app
@@ -150,7 +150,7 @@ jobs:
 ### Example 6: OCI chart from registry
 
 ```yaml
-- uses: pipery-dev/pipery-helm-cd@v1
+- uses: pipery-dev/pipery-helm-cd@v1.1.0
   with:
     release_name: my-app
     chart: oci://ghcr.io/my-org/my-chart
@@ -167,7 +167,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-helm-cd
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -190,8 +190,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-helm-cd:v1
-    pipery-custom: pipery-dev/pipery-helm-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-helm-cd:v1.1.0
+    pipery-custom: pipery-dev/pipery-helm-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

@@ -14,3 +14,5 @@ Pipery bots are small GitHub App services for release and deploy workflows that 
 - [pipery-deploy-bot](/docs/bots/pipery-deploy-bot/) schedules one-time GitHub Actions deploys and records trigger attempts in Postgres.
 
 Both bots ship Helm charts and publish ArgoCD Application updates to the private `pipery-dev/pipery-argocd` repository from their CI workflows.
+
+Both bots can also validate Dex-issued bearer tokens. See [Dex-backed Pipery Auth](/docs/apps/pipery-auth/) for the shared issuer and runtime secret model.

@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-npm-ci@v1
+      - uses: pipery-dev/pipery-npm-ci@v1.1.0
         with:
           project_path: .
           npm_token: ${{ secrets.NPM_TOKEN }}

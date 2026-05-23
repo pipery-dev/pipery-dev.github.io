@@ -51,6 +51,18 @@ The service reads JSON from `PIPERY_RELEASE_CONFIG`.
 
 Private keys should be stored in Kubernetes secrets or another secret manager. The bot can load a key from `private_key_file` or `private_key_env`.
 
+## Authentication
+
+The release bot supports both workflow automation tokens and Dex bearer-token validation.
+
+```bash
+PIPERY_DEX_ISSUER=https://auth.pipery.dev/dex
+PIPERY_RELEASE_DEX_CLIENT_ID=pipery-release-bot
+PIPERY_RELEASE_API_TOKEN=...
+```
+
+Keep GitHub App private keys, API tokens, and Dex client secrets in Kubernetes secrets. Non-sensitive settings such as issuer URL, listen address, and branch patterns can live in Helm values.
+
 ## API
 
 ```sh
@@ -81,7 +93,7 @@ helm upgrade --install pipery-release-bot ./charts/pipery-release-bot \
 
 ## ArgoCD Release Flow
 
-The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd` to update `pipery-dev/pipery-argocd`:
+The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1.1.0`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd@v1.1.0` to update `pipery-dev/pipery-argocd`:
 
 - `applications/pipery-release-bot/application.yaml`
 - `applications/pipery-release-bot/values.yaml`

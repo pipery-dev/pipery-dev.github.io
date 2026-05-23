@@ -43,6 +43,15 @@ Required runtime settings:
 - `PIPERY_DEPLOY_API_TOKEN`: optional bearer token for API and dashboard access.
 - `SCHEDULER_INTERVAL`: optional poll interval, default `30s`.
 
+Dex validation can be enabled with:
+
+```bash
+PIPERY_DEX_ISSUER=https://auth.pipery.dev/dex
+PIPERY_DEPLOY_DEX_CLIENT_ID=pipery-deploy-bot
+```
+
+Keep `DATABASE_URL`, GitHub App private keys, Dex client secrets, and API tokens in Kubernetes secrets. Store non-sensitive settings such as public URLs, scheduler interval, namespace, and chart settings in Helm values.
+
 ## Scheduling Action
 
 The repository ships a composite GitHub Action for scheduling a deploy from a workflow.
@@ -90,7 +99,7 @@ The chart can run the Postgres migration as a Helm pre-install/pre-upgrade hook.
 
 ## ArgoCD Release Flow
 
-The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd` to update `pipery-dev/pipery-argocd`:
+The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1.1.0`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd@v1.1.0` to update `pipery-dev/pipery-argocd`:
 
 - `applications/pipery-deploy-bot/application.yaml`
 - `applications/pipery-deploy-bot/values.yaml`

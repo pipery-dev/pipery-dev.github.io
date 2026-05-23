@@ -8,13 +8,13 @@ weight: 2
 # Pipery Docker CI
 
 - Repository: [`pipery-docker-ci`](https://github.com/pipery-dev/pipery-docker-ci)
-- Release tag: `v1`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete Docker CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Docker%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-docker-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-ci@v1
+      - uses: pipery-dev/pipery-docker-ci@v1.1.0
         with:
           project_path: .
           image_name: ghcr.io/${{ github.repository }}
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-ci@v1
+      - uses: pipery-dev/pipery-docker-ci@v1.1.0
         with:
           project_path: .
           image_name: ghcr.io/${{ github.repository }}
@@ -116,7 +116,7 @@ jobs:
 ### Example 2: Build for multiple platforms (amd64 + arm64)
 
 ```yaml
-- uses: pipery-dev/pipery-docker-ci@v1
+- uses: pipery-dev/pipery-docker-ci@v1.1.0
   with:
     project_path: .
     image_name: ghcr.io/${{ github.repository }}
@@ -128,7 +128,7 @@ jobs:
 ### Example 3: Skip security scanning for speed
 
 ```yaml
-- uses: pipery-dev/pipery-docker-ci@v1
+- uses: pipery-dev/pipery-docker-ci@v1.1.0
   with:
     project_path: .
     image_name: myapp
@@ -140,7 +140,7 @@ jobs:
 ### Example 4: Custom Dockerfile with build arguments
 
 ```yaml
-- uses: pipery-dev/pipery-docker-ci@v1
+- uses: pipery-dev/pipery-docker-ci@v1.1.0
   with:
     project_path: ./docker
     dockerfile: Dockerfile.prod
@@ -152,7 +152,7 @@ jobs:
 ### Example 5: Container health check test
 
 ```yaml
-- uses: pipery-dev/pipery-docker-ci@v1
+- uses: pipery-dev/pipery-docker-ci@v1.1.0
   with:
     project_path: .
     image_name: myapp
@@ -163,7 +163,7 @@ jobs:
 ### Example 6: Minor version bump for release
 
 ```yaml
-- uses: pipery-dev/pipery-docker-ci@v1
+- uses: pipery-dev/pipery-docker-ci@v1.1.0
   with:
     project_path: .
     image_name: ghcr.io/${{ github.repository }}
@@ -181,7 +181,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-docker-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -204,8 +204,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-docker-ci:v1
-    pipery-custom: pipery-dev/pipery-docker-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-docker-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-docker-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

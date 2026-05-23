@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-python-ci@v1
+      - uses: pipery-dev/pipery-python-ci@v1.1.0
         with:
           project_path: .
           pypi_token: ${{ secrets.PYPI_TOKEN }}

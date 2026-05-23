@@ -8,13 +8,13 @@ weight: 5
 # Pipery npm CI
 
 - Repository: [`pipery-npm-ci`](https://github.com/pipery-dev/pipery-npm-ci)
-- Release tag: `v1`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete npm/Node.js CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20npm%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-npm-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-npm-ci@v1
+      - uses: pipery-dev/pipery-npm-ci@v1.1.0
         with:
           project_path: .
           npm_token: ${{ secrets.NPM_TOKEN }}
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-npm-ci@v1
+      - uses: pipery-dev/pipery-npm-ci@v1.1.0
         with:
           project_path: .
           node_version: "20"
@@ -108,7 +108,7 @@ jobs:
 ### Example 2: Yarn-based project
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1
+- uses: pipery-dev/pipery-npm-ci@v1.1.0
   with:
     project_path: .
     package_manager: yarn
@@ -119,7 +119,7 @@ jobs:
 ### Example 3: Skip packaging and release (CI only)
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1
+- uses: pipery-dev/pipery-npm-ci@v1.1.0
   with:
     project_path: .
     skip_packaging: true
@@ -129,7 +129,7 @@ jobs:
 ### Example 4: Custom test path
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1
+- uses: pipery-dev/pipery-npm-ci@v1.1.0
   with:
     project_path: .
     tests_path: "src/**/*.test.ts"
@@ -140,7 +140,7 @@ jobs:
 ### Example 5: Minor version bump for release
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1
+- uses: pipery-dev/pipery-npm-ci@v1.1.0
   with:
     project_path: .
     version_bump: minor
@@ -151,7 +151,7 @@ jobs:
 ### Example 6: Private registry deployment
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1
+- uses: pipery-dev/pipery-npm-ci@v1.1.0
   with:
     project_path: .
     registry: npm.example.com
@@ -168,7 +168,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-npm-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -193,8 +193,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-npm-ci:v1
-    pipery-custom: pipery-dev/pipery-npm-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-npm-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-npm-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

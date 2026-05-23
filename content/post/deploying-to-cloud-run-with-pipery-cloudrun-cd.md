@@ -24,7 +24,7 @@ on:
 
 jobs:
   cd:
-    uses: pipery-dev/pipery-cloudrun-cd@v1
+    uses: pipery-dev/pipery-cloudrun-cd@v1.1.0
     with:
       image_name: ghcr.io/acme/api
       service_name: api

@@ -8,13 +8,13 @@ weight: 1
 # Pipery Ansible CD
 
 - Repository: [`pipery-ansible-cd`](https://github.com/pipery-dev/pipery-ansible-cd)
-- Release tag: `v3`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for Ansible-based deployment with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Ansible%20CD-blue?logo=github)](https://github.com/marketplace/actions/pipery-ansible-cd)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-ansible-cd@v1
+      - uses: pipery-dev/pipery-ansible-cd@v1.1.0
         with:
           playbook: deploy.yml
           inventory: inventory/production
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-ansible-cd@v1
+      - uses: pipery-dev/pipery-ansible-cd@v1.1.0
         with:
           playbook: deploy.yml
           inventory: inventory/production
@@ -101,7 +101,7 @@ jobs:
 ### Example 2: With Ansible Galaxy requirements
 
 ```yaml
-- uses: pipery-dev/pipery-ansible-cd@v1
+- uses: pipery-dev/pipery-ansible-cd@v1.1.0
   with:
     playbook: site.yml
     inventory: inventories/production/hosts.yml
@@ -112,7 +112,7 @@ jobs:
 ### Example 3: Run specific tags only
 
 ```yaml
-- uses: pipery-dev/pipery-ansible-cd@v1
+- uses: pipery-dev/pipery-ansible-cd@v1.1.0
   with:
     playbook: deploy.yml
     inventory: inventory/production
@@ -123,7 +123,7 @@ jobs:
 ### Example 4: With extra variables and privilege escalation
 
 ```yaml
-- uses: pipery-dev/pipery-ansible-cd@v1
+- uses: pipery-dev/pipery-ansible-cd@v1.1.0
   with:
     playbook: deploy.yml
     inventory: inventory/production
@@ -135,7 +135,7 @@ jobs:
 ### Example 5: With Python dependencies
 
 ```yaml
-- uses: pipery-dev/pipery-ansible-cd@v1
+- uses: pipery-dev/pipery-ansible-cd@v1.1.0
   with:
     playbook: deploy.yml
     inventory: inventory/production
@@ -147,7 +147,7 @@ jobs:
 ### Example 6: Known hosts configuration
 
 ```yaml
-- uses: pipery-dev/pipery-ansible-cd@v1
+- uses: pipery-dev/pipery-ansible-cd@v1.1.0
   with:
     playbook: deploy.yml
     inventory: inventory/production
@@ -164,7 +164,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-ansible-cd
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -188,8 +188,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-ansible-cd:v1
-    pipery-custom: pipery-dev/pipery-ansible-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-ansible-cd:v1.1.0
+    pipery-custom: pipery-dev/pipery-ansible-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

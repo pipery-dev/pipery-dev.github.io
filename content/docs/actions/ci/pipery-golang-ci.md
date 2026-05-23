@@ -8,13 +8,13 @@ weight: 3
 # Pipery Go CI
 
 - Repository: [`pipery-golang-ci`](https://github.com/pipery-dev/pipery-golang-ci)
-- Release tag: `v1`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete Go CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20Go%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-golang-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-golang-ci@v1
+      - uses: pipery-dev/pipery-golang-ci@v1.1.0
         with:
           project_path: .
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-golang-ci@v1
+      - uses: pipery-dev/pipery-golang-ci@v1.1.0
         with:
           project_path: .
           go_version: "1.22"
@@ -105,7 +105,7 @@ jobs:
 ### Example 2: Run specific test packages
 
 ```yaml
-- uses: pipery-dev/pipery-golang-ci@v1
+- uses: pipery-dev/pipery-golang-ci@v1.1.0
   with:
     project_path: .
     tests_path: ./pkg/... ./cmd/...
@@ -115,7 +115,7 @@ jobs:
 ### Example 3: Skip security scanning
 
 ```yaml
-- uses: pipery-dev/pipery-golang-ci@v1
+- uses: pipery-dev/pipery-golang-ci@v1.1.0
   with:
     project_path: .
     skip_sast: true
@@ -126,7 +126,7 @@ jobs:
 ### Example 4: Go 1.20 with binary release
 
 ```yaml
-- uses: pipery-dev/pipery-golang-ci@v1
+- uses: pipery-dev/pipery-golang-ci@v1.1.0
   with:
     project_path: .
     go_version: "1.20"
@@ -136,7 +136,7 @@ jobs:
 ### Example 5: Docker image packaging
 
 ```yaml
-- uses: pipery-dev/pipery-golang-ci@v1
+- uses: pipery-dev/pipery-golang-ci@v1.1.0
   with:
     project_path: .
     registry: ghcr.io
@@ -147,7 +147,7 @@ jobs:
 ### Example 6: Minor version bump for release
 
 ```yaml
-- uses: pipery-dev/pipery-golang-ci@v1
+- uses: pipery-dev/pipery-golang-ci@v1.1.0
   with:
     project_path: .
     version_bump: minor
@@ -163,7 +163,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-golang-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -186,8 +186,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-golang-ci:v1
-    pipery-custom: pipery-dev/pipery-golang-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-golang-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-golang-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

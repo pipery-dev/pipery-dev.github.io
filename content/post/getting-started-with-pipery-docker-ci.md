@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-ci@v1
+      - uses: pipery-dev/pipery-docker-ci@v1.1.0
         with:
           image_name: ghcr.io/${{ github.repository }}
           registry_username: ${{ github.actor }}

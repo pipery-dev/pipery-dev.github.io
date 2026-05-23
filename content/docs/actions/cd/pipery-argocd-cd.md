@@ -8,13 +8,13 @@ weight: 2
 # Pipery ArgoCD CD
 
 - Repository: [`pipery-argocd-cd`](https://github.com/pipery-dev/pipery-argocd-cd)
-- Release tag: `v3`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for ArgoCD deployment with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20ArgoCD%20CD-blue?logo=github)](https://github.com/marketplace/actions/pipery-argocd-cd)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-argocd-cd@v1
+      - uses: pipery-dev/pipery-argocd-cd@v1.1.0
         with:
           argocd_server: argocd.example.com
           argocd_app: my-app
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-argocd-cd@v1
+      - uses: pipery-dev/pipery-argocd-cd@v1.1.0
         with:
           argocd_server: ${{ vars.ARGOCD_SERVER }}
           argocd_app: my-app
@@ -102,7 +102,7 @@ jobs:
 ### Example 2: With image name update
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1
+- uses: pipery-dev/pipery-argocd-cd@v1.1.0
   with:
     argocd_server: argocd.example.com
     argocd_app: my-app
@@ -114,7 +114,7 @@ jobs:
 ### Example 3: Force sync with resource pruning
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1
+- uses: pipery-dev/pipery-argocd-cd@v1.1.0
   with:
     argocd_server: argocd.example.com
     argocd_app: my-app
@@ -127,7 +127,7 @@ jobs:
 ### Example 4: Extended sync timeout
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1
+- uses: pipery-dev/pipery-argocd-cd@v1.1.0
   with:
     argocd_server: argocd.example.com
     argocd_app: my-app
@@ -139,7 +139,7 @@ jobs:
 ### Example 5: Skip status checks for faster deployment
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1
+- uses: pipery-dev/pipery-argocd-cd@v1.1.0
   with:
     argocd_server: argocd.example.com
     argocd_app: my-app
@@ -151,7 +151,7 @@ jobs:
 ### Example 6: Production deployment with release tag
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1
+- uses: pipery-dev/pipery-argocd-cd@v1.1.0
   with:
     argocd_server: argocd.example.com
     argocd_app: my-app-prod
@@ -169,7 +169,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-argocd-cd
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -192,8 +192,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-argocd-cd:v1
-    pipery-custom: pipery-dev/pipery-argocd-cd:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-argocd-cd:v1.1.0
+    pipery-custom: pipery-dev/pipery-argocd-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:

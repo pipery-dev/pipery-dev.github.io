@@ -25,7 +25,7 @@ For GitLab CI, import templates from the GitLab mirror:
 ```yaml
 include:
   - project: pipery-dev/pipery-python-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -78,7 +78,7 @@ Older GitLab examples may still show GitHub raw imports. Treat those as legacy e
 ```yaml
 include:
   - project: pipery-dev/pipery-npm-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -89,7 +89,7 @@ The same pattern applies to the other pipeline families:
 ```yaml
 include:
   - project: pipery-dev/pipery-cloudrun-cd
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 

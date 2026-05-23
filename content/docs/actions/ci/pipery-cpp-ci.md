@@ -8,13 +8,13 @@ weight: 1
 # Pipery C/C++ CI
 
 - Repository: [`pipery-cpp-ci`](https://github.com/pipery-dev/pipery-cpp-ci)
-- Release tag: `v1`
+- Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
 Reusable GitHub Action for a complete C/C++ CI pipeline with structured logging via [Pipery](https://pipery.dev).
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Pipery%20C/C++%20CI-blue?logo=github)](https://github.com/marketplace/actions/pipery-cpp-ci)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Table of Contents
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-cpp-ci@v1
+      - uses: pipery-dev/pipery-cpp-ci@v1.1.0
         with:
           project_path: .
           build_system: auto
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-cpp-ci@v1
+      - uses: pipery-dev/pipery-cpp-ci@v1.1.0
         with:
           project_path: .
           build_system: cmake
@@ -108,7 +108,7 @@ jobs:
 ### Example 2: Clang compiler
 
 ```yaml
-- uses: pipery-dev/pipery-cpp-ci@v1
+- uses: pipery-dev/pipery-cpp-ci@v1.1.0
   with:
     project_path: .
     build_system: cmake
@@ -119,7 +119,7 @@ jobs:
 ### Example 3: Custom CMake flags for release build
 
 ```yaml
-- uses: pipery-dev/pipery-cpp-ci@v1
+- uses: pipery-dev/pipery-cpp-ci@v1.1.0
   with:
     project_path: .
     build_system: cmake
@@ -130,7 +130,7 @@ jobs:
 ### Example 4: Makefile-based project
 
 ```yaml
-- uses: pipery-dev/pipery-cpp-ci@v1
+- uses: pipery-dev/pipery-cpp-ci@v1.1.0
   with:
     project_path: .
     build_system: make
@@ -140,7 +140,7 @@ jobs:
 ### Example 5: Run specific test suite
 
 ```yaml
-- uses: pipery-dev/pipery-cpp-ci@v1
+- uses: pipery-dev/pipery-cpp-ci@v1.1.0
   with:
     project_path: .
     tests_path: unit_*
@@ -150,7 +150,7 @@ jobs:
 ### Example 6: Major version bump
 
 ```yaml
-- uses: pipery-dev/pipery-cpp-ci@v1
+- uses: pipery-dev/pipery-cpp-ci@v1.1.0
   with:
     project_path: .
     build_system: cmake
@@ -167,7 +167,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 ```yaml
 include:
   - project: pipery-dev/pipery-cpp-ci
-    ref: v1
+    ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
 
@@ -191,8 +191,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-cpp-ci:v1
-    pipery-custom: pipery-dev/pipery-cpp-ci:v1:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/pipery-cpp-ci:v1.1.0
+    pipery-custom: pipery-dev/pipery-cpp-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
