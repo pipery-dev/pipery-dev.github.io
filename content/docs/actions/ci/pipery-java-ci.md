@@ -53,10 +53,10 @@ jobs:
 | SAST | SpotBugs, PMD | `skip_sast` | Detects Java security and quality issues |
 | SCA | OWASP Dependency-Check | `skip_sca` | Identifies vulnerable dependencies |
 | Lint | Checkstyle | `skip_lint` | Enforces code style |
-| Build | Maven/Gradle | `skip_build` | Compiles Java project |
+| Build | Maven/Gradle/Ant/Groovy | `skip_build` | Compiles Java project |
 | Test | JUnit | `skip_test` | Runs unit and integration tests |
 | Version | Semantic versioning | `skip_versioning` | Bumps version and creates git tag |
-| Package | Maven package / Gradle build | `skip_packaging` | Creates JAR/Docker artifact |
+| Package | Maven package / Gradle build / Ant target | `skip_packaging` | Creates JAR/Docker artifact |
 | Release | Maven Central / Docker push | `skip_release` | Publishes to registry |
 | Reintegrate | Git merge | `skip_reintegration` | Merges back to default branch |
 
@@ -67,7 +67,7 @@ jobs:
 | `project_path` | `.` | Path to the project source tree. |
 | `config_file` | `.pipery/config.yaml` | Path to Pipery config file. |
 | `java_version` | `21` | Java version to use (e.g., `11`, `17`, `21`). |
-| `build_tool` | `auto` | Build tool to use: `auto`, `maven`, `gradle`, or `groovy`. |
+| `build_tool` | `auto` | Build tool to use: `auto`, `maven`, `gradle`, `ant`, or `groovy`. |
 | `tests_path` | `` | Test target passed to the build tool (e.g., a test class or pattern). |
 | `registry` | `ghcr.io` | Container registry for packaging. |
 | `registry_username` | `` | Registry username for authentication. |
@@ -184,7 +184,7 @@ Configure these protected variables in **Settings > CI/CD > Variables**:
 - `GITHUB_TOKEN` - GitHub API access for release and reintegration
 - `REGISTRY_PASSWORD` - Container registry password (if packaging)
 - `JAVA_VERSION` - Java version (default: 21)
-- `BUILD_TOOL` - maven/gradle/auto (default: auto)
+- `BUILD_TOOL` - maven/gradle/ant/groovy/auto (default: auto)
 - `VERSION_BUMP` - patch/minor/major (default: patch)
 
 ## Bitbucket Pipelines

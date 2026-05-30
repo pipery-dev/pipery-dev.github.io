@@ -555,7 +555,19 @@ Start with the essentials.
     Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-java-ci" href="https://github.com/pipery-dev/pipery-java-ci" icon="/images/actions/java.svg" >}}
-    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Groovy. `pipery-dev/pipery-java-ci@v1.1.0`
+    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Ant, and Groovy. `pipery-dev/pipery-java-ci@v1.1.0`
+  {{< /card >}}
+  {{< card title="pipery-kotlin-ci" href="https://github.com/pipery-dev/pipery-kotlin-ci" icon="/images/actions/java.svg" >}}
+    Kotlin CI: SAST → SCA → lint → Gradle/Maven build → test → package. Supports JVM, Android, and Multiplatform projects. `pipery-dev/pipery-kotlin-ci@main`
+  {{< /card >}}
+  {{< card title="pipery-android-ci" href="https://github.com/pipery-dev/pipery-android-ci" icon="/images/actions/java.svg" >}}
+    Android CI: SAST → SCA → lint → assemble → test → package APK/AAB artifacts. `pipery-dev/pipery-android-ci@main`
+  {{< /card >}}
+  {{< card title="pipery-swift-ci" href="https://github.com/pipery-dev/pipery-swift-ci" icon="/images/pipeline.svg" >}}
+    Swift CI: SwiftLint → SwiftPM build → test → package → release-ready artifacts. `pipery-dev/pipery-swift-ci@main`
+  {{< /card >}}
+  {{< card title="pipery-ios-ci" href="https://github.com/pipery-dev/pipery-ios-ci" icon="/images/pipeline.svg" >}}
+    iOS CI: SwiftLint → xcodebuild build → test → archive → export IPA artifacts. `pipery-dev/pipery-ios-ci@main`
   {{< /card >}}
   {{< card title="pipery-cpp-ci" href="https://github.com/pipery-dev/pipery-cpp-ci" icon="/images/actions/cpp.svg" >}}
     C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/pipery-cpp-ci@v1.1.0`
@@ -579,6 +591,12 @@ Start with the essentials.
   {{< /card >}}
   {{< card title="pipery-cloudrun-cd" href="https://github.com/pipery-dev/pipery-cloudrun-cd" icon="/images/actions/cloudrun.svg" >}}
     Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/pipery-cloudrun-cd@v1.1.0`
+  {{< /card >}}
+  {{< card title="pipery-googleplay-cd" href="https://github.com/pipery-dev/pipery-googleplay-cd" icon="/images/actions/java.svg" >}}
+    Google Play CD: upload Android APK/AAB artifacts with Fastlane supply or Gradle Play Publisher. `pipery-dev/pipery-googleplay-cd@main`
+  {{< /card >}}
+  {{< card title="pipery-appstore-cd" href="https://github.com/pipery-dev/pipery-appstore-cd" icon="/images/pipeline.svg" >}}
+    App Store CD: upload iOS IPA artifacts to App Store Connect with Fastlane pilot or xcrun altool. `pipery-dev/pipery-appstore-cd@main`
   {{< /card >}}
   {{< card title="pipery-ansible-cd" href="https://github.com/pipery-dev/pipery-ansible-cd" icon="/images/actions/ansible.svg" >}}
     Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/pipery-ansible-cd@v1.1.0`
