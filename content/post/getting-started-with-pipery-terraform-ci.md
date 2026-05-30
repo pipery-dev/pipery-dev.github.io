@@ -11,7 +11,7 @@ keywords:
   - terraform plan automation
 ---
 
-Infrastructure repositories deserve the same level of repeatability as application repos. `pipery-dev/pipery-terraform-ci` gives Terraform projects a shared CI pipeline that validates code, checks risk earlier, and leaves behind a structured log you can inspect later.
+Infrastructure repositories deserve the same level of repeatability as application repos. `pipery-dev/terraform-ci` gives Terraform projects a shared CI pipeline that validates code, checks risk earlier, and leaves behind a structured log you can inspect later.
 
 ## Minimal workflow
 
@@ -25,7 +25,7 @@ on:
 
 jobs:
   ci:
-    uses: pipery-dev/pipery-terraform-ci@v1.1.0
+    uses: pipery-dev/terraform-ci@v1.1.0
     with:
       project_path: .
     secrets: inherit
@@ -56,4 +56,4 @@ Terraform workflows often grow hidden complexity around backends, environments, 
 
 If your team is trying to standardize infrastructure checks before merge, this is a strong first action to adopt.
 
-Source and docs: [GitHub](https://github.com/pipery-dev/pipery-terraform-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-terraform-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-terraform-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/terraform-ci), [GitLab](https://gitlab.com/pipery-dev/terraform-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/terraform-ci).

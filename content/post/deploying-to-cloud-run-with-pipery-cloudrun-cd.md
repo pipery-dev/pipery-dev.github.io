@@ -11,7 +11,7 @@ keywords:
   - deployment observability
 ---
 
-Once a service is built and tested, the next question is how to deploy it without turning your workflow into another custom shell project. `pipery-dev/pipery-cloudrun-cd` gives you a reusable Cloud Run deployment step with the same observability story as the CI actions.
+Once a service is built and tested, the next question is how to deploy it without turning your workflow into another custom shell project. `pipery-dev/cloudrun-cd` gives you a reusable Cloud Run deployment step with the same observability story as the CI actions.
 
 ## Minimal workflow
 
@@ -24,7 +24,7 @@ on:
 
 jobs:
   cd:
-    uses: pipery-dev/pipery-cloudrun-cd@v1.1.0
+    uses: pipery-dev/cloudrun-cd@v1.1.0
     with:
       image_name: ghcr.io/acme/api
       service_name: api
@@ -54,4 +54,4 @@ The deployment path is straightforward:
 
 Cloud Run deployment is simple enough to start casually and tricky enough to drift over time. One team adds traffic handling, another adds status checks, another copies an old auth pattern. A shared action gives you the same deployment shape everywhere, and Pipery’s `psh` logs make post-deploy debugging much calmer when a rollout does not behave the way you expected.
 
-Source and docs: [GitHub](https://github.com/pipery-dev/pipery-cloudrun-cd), [GitLab](https://gitlab.com/pipery-dev/pipery-cloudrun-cd), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-cloudrun-cd).
+Source and docs: [GitHub](https://github.com/pipery-dev/cloudrun-cd), [GitLab](https://gitlab.com/pipery-dev/cloudrun-cd), or [Bitbucket](https://bitbucket.org/pipery-dev/cloudrun-cd).

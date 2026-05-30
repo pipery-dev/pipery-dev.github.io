@@ -21,7 +21,7 @@ Create or update `.gitlab-ci.yml` in your application repository:
 
 ```yaml
 include:
-  - project: pipery-dev/pipery-npm-ci
+  - project: pipery-dev/npm-ci
     ref: v1.1.0
     file: /.gitlab-ci.yml
 

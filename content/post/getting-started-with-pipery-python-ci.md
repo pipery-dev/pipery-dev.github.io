@@ -11,7 +11,7 @@ keywords:
   - PyPI release automation
 ---
 
-`pipery-dev/pipery-python-ci` is the easiest way to give a Python repository a consistent CI pipeline without stitching together half a dozen actions and shell steps.
+`pipery-dev/python-ci` is the easiest way to give a Python repository a consistent CI pipeline without stitching together half a dozen actions and shell steps.
 
 It is designed for the common Python path: scan the code, audit dependencies, lint, build, test, package, and publish, while producing a structured `pipery.jsonl` log for the whole run.
 
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-python-ci@v1.1.0
+      - uses: pipery-dev/python-ci@v1.1.0
         with:
           project_path: .
           pypi_token: ${{ secrets.PYPI_TOKEN }}
@@ -67,4 +67,4 @@ Python repos tend to drift over time. One project uses Poetry, another uses plai
 
 That makes it easier to adopt a standard without losing debuggability.
 
-Source and docs: [GitHub](https://github.com/pipery-dev/pipery-python-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-python-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-python-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/python-ci), [GitLab](https://gitlab.com/pipery-dev/python-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/python-ci).

@@ -11,7 +11,7 @@ keywords:
   - Bitbucket CI/CD
 ---
 
-Bitbucket Pipelines is now a first-class Pipery target. Pipery repositories in the `pipery-dev` Bitbucket workspace, such as `https://bitbucket.org/pipery-dev/pipery-npm-ci/` or `https://bitbucket.org/pipery-dev/pipery-cloudrun-cd/`, can expose shared pipeline definitions. Application repositories can import those definitions instead of copying the whole pipeline YAML into every repo.
+Bitbucket Pipelines is now a first-class Pipery target. Pipery repositories in the `pipery-dev` Bitbucket workspace, such as `https://bitbucket.org/pipery-dev/npm-ci/` or `https://bitbucket.org/pipery-dev/cloudrun-cd/`, can expose shared pipeline definitions. Application repositories can import those definitions instead of copying the whole pipeline YAML into every repo.
 
 The important difference is that Bitbucket sharing is import-based. You define import sources under `definitions.imports`, then use `import: pipeline-name@import-source-name` under any supported start condition, including `branches`, `pull-requests`, `tags`, and `custom`.
 
@@ -22,7 +22,7 @@ In your application repository, point an import source at the Pipery Bitbucket r
 ```yaml
 definitions:
   imports:
-    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1.1.0
+    pipery-npm-ci: pipery-dev/npm-ci:v1.1.0
 
 pipelines:
   branches:
@@ -39,7 +39,7 @@ If the exported pipeline lives in another file, include the file path in the imp
 ```yaml
 definitions:
   imports:
-    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
+    pipery-cloudrun-cd: pipery-dev/cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   custom:
@@ -52,8 +52,8 @@ pipelines:
 Bitbucket import sources can use three formats:
 
 - `{config-filepath}` for imports within the same repository
-- `{project-path}/{repo-slug}:{branch-or-tag}` for imports from another repository's `bitbucket-pipelines.yml`, such as `pipery-dev/pipery-npm-ci:v1.1.0`
-- `{project-path}/{repo-slug}:{branch-or-tag}:{config-filepath}` for imports from another file in another repository, such as `pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml`
+- `{project-path}/{repo-slug}:{branch-or-tag}` for imports from another repository's `bitbucket-pipelines.yml`, such as `pipery-dev/npm-ci:v1.1.0`
+- `{project-path}/{repo-slug}:{branch-or-tag}:{config-filepath}` for imports from another file in another repository, such as `pipery-dev/cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml`
 
 An import statement always uses:
 

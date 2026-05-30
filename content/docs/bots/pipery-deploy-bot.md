@@ -72,7 +72,7 @@ jobs:
   schedule:
     runs-on: ubuntu-latest
     steps:
-      - uses: pipery-dev/pipery-deploy-bot@v1
+      - uses: pipery-dev/deploy-bot@v1
         with:
           api-url: ${{ secrets.PIPERY_DEPLOY_BOT_URL }}
           api-token: ${{ secrets.PIPERY_DEPLOY_BOT_TOKEN }}
@@ -99,7 +99,7 @@ The chart can run the Postgres migration as a Helm pre-install/pre-upgrade hook.
 
 ## ArgoCD Release Flow
 
-The repository CI workflow runs `pipery-dev/pipery-golang-ci@v1.1.0`. On pushes to `main` and `v*` tags it also uses `pipery-dev/pipery-argocd-cd@v1.1.0` to update `pipery-dev/pipery-argocd`:
+The repository CI workflow runs `pipery-dev/golang-ci@v1.1.0`. On pushes to `main` and `v*` tags it also uses `pipery-dev/argocd-cd@v1.1.0` to update `pipery-dev/pipery-argocd`:
 
 - `applications/pipery-deploy-bot/application.yaml`
 - `applications/pipery-deploy-bot/values.yaml`

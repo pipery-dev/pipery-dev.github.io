@@ -19,14 +19,14 @@ Pipery actions `v1.1.0` is the current release across the supported action catal
 The docs now show exact `v1.1.0` usage for GitHub Actions:
 
 ```yaml
-- uses: pipery-dev/pipery-npm-ci@v1.1.0
+- uses: pipery-dev/npm-ci@v1.1.0
 ```
 
 The same tag is used in GitLab CI includes:
 
 ```yaml
 include:
-  - project: pipery-dev/pipery-npm-ci
+  - project: pipery-dev/npm-ci
     ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
@@ -36,7 +36,7 @@ And in Bitbucket shared pipeline imports:
 ```yaml
 definitions:
   imports:
-    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1.1.0
+    pipery-npm-ci: pipery-dev/npm-ci:v1.1.0
 ```
 
 The major `v1` line can still be useful for teams that want rolling minor updates. Exact pins are better for platform-owned golden workflows, regulated repositories, and migrations that need deterministic behavior.
@@ -67,7 +67,7 @@ That gives release workflows a simple contract:
 `pipery-argocd-cd@v1.1.0` can publish generated ArgoCD Application and values updates into the `pipery-dev/pipery-argocd` GitOps repository. It can also validate a Helm chart before publishing:
 
 ```yaml
-- uses: pipery-dev/pipery-argocd-cd@v1.1.0
+- uses: pipery-dev/argocd-cd@v1.1.0
   with:
     publish_helm_chart_update: true
     validate_helm_chart: true

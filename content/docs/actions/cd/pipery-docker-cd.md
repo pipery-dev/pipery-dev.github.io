@@ -7,7 +7,7 @@ weight: 5
 
 # Pipery Docker CD
 
-- Repository: [`pipery-docker-cd`](https://github.com/pipery-dev/pipery-docker-cd)
+- Repository: [`pipery-docker-cd`](https://github.com/pipery-dev/docker-cd)
 - Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-cd@v1.1.0
+      - uses: pipery-dev/docker-cd@v1.1.0
         with:
           image_name: ghcr.io/${{ github.repository }}
           image_tag: ${{ github.sha }}
@@ -96,7 +96,7 @@ jobs:
 Deploy to Kubernetes via ArgoCD. Automatically syncs and monitors the application.
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -111,7 +111,7 @@ Deploy to Kubernetes via ArgoCD. Automatically syncs and monitors the applicatio
 Deploy serverless containers to Google Cloud Run.
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -126,7 +126,7 @@ Deploy serverless containers to Google Cloud Run.
 Deploy using Helm charts on Kubernetes clusters.
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -141,7 +141,7 @@ Deploy using Helm charts on Kubernetes clusters.
 Deploy to VMs or bare metal servers using Ansible playbooks.
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     deploy_target: ansible
@@ -164,7 +164,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-cd@v1.1.0
+      - uses: pipery-dev/docker-cd@v1.1.0
         with:
           image_name: ghcr.io/${{ github.repository }}
           image_tag: ${{ github.sha }}
@@ -177,7 +177,7 @@ jobs:
 ### Example 2: Cloud Run with custom region
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: gcr.io/my-project/my-service
     image_tag: ${{ github.sha }}
@@ -189,7 +189,7 @@ jobs:
 ### Example 3: Blue-green deployment strategy
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -203,7 +203,7 @@ jobs:
 ### Example 4: Helm with custom values
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -216,7 +216,7 @@ jobs:
 ### Example 5: Ansible deployment with custom inventory
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     deploy_target: ansible
@@ -227,7 +227,7 @@ jobs:
 ### Example 6: Skip status checks for faster deployment
 
 ```yaml
-- uses: pipery-dev/pipery-docker-cd@v1.1.0
+- uses: pipery-dev/docker-cd@v1.1.0
   with:
     image_name: ghcr.io/${{ github.repository }}
     image_tag: ${{ github.sha }}
@@ -246,7 +246,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 
 ```yaml
 include:
-  - project: pipery-dev/pipery-docker-cd
+  - project: pipery-dev/docker-cd
     ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
@@ -270,8 +270,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-docker-cd:v1.1.0
-    pipery-custom: pipery-dev/pipery-docker-cd:v1.1.0:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/docker-cd:v1.1.0
+    pipery-custom: pipery-dev/docker-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
@@ -319,7 +319,7 @@ Support for:
 
 <img src="https://avatars.githubusercontent.com/u/270923927?s=32" alt="Pipery" width="22" align="center" /> [**Pipery**](https://pipery.dev) is an open-source CI/CD observability platform. Every step script runs under **psh** (Pipery Shell), which intercepts all commands and emits structured JSONL events — giving you full visibility into your pipeline without any manual instrumentation.
 
-- Browse logs in the [Pipery Dashboard](https://github.com/pipery-dev/pipery-dashboard)
+- Browse logs in the [Pipery Dashboard](https://github.com/pipery-dev/dashboard)
 - Find all Pipery actions on [GitHub Marketplace](https://github.com/marketplace?q=pipery&type=actions)
 - Source code: [pipery-dev](https://github.com/pipery-dev)
 

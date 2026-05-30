@@ -11,7 +11,7 @@ keywords:
   - pipery.jsonl
 ---
 
-If your Node.js workflow keeps growing one shell step at a time, `pipery-dev/pipery-npm-ci` is a clean place to stop and standardize it.
+If your Node.js workflow keeps growing one shell step at a time, `pipery-dev/npm-ci` is a clean place to stop and standardize it.
 
 This action is a complete CI workflow for npm and Yarn projects. It covers SAST, dependency scanning, linting, build, test, versioning, packaging, release, and reintegration, while every command is captured in `pipery.jsonl` through `psh`.
 
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-npm-ci@v1.1.0
+      - uses: pipery-dev/npm-ci@v1.1.0
         with:
           project_path: .
           npm_token: ${{ secrets.NPM_TOKEN }}
@@ -73,4 +73,4 @@ That means the repo owner gets a full CI path without rewriting the same workflo
 
 Node pipelines often fail in the annoying middle: lockfile drift, a flaky test, a publish auth issue, an unexpected build script change. Pipery logs each executed command and its output in `pipery.jsonl`, so you can inspect the exact step in the dashboard instead of reconstructing the failure by hand.
 
-Start with the repository that matches your provider: [GitHub](https://github.com/pipery-dev/pipery-npm-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-npm-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-npm-ci).
+Start with the repository that matches your provider: [GitHub](https://github.com/pipery-dev/npm-ci), [GitLab](https://gitlab.com/pipery-dev/npm-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/npm-ci).

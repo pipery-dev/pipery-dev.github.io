@@ -46,7 +46,7 @@ jobs:
   schedule:
     runs-on: ubuntu-latest
     steps:
-      - uses: pipery-dev/pipery-deploy-bot@v1
+      - uses: pipery-dev/deploy-bot@v1
         with:
           api-url: ${{ secrets.PIPERY_DEPLOY_BOT_URL }}
           api-token: ${{ secrets.PIPERY_DEPLOY_BOT_TOKEN }}

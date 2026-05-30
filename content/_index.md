@@ -260,7 +260,7 @@ permissions:
 
 jobs:
   ci:
-    uses: pipery-dev/pipery-npm-ci@v1.1.0
+    uses: pipery-dev/npm-ci@v1.1.0
     with:
       node_version: 20
       package_manager: npm
@@ -273,7 +273,7 @@ jobs:
   deploy:
     needs: ci
     if: github.ref == 'refs/heads/main'
-    uses: pipery-dev/pipery-cloudrun-cd@v1.1.0
+    uses: pipery-dev/cloudrun-cd@v1.1.0
     with:
       image_name: api
       region: europe-west1
@@ -327,10 +327,10 @@ deploy:
 
 {{< code-block language="yaml" title="After · GitLab CI" tag="After · Pipery templates" tagKind="after" >}}
 include:
-  - project: pipery-dev/pipery-npm-ci
+  - project: pipery-dev/npm-ci
     ref: v1.1.0
     file: /.gitlab-ci.yml
-  - project: pipery-dev/pipery-cloudrun-cd
+  - project: pipery-dev/cloudrun-cd
     ref: v1.1.0
     file: /.gitlab-ci.yml
 
@@ -404,7 +404,7 @@ pipelines:
 
 {{< code-block language="yaml" title="After · Bitbucket Pipelines" tag="After · Pipery pipeline" tagKind="after" >}}
 # Pipery shared pipeline repository in the same Bitbucket workspace:
-# https://bitbucket.org/pipery-dev/pipery-npm-ci/
+# https://bitbucket.org/pipery-dev/npm-ci/
 export: true
 
 definitions:
@@ -452,8 +452,8 @@ definitions:
 # bitbucket-pipelines.yml
 definitions:
   imports:
-    pipery-npm-ci: pipery-dev/pipery-npm-ci:v1.1.0
-    pipery-cloudrun-cd: pipery-dev/pipery-cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
+    pipery-npm-ci: pipery-dev/npm-ci:v1.1.0
+    pipery-cloudrun-cd: pipery-dev/cloudrun-cd:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
@@ -495,7 +495,7 @@ Pipery Dashboard turns raw pipeline logs into a searchable debugging workspace. 
   {{< button href="https://dash.pipery.dev" primary="true" >}}
     Open Dashboard
   {{< /button >}}
-  {{< button href="https://github.com/pipery-dev/pipery-dashboard" >}}
+  {{< button href="https://github.com/pipery-dev/dashboard" >}}
     View Source
   {{< /button >}}
 {{< /buttons >}}
@@ -542,20 +542,20 @@ Start with the essentials.
 **CI Actions**
 
 {{< cards >}}
-  {{< card title="pipery-docker-ci" href="https://github.com/pipery-dev/pipery-docker-ci" icon="/images/actions/docker.svg" >}}
-    Docker CI: lint (hadolint) → SAST → SCA → build → test → version → push to registry. `pipery-dev/pipery-docker-ci@v1.1.0`
+  {{< card title="pipery-docker-ci" href="https://github.com/pipery-dev/docker-ci" icon="/images/actions/docker.svg" >}}
+    Docker CI: lint (hadolint) → SAST → SCA → build → test → version → push to registry. `pipery-dev/docker-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-golang-ci" href="https://github.com/pipery-dev/pipery-golang-ci" icon="/images/actions/golang.svg" >}}
-    Go CI: SAST → SCA → lint (golangci-lint) → build → test → version → cross-compile → GitHub release. `pipery-dev/pipery-golang-ci@v1.1.0`
+  {{< card title="pipery-golang-ci" href="https://github.com/pipery-dev/golang-ci" icon="/images/actions/golang.svg" >}}
+    Go CI: SAST → SCA → lint (golangci-lint) → build → test → version → cross-compile → GitHub release. `pipery-dev/golang-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-npm-ci" href="https://github.com/pipery-dev/pipery-npm-ci" icon="/images/actions/npm.svg" >}}
-    npm/Node.js CI: SAST → SCA → lint (ESLint) → build → test → version → npm publish. `pipery-dev/pipery-npm-ci@v1.1.0`
+  {{< card title="pipery-npm-ci" href="https://github.com/pipery-dev/npm-ci" icon="/images/actions/npm.svg" >}}
+    npm/Node.js CI: SAST → SCA → lint (ESLint) → build → test → version → npm publish. `pipery-dev/npm-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-python-ci" href="https://github.com/pipery-dev/pipery-python-ci" icon="/images/actions/python.svg" >}}
-    Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/pipery-python-ci@v1.1.0`
+  {{< card title="pipery-python-ci" href="https://github.com/pipery-dev/python-ci" icon="/images/actions/python.svg" >}}
+    Python CI: SAST → SCA → lint (ruff) → build → test → version → PyPI publish. `pipery-dev/python-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-java-ci" href="https://github.com/pipery-dev/pipery-java-ci" icon="/images/actions/java.svg" >}}
-    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Ant, and Groovy. `pipery-dev/pipery-java-ci@v1.1.0`
+  {{< card title="pipery-java-ci" href="https://github.com/pipery-dev/java-ci" icon="/images/actions/java.svg" >}}
+    Java CI: SAST → SCA → lint (Checkstyle) → build → test → version → package → GitHub release. Supports Maven, Gradle, Ant, and Groovy. `pipery-dev/java-ci@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-kotlin-ci" href="https://github.com/pipery-dev/pipery-kotlin-ci" icon="/images/actions/java.svg" >}}
     Kotlin CI: SAST → SCA → lint → Gradle/Maven build → test → package. Supports JVM, Android, and Multiplatform projects. `pipery-dev/pipery-kotlin-ci@main`
@@ -569,28 +569,28 @@ Start with the essentials.
   {{< card title="pipery-ios-ci" href="https://github.com/pipery-dev/pipery-ios-ci" icon="/images/pipeline.svg" >}}
     iOS CI: SwiftLint → xcodebuild build → test → archive → export IPA artifacts. `pipery-dev/pipery-ios-ci@main`
   {{< /card >}}
-  {{< card title="pipery-cpp-ci" href="https://github.com/pipery-dev/pipery-cpp-ci" icon="/images/actions/cpp.svg" >}}
-    C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/pipery-cpp-ci@v1.1.0`
+  {{< card title="pipery-cpp-ci" href="https://github.com/pipery-dev/cpp-ci" icon="/images/actions/cpp.svg" >}}
+    C/C++ CI: SAST → SCA → lint (clang-tidy/cppcheck) → build (CMake/Make/Meson) → test → version → package → GitHub release. `pipery-dev/cpp-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-rust-ci" href="https://github.com/pipery-dev/pipery-rust-ci" icon="/images/actions/rust.svg" >}}
-    Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/pipery-rust-ci@v1.1.0`
+  {{< card title="pipery-rust-ci" href="https://github.com/pipery-dev/rust-ci" icon="/images/actions/rust.svg" >}}
+    Rust CI: SAST → SCA → lint (clippy) → build → test → version → cargo package → GitHub release. `pipery-dev/rust-ci@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-terraform-ci" href="https://github.com/pipery-dev/pipery-terraform-ci" icon="/images/actions/terraform.svg" >}}
-    Terraform CI: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release. `pipery-dev/pipery-terraform-ci@v1.1.0`
+  {{< card title="pipery-terraform-ci" href="https://github.com/pipery-dev/terraform-ci" icon="/images/actions/terraform.svg" >}}
+    Terraform CI: SAST (tfsec) → SCA → lint (tflint) → validate → plan → version → release. `pipery-dev/terraform-ci@v1.1.0`
   {{< /card >}}
 {{< /cards >}}
 
 **CD Actions**
 
 {{< cards >}}
-  {{< card title="pipery-argocd-cd" href="https://github.com/pipery-dev/pipery-argocd-cd" icon="/images/actions/argocd.svg" >}}
-    ArgoCD CD: update image tag & values → ArgoCD sync → wait for Argo Rollout. GitOps-native deployment. `pipery-dev/pipery-argocd-cd@v1.1.0`
+  {{< card title="pipery-argocd-cd" href="https://github.com/pipery-dev/argocd-cd" icon="/images/actions/argocd.svg" >}}
+    ArgoCD CD: update image tag & values → ArgoCD sync → wait for Argo Rollout. GitOps-native deployment. `pipery-dev/argocd-cd@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-helm-cd" href="https://github.com/pipery-dev/pipery-helm-cd" icon="/images/actions/helm.svg" >}}
-    Helm CD: update chart values → helm upgrade → wait for rollout. Deploy any workload via Helm. `pipery-dev/pipery-helm-cd@v1.1.0`
+  {{< card title="pipery-helm-cd" href="https://github.com/pipery-dev/helm-cd" icon="/images/actions/helm.svg" >}}
+    Helm CD: update chart values → helm upgrade → wait for rollout. Deploy any workload via Helm. `pipery-dev/helm-cd@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-cloudrun-cd" href="https://github.com/pipery-dev/pipery-cloudrun-cd" icon="/images/actions/cloudrun.svg" >}}
-    Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/pipery-cloudrun-cd@v1.1.0`
+  {{< card title="pipery-cloudrun-cd" href="https://github.com/pipery-dev/cloudrun-cd" icon="/images/actions/cloudrun.svg" >}}
+    Cloud Run CD: push image → gcloud run deploy → manage traffic migration and health checks. Deploy to Google Cloud Run. `pipery-dev/cloudrun-cd@v1.1.0`
   {{< /card >}}
   {{< card title="pipery-googleplay-cd" href="https://github.com/pipery-dev/pipery-googleplay-cd" icon="/images/actions/java.svg" >}}
     Google Play CD: upload Android APK/AAB artifacts with Fastlane supply or Gradle Play Publisher. `pipery-dev/pipery-googleplay-cd@main`
@@ -598,14 +598,14 @@ Start with the essentials.
   {{< card title="pipery-appstore-cd" href="https://github.com/pipery-dev/pipery-appstore-cd" icon="/images/pipeline.svg" >}}
     App Store CD: upload iOS IPA artifacts to App Store Connect with Fastlane pilot or xcrun altool. `pipery-dev/pipery-appstore-cd@main`
   {{< /card >}}
-  {{< card title="pipery-ansible-cd" href="https://github.com/pipery-dev/pipery-ansible-cd" icon="/images/actions/ansible.svg" >}}
-    Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/pipery-ansible-cd@v1.1.0`
+  {{< card title="pipery-ansible-cd" href="https://github.com/pipery-dev/ansible-cd" icon="/images/actions/ansible.svg" >}}
+    Ansible CD: clone playbook repo, install pip requirements, run playbook → status check. Deploy to VMs or bare metal. `pipery-dev/ansible-cd@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-docker-cd" href="https://github.com/pipery-dev/pipery-docker-cd" icon="/images/actions/docker.svg" >}}
-    Docker CD: docker-compose up or docker swarm deploy → health check. Deploy containerized workloads directly. `pipery-dev/pipery-docker-cd@v1.1.0`
+  {{< card title="pipery-docker-cd" href="https://github.com/pipery-dev/docker-cd" icon="/images/actions/docker.svg" >}}
+    Docker CD: docker-compose up or docker swarm deploy → health check. Deploy containerized workloads directly. `pipery-dev/docker-cd@v1.1.0`
   {{< /card >}}
-  {{< card title="pipery-terraform-cd" href="https://github.com/pipery-dev/pipery-terraform-cd" icon="/images/actions/terraform.svg" >}}
-    Terraform CD: terraform plan → terraform apply → state management and drift detection. Infrastructure as code deployment. `pipery-dev/pipery-terraform-cd@v1.1.0`
+  {{< card title="pipery-terraform-cd" href="https://github.com/pipery-dev/terraform-cd" icon="/images/actions/terraform.svg" >}}
+    Terraform CD: terraform plan → terraform apply → state management and drift detection. Infrastructure as code deployment. `pipery-dev/terraform-cd@v1.1.0`
   {{< /card >}}
 {{< /cards >}}
 {{< /section >}}

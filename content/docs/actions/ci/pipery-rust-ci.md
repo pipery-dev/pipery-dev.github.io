@@ -7,7 +7,7 @@ weight: 7
 
 # Pipery Rust CI
 
-- Repository: [`pipery-rust-ci`](https://github.com/pipery-dev/pipery-rust-ci)
+- Repository: [`pipery-rust-ci`](https://github.com/pipery-dev/rust-ci)
 - Release tag: `v1.1.0`
 - Catalog: [/catalog/](/catalog/)
 
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-rust-ci@v1.1.0
+      - uses: pipery-dev/rust-ci@v1.1.0
         with:
           project_path: .
           crates_token: ${{ secrets.CRATES_TOKEN }}
@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-rust-ci@v1.1.0
+      - uses: pipery-dev/rust-ci@v1.1.0
         with:
           project_path: .
           rust_toolchain: stable
@@ -109,7 +109,7 @@ jobs:
 ### Example 2: Nightly Rust with features enabled
 
 ```yaml
-- uses: pipery-dev/pipery-rust-ci@v1.1.0
+- uses: pipery-dev/rust-ci@v1.1.0
   with:
     project_path: .
     rust_toolchain: nightly
@@ -121,7 +121,7 @@ jobs:
 ### Example 3: Cross-compile to musl target
 
 ```yaml
-- uses: pipery-dev/pipery-rust-ci@v1.1.0
+- uses: pipery-dev/rust-ci@v1.1.0
   with:
     project_path: .
     rust_toolchain: stable
@@ -133,7 +133,7 @@ jobs:
 ### Example 4: Run specific integration tests
 
 ```yaml
-- uses: pipery-dev/pipery-rust-ci@v1.1.0
+- uses: pipery-dev/rust-ci@v1.1.0
   with:
     project_path: .
     tests_path: integration_test
@@ -143,7 +143,7 @@ jobs:
 ### Example 5: Skip security checks for development
 
 ```yaml
-- uses: pipery-dev/pipery-rust-ci@v1.1.0
+- uses: pipery-dev/rust-ci@v1.1.0
   with:
     project_path: .
     skip_sast: true
@@ -154,7 +154,7 @@ jobs:
 ### Example 6: Major version bump for release
 
 ```yaml
-- uses: pipery-dev/pipery-rust-ci@v1.1.0
+- uses: pipery-dev/rust-ci@v1.1.0
   with:
     project_path: .
     rust_toolchain: stable
@@ -171,7 +171,7 @@ The GitLab pipeline maps action inputs to CI/CD variables, publishes `pipery.jso
 
 ```yaml
 include:
-  - project: pipery-dev/pipery-rust-ci
+  - project: pipery-dev/rust-ci
     ref: v1.1.0
     file: /.gitlab-ci.yml
 ```
@@ -196,8 +196,8 @@ Bitbucket Cloud pipelines provide an alternative to GitHub Actions. Use Bitbucke
 ```yaml
 definitions:
   imports:
-    pipery-shared: pipery-dev/pipery-rust-ci:v1.1.0
-    pipery-custom: pipery-dev/pipery-rust-ci:v1.1.0:.bitbucket/shared-pipelines.yml
+    pipery-shared: pipery-dev/rust-ci:v1.1.0
+    pipery-custom: pipery-dev/rust-ci:v1.1.0:.bitbucket/shared-pipelines.yml
 
 pipelines:
   branches:
@@ -246,7 +246,7 @@ Example: Set `SKIP_SAST=true` to skip security scanning.
 
 <img src="https://avatars.githubusercontent.com/u/270923927?s=32" alt="Pipery" width="22" align="center" /> [**Pipery**](https://pipery.dev) is an open-source CI/CD observability platform. Every step script runs under **psh** (Pipery Shell), which intercepts all commands and emits structured JSONL events — giving you full visibility into your pipeline without any manual instrumentation.
 
-- Browse logs in the [Pipery Dashboard](https://github.com/pipery-dev/pipery-dashboard)
+- Browse logs in the [Pipery Dashboard](https://github.com/pipery-dev/dashboard)
 - Find all Pipery actions on [GitHub Marketplace](https://github.com/marketplace?q=pipery&type=actions)
 - Source code: [pipery-dev](https://github.com/pipery-dev)
 

@@ -11,7 +11,7 @@ keywords:
   - GHCR automation
 ---
 
-Container pipelines get messy quickly. `pipery-dev/pipery-docker-ci` wraps the usual Docker CI sequence into one reusable action, with structured logging built in.
+Container pipelines get messy quickly. `pipery-dev/docker-ci` wraps the usual Docker CI sequence into one reusable action, with structured logging built in.
 
 Instead of hand-writing Docker login, build, scan, test, tag, and push steps in every repository, you can move that workflow into a single maintained action call.
 
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pipery-dev/pipery-docker-ci@v1.1.0
+      - uses: pipery-dev/docker-ci@v1.1.0
         with:
           image_name: ghcr.io/${{ github.repository }}
           registry_username: ${{ github.actor }}
@@ -65,4 +65,4 @@ Docker builds can fail for reasons that are annoyingly context-heavy: auth, miss
 
 That is the difference between “the image push step failed somewhere” and “this exact command failed with this exact output.”
 
-Source and docs: [GitHub](https://github.com/pipery-dev/pipery-docker-ci), [GitLab](https://gitlab.com/pipery-dev/pipery-docker-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/pipery-docker-ci).
+Source and docs: [GitHub](https://github.com/pipery-dev/docker-ci), [GitLab](https://gitlab.com/pipery-dev/docker-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/docker-ci).
