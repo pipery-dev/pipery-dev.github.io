@@ -46,9 +46,6 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
-# Shebang mode: $1 is the script being interpreted. Run it line by line,
-# logging every command (everything except the shebang, `set` line, blank
-# lines, and pure variable assignments) to pipery.jsonl as psh would.
 LOG_FILE="${INPUT_LOG_FILE:-pipery.jsonl}"
 
 while IFS= read -r line; do
