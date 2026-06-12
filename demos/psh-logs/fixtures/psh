@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+HELP_TEXT='psh mediates shell commands and records structured execution logs.
+
+Usage:
+  psh
+  echo "echo Hi" | psh
+  psh -config ./.pipery/config.yaml
+  psh -c "echo hello"
+  psh -c "cd /tmp" -c "pwd"
+  psh -- ls -la
+  psh -replay pipery.jsonl
+  psh -replay run1.jsonl -replay run2.jsonl
+
+Modes:
+  No command arguments starts a line-oriented REPL.
+  Piped stdin runs each incoming line as a command.
+  Repeated -c runs shell commands sequentially.
+  Arguments after -- execute a program directly.
+  Repeated -replay validates prior JSONL logs, reruns the sequence, and compares outputs and timings.
+
+Logging:
+  Logs are written asynchronously as JSON lines.
+  The default file sink is ./pipery.jsonl.
+  Replay mode writes a fresh log to -replay-log-file or auto-creates <input>.N.
+  Add -syslog udp://host:514 or -syslog tcp://host:514 to mirror logs to syslog.
+  Config can also come from ./.pipery/config.yaml and PIPERY_* environment variables.
+  Secret masking can be extended with secret names, prefixes, and suffixes.
+  Enable -fail-on-error to stop after the first non-zero command result.
+
+Interactive built-ins:
+  cd [dir]
+  pwd
+  export KEY=VALUE
+  unset KEY
+  exit [code]
+  quit [code]
+
+Defaults:
+  shell: /bin/sh
+  env prefix: PIPERY_'
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  printf '%s\n' "$HELP_TEXT"
+  exit 0
+fi
+
+# Shebang mode: $1 is the script being interpreted. Run it line by line,
+# logging every command (everything except the shebang, `set` line, blank
+# lines, and pure variable assignments) to pipery.jsonl as psh would.
+LOG_FILE="${INPUT_LOG_FILE:-pipery.jsonl}"
+
+while IFS= read -r line; do
+  case "$line" in
+    '#!'*|'set -'*|'') continue ;;
+    [A-Za-z_]*=*) eval "$line"; continue ;;
+  esac
+
+  if eval "$line"; then status=0; else status=$?; fi
+
+  outcome="success"
+  [[ "$status" -ne 0 ]] && outcome="failure"
+  duration_ms=$(( (RANDOM % 200) + 5 ))
+  cmd_json=$(printf '%s' "$line" | jq -Rs .)
+  printf '{"event":"command","cmd":%s,"status":"%s","exit_code":%d,"duration_ms":%d,"ts":"%s"}\n' \
+    "$cmd_json" "$outcome" "$status" "$duration_ms" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG_FILE"
+done < "$1"
