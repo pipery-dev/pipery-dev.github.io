@@ -67,4 +67,17 @@ Python repos tend to drift over time. One project uses Poetry, another uses plai
 
 That makes it easier to adopt a standard without losing debuggability.
 
+## Reading the logs
+
+Every step script in this action runs through `psh` via the
+`#!/usr/bin/env psh` shebang, so each command is recorded as a structured
+entry in `pipery.jsonl` alongside the step's own `{"event":"lint",...}`
+style entries:
+
+![Running a psh step script and reading the resulting pipery.jsonl with jq](/images/demos/psh-logs-demo.gif)
+
+See [Reading pipery.jsonl logs with psh]({{< ref "reading-pipery-jsonl-logs-with-psh.md" >}})
+for the full walkthrough, including `jq` recipes for finding failures and
+slow steps.
+
 Source and docs: [GitHub](https://github.com/pipery-dev/python-ci), [GitLab](https://gitlab.com/pipery-dev/python-ci), or [Bitbucket](https://bitbucket.org/pipery-dev/python-ci).
